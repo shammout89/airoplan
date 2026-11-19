@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "AeroPlan",
   "release": "0.16.0",
-  "updatedAt": "2026-11-19T12:01:00.000Z",
+  "updatedAt": "2026-11-19T12:21:00.000Z",
   "displayTimeZone": "Asia/Amman",
   "runtime": "v24.22.3 / Linux / SQLite",
   "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
   "sourceFiles": 283,
   "upstreamSourceCommit": "969a7b1286764b2650bc3f5faaa4be0df4e49986",
-  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, and task creation modal field ordering.",
+  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, task creation modal field ordering, and 4-digit year date-input hardening.",
   "completionRule": {
     "softwareVerified": "Implementation plus applicable automated regression checks and production build passed with recorded evidence.",
     "fullyClosed": "All agreed requirements, applicable UI/target-host checks, and required real operational evidence passed; no known unmet requirement remains.",
@@ -16,7 +16,7 @@
     "syntheticEvidenceIsCompanyAcceptance": false,
     "promiseOfNoFutureDefects": false
   },
-  "currentPhase": "task-modal-field-ordering-software-verified",
+  "currentPhase": "task-due-date-validation-fix-software-verified",
   "finalClosure": false,
   "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [
     "Pre-existing ESLint @typescript-eslint/no-explicit-any and legacy prefer-const/react-hooks errors in untouched legacy files; new pure modules (lib/aircraft-scope.ts, lib/aircraft-scope.test.ts) pass eslint cleanly.",
@@ -441,6 +441,23 @@
         "tests/task-approval-policy.integration.mjs",
         "tests/security-policy.integration.mjs",
         "tests/aircraft-scope.integration.mjs",
+        "selfhost/http.test.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 31,
+      "id": "task-due-date-validation-fix",
+      "title": "منع السنوات الزائدة عن أربعة أرقام (مثل 202700-02-19) في حقل تاريخ الاستحقاق بنموذج المهمة والحقول المخصصة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "lib/aircraft-date-input.test.ts + lib/aircraft-scope.test.ts + lib/planning-ux.test.ts (14/14), aircraft-dates-dom (86+16), aircraft-form-save (43), task-approval-ui (70), flexibility (20), task-approval-policy (204), security-policy (30), aircraft-scope (32), selfhost/http (226), npm run build:docker, compile_applet, and headless Chromium playwright-cli keyboard/fill verification (r2-task-date-desktop.png).",
+      "testFiles": [
+        "lib/aircraft-date-input.test.ts",
+        "tests/aircraft-dates-dom.integration.mjs",
+        "tests/aircraft-form-save.integration.mjs",
+        "tests/task-approval-ui.integration.mjs",
+        "tests/flexibility.test.mjs",
         "selfhost/http.test.mjs"
       ],
       "finalOperationalAcceptance": "pending"
@@ -1127,6 +1144,20 @@
         ],
         "dockerProductionBuild": "passed (npm run build:docker)",
         "browserVerification": "passed in headless Chromium (1440x900 & 390x844): 0 console errors/warnings, HTTP 200 on workspace APIs, الطائرة renders first before إصدار برنامج الصيانة, zero mobile horizontal overflow (scrollWidth 390 === innerWidth 390)"
+      },
+      "targetWindowsDockerExecuted": false,
+      "companyAcceptanceExecuted": false
+    },
+    {
+      "id": "task-due-date-validation-fix-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-19T12:21:00.000Z",
+      "evidence": "lib/aircraft-date-input.test.ts (14/14 suite) + Chromium playwright-cli keyboard/fill test (r2-task-date-desktop.png) + npm run build:docker + targeted regression suites",
+      "results": {
+        "unitTests": "14/14 passed (lib/aircraft-date-input.test.ts + lib/aircraft-scope.test.ts + lib/planning-ux.test.ts)",
+        "regressionSuitesPassed": "aircraft-dates-dom (86+16), aircraft-form-save (43), task-approval-ui (70), flexibility (20), task-approval-policy (204), security-policy (30), aircraft-scope (32), selfhost/http (226)",
+        "dockerProductionBuild": "passed (npm run build:docker)",
+        "browserVerification": "passed in headless Chromium (1440x900): min=1900-01-01 & max=9999-12-31 enforced natively; typing extra digits after 4-digit year does not produce 6-digit years (202700); valid future date 2027-02-19 accepted with 0 console errors/warnings"
       },
       "targetWindowsDockerExecuted": false,
       "companyAcceptanceExecuted": false

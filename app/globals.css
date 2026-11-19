@@ -189,6 +189,8 @@ aside nav{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column
 .scope-summary{display:inline-block;margin:6px 0 8px;padding:5px 10px;border-radius:6px;background:#eef6f4;border:1px solid #cde2db;color:#185247;font-size:12px;font-weight:600}
 .operationalmodal .formgrid,.modal .formgrid{align-items:start}
 .operationalmodal .formgrid label:not(.check),.modal .formgrid label:not(.check){align-content:start}
+.modal .formgrid label>input[type=date]{direction:ltr;text-align:start}
+.modal .formgrid label>small.error{margin:0;padding:8px 10px;line-height:1.6;overflow-wrap:anywhere}
 .task-picker-full,.task-form-full{grid-column:1/-1}
 .task-picker-full>div{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;align-items:end}
 .task-picker-full .actions{grid-column:1/-1;align-items:center}
