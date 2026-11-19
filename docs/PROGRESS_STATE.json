@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "AeroPlan",
   "release": "0.16.0",
-  "updatedAt": "2026-11-19T06:02:00.000Z",
+  "updatedAt": "2026-11-19T12:01:00.000Z",
   "displayTimeZone": "Asia/Amman",
   "runtime": "v24.22.3 / Linux / SQLite",
   "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
   "sourceFiles": 283,
   "upstreamSourceCommit": "969a7b1286764b2650bc3f5faaa4be0df4e49986",
-  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements and aircraft-scope permission/authorization enforcement.",
+  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, and task creation modal field ordering.",
   "completionRule": {
     "softwareVerified": "Implementation plus applicable automated regression checks and production build passed with recorded evidence.",
     "fullyClosed": "All agreed requirements, applicable UI/target-host checks, and required real operational evidence passed; no known unmet requirement remains.",
@@ -16,7 +16,7 @@
     "syntheticEvidenceIsCompanyAcceptance": false,
     "promiseOfNoFutureDefects": false
   },
-  "currentPhase": "aircraft-scope-enforcement-software-verified",
+  "currentPhase": "task-modal-field-ordering-software-verified",
   "finalClosure": false,
   "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [
     "Pre-existing ESLint @typescript-eslint/no-explicit-any and legacy prefer-const/react-hooks errors in untouched legacy files; new pure modules (lib/aircraft-scope.ts, lib/aircraft-scope.test.ts) pass eslint cleanly.",
@@ -426,6 +426,22 @@
         "lib/aircraft-scope.ts",
         "lib/aircraft-scope.test.ts",
         "tests/aircraft-scope.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 30,
+      "id": "task-modal-field-ordering",
+      "title": "إعادة ترتيب حقول نموذج إضافة وتعديل مهمة صيانة (الطائرة أولًا قبل إصدار برنامج الصيانة)",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "lib/aircraft-scope.test.ts + lib/planning-ux.test.ts (11/11), 40 SQLite/Node/DOM/HTTP regression suites (including security-policy 30, task-approval-policy 204, task-approval-ui 70, aircraft-scope 32, ux-planning-security 24, users-management 137, customer-setup 72/54, manual-execution-dialog 89, quality 73, planning.test 36, selfhost/http 226), npm run build:docker, compile_applet, and headless Chromium playwright-cli captures (r1-task-modal-desktop.png, r1-task-modal-mobile.png).",
+      "testFiles": [
+        "tests/task-approval-ui.integration.mjs",
+        "tests/task-approval-policy.integration.mjs",
+        "tests/security-policy.integration.mjs",
+        "tests/aircraft-scope.integration.mjs",
+        "selfhost/http.test.mjs"
       ],
       "finalOperationalAcceptance": "pending"
     }
@@ -1091,6 +1107,26 @@
         "dockerProductionBuild": "passed (npm run build:docker)",
         "eslint": "lib/aircraft-scope.ts clean (0 errors, 0 warnings); zero new lint issues introduced in modified routes/components",
         "browserVerification": "passed in headless Chromium (1440x900 & 390x844): 0 console errors/warnings, HTTP 200 on control/planning/workspace APIs, verified restricted scope fields in access_grant modal (Settings -> Team) and optional aircraftIds field in authorization modal (Maintenance Resources)"
+      },
+      "targetWindowsDockerExecuted": false,
+      "companyAcceptanceExecuted": false
+    },
+    {
+      "id": "task-modal-field-ordering-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-19T12:01:00.000Z",
+      "evidence": "Headless Chromium playwright-cli captures (1440x900 & 390x844) + npm run build:docker + 40 SQLite/Node/DOM/HTTP regression suites",
+      "results": {
+        "unitTests": "11/11 passed (lib/aircraft-scope.test.ts + lib/planning-ux.test.ts)",
+        "securityAndPolicyRegression": "aircraft-scope (32), security-policy (30), task-approval-policy (204), task-approval-ui (70), ux-planning-security (24), users-management (137), accounts (75), mfa (57), audit-integrity (21), full-backup (35)",
+        "technicalAndDomainRegression": "storage, advanced-domain (34), aircraft (43), aircraft-references (99), aircraft-catalog-sync (103), aircraft-dropdown-dom (47), aircraft-dates-dom (86+16), aircraft-form-save (43), manual-execution-dialog (89), customer-setup (72), customer-setup-ui (54), settings-ui (56), settings-upgrade (16), remediation (80), assemblies (108), engineering (67), quality (73), reporting (56), integration-contracts (50), recurrence (35), future (14), statistics (27), reliability-statistics (17), unit-amendments (77), scheduling (62), opening (16), operations (23), package-schedule (20), planning (36), flexibility (20), services (34), selfhost/http (226)",
+        "miniflareSuitesSkipped": [
+          "tests/advanced.integration.mjs",
+          "tests/scheduling.integration.mjs",
+          "tests/access.integration.mjs"
+        ],
+        "dockerProductionBuild": "passed (npm run build:docker)",
+        "browserVerification": "passed in headless Chromium (1440x900 & 390x844): 0 console errors/warnings, HTTP 200 on workspace APIs, الطائرة renders first before إصدار برنامج الصيانة, zero mobile horizontal overflow (scrollWidth 390 === innerWidth 390)"
       },
       "targetWindowsDockerExecuted": false,
       "companyAcceptanceExecuted": false

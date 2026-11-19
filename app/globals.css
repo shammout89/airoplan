@@ -187,5 +187,9 @@ aside nav{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column
 /* Aircraft Scope Enforcement Notices & Badges */
 .scope-notice{border-color:#d8b36a;background:#fff9eb;color:#6c4b11;font-size:12px;font-weight:600}
 .scope-summary{display:inline-block;margin:6px 0 8px;padding:5px 10px;border-radius:6px;background:#eef6f4;border:1px solid #cde2db;color:#185247;font-size:12px;font-weight:600}
-.operationalmodal .formgrid{align-items:start}
-.operationalmodal .formgrid label:not(.check){align-content:start}
+.operationalmodal .formgrid,.modal .formgrid{align-items:start}
+.operationalmodal .formgrid label:not(.check),.modal .formgrid label:not(.check){align-content:start}
+.task-picker-full,.task-form-full{grid-column:1/-1}
+.task-picker-full>div{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;align-items:end}
+.task-picker-full .actions{grid-column:1/-1;align-items:center}
+@media(max-width:760px){.task-picker-full>div{grid-template-columns:1fr}}
