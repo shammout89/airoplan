@@ -2,7 +2,7 @@ import {env} from 'cloudflare:workers';
 import {requireAircraftReady} from '../../../lib/aircraft';
 import {taskLimits} from '../../../lib/task-validation';
 import {acquireWrite,releaseWrite} from '../../../lib/write-gate';
-import {access,checkOrigin,failure} from '../../../lib/access';
+import {access,checkOrigin,failure,requireAircraftInScope} from '../../../lib/access';
 import {AccessError} from '../../../lib/permissions';
 import {transitionTask,taskHash} from '../../../lib/task-approval';
 import {workflowTaskSnapshot,checkTaskEvidence,evidenceGuard,taskEventWrites,taskActorGuard} from '../../../lib/task-approval-store';
@@ -11,11 +11,13 @@ export async function POST(req:Request){let lease:string|null=null;try{
  checkOrigin(req);const a=await access();lease=await acquireWrite(a,req);const body:any=await req.json();
  if(JSON.stringify(body).length>12000||!['submit','review','approve','return','close'].includes(body.action))throw Error('إجراء غير صالح');
  const raw=env.DB!,row:any=await raw.prepare("SELECT * FROM records WHERE id=? AND owner=? AND kind='task'").bind(body.id,a.scope).first();if(!row)throw new AccessError('المهمة غير موجودة',404);
- const original=JSON.parse(row.data);if(original.status==='withdrawn')throw new AccessError('المهمة مسحوبة بخطة انتقال معتمدة',409);
+ const original=JSON.parse(row.data);
+ const plane:any=await raw.prepare("SELECT data FROM records WHERE id=? AND owner=? AND kind='aircraft'").bind(original.aircraftId,a.scope).first();requireAircraftInScope(a,plane?{id:original.aircraftId,...JSON.parse(plane.data)}:null);
+ if(original.status==='withdrawn')throw new AccessError('المهمة مسحوبة بخطة انتقال معتمدة',409);
  if(body.action==='close')throw new AccessError('تُغلق المهمة باعتماد سجل إنجازها المستقل؛ افتح الاستحقاق والتنفيذ');
  if(typeof body.expectedRevision!=='string'||!body.expectedRevision||body.expectedRevision!==original._revision)throw new AccessError('تغيرت المهمة أو لم تُثبت النسخة المعروضة؛ حدّث الصفحة وأعد المراجعة',409);
  if(original.status==='closed')throw new AccessError('المهمة مغلقة',409);
- const plane:any=await raw.prepare("SELECT data FROM records WHERE id=? AND owner=? AND kind='aircraft'").bind(original.aircraftId,a.scope).first();if(body.action!=='return'){requireAircraftReady(plane?JSON.parse(plane.data):null);taskLimits(original);if(body.expectedAircraftRevision!==JSON.parse(plane.data)._revision)throw new AccessError('تغيرت بطاقة الطائرة أو عداداتها؛ حمّل نسخة المهمة الحالية قبل القرار',409);}
+ if(body.action!=='return'){requireAircraftReady(plane?JSON.parse(plane.data):null);taskLimits(original);if(body.expectedAircraftRevision!==JSON.parse(plane.data)._revision)throw new AccessError('تغيرت بطاقة الطائرة أو عداداتها؛ حمّل نسخة المهمة الحالية قبل القرار',409);}
  // Return can recover a request invalidated by another controlled technical process.
  let recover=original;
  if(body.action==='return'&&original.taskApproval){const technicalHash=await taskHash(original,true),w=original.taskApproval,risk=technicalHash!==w.technicalHash?'technical':w.risk;recover={...original,taskApproval:{...w,risk,mode:risk==='technical'?w.policy.technicalMode:w.policy.routineMode,contentHash:await taskHash(original)}};}

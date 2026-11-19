@@ -4,7 +4,7 @@ import {requireAircraftReady} from '../../../lib/aircraft';
 import {routePolicy,policyWrites} from '../../../lib/approval-policy';
 import {acquireWrite,releaseWrite} from '../../../lib/write-gate';
 import {env} from 'cloudflare:workers';
-import {access,checkOrigin,failure,requirePermission} from '../../../lib/access';
+import {access,checkOrigin,failure,requirePermission,requireAircraftIdInScope} from '../../../lib/access';
 import {AccessError,workflowTransition} from '../../../lib/permissions';
 import {normalizeProgram,programToday} from '../../../lib/program';
 export const dynamic='force-dynamic';
@@ -20,6 +20,7 @@ export async function POST(req:Request){let lease:string|null=null;try{checkOrig
  if(body.action==='revise'&&(!row||!['approved','superseded'].includes(row.state)))throw new AccessError('إنشاء إصدار جديد متاح من إصدار معتمد أو سابق');
  const raw=body.action==='revise'?{...await programData(db,a.scope,row),revision:body.newRevision,approvalReference:''}:body.data;
  const data=await pinScheduleEvidence(db,env.BUCKET!,a.scope,normalizeProgram(raw,aircraft.results.map((x:any)=>x.id)));
+ for(const aid of data.aircraftIds)await requireAircraftIdInScope(a,aid);
  if(row&&body.action==='save'&&(data.code!==row.code||data.revision!==row.revision))throw Error('رمز البرنامج ورقم الإصدار ثابتان بعد الإنشاء');
  const existing=await db.prepare('SELECT id FROM program_revisions WHERE workspace_id=? AND code=? AND revision=?').bind(a.scope,data.code,data.revision).first();
  if(existing&&(!row||body.action==='revise'||(existing as any).id!==row.id))throw Error('رقم هذا الإصدار موجود بالفعل للبرنامج');
@@ -32,10 +33,10 @@ export async function POST(req:Request){let lease:string|null=null;try{checkOrig
  if(!row)throw new AccessError('الإصدار غير موجود',404);if(body.etag!==row.etag)throw new AccessError('تغير الإصدار. حدّث الصفحة وأعد العملية',409);
  let state:string,submitted=row.submitted_by,reviewed=row.reviewed_by,approved=row.approved_by;
  if(body.action==='return'){
- requirePermission(a,'edit_program');if(!['submitted','reviewed'].includes(row.state))throw new AccessError('لا يمكن إعادة هذا الإصدار للمسودة',409);state='draft';submitted=null;reviewed=null;approved=null;
+ requirePermission(a,'edit_program');const data=await programData(db,a.scope,row);for(const aid of data.aircraftIds||[])await requireAircraftIdInScope(a,aid);if(!['submitted','reviewed'].includes(row.state))throw new AccessError('لا يمكن إعادة هذا الإصدار للمسودة',409);state='draft';submitted=null;reviewed=null;approved=null;
  }else{
  if(!['submit','review','approve'].includes(body.action))throw Error('إجراء غير صالح');
- const data=await programData(db,a.scope,row);normalizeProgram(data,aircraft.results.map((x:any)=>x.id));await pinScheduleEvidence(db,env.BUCKET!,a.scope,data,true);
+ const data=await programData(db,a.scope,row);normalizeProgram(data,aircraft.results.map((x:any)=>x.id));for(const aid of data.aircraftIds)await requireAircraftIdInScope(a,aid);await pinScheduleEvidence(db,env.BUCKET!,a.scope,data,true);
  const next=workflowTransition({reviewState:row.state,submittedBy:row.submitted_by,reviewedBy:row.reviewed_by,modifiedBy:row.modified_by},body.action,a.userId,a.role);state=next.reviewState;submitted=next.submittedBy??submitted;reviewed=next.reviewedBy??reviewed;approved=next.approvedBy??approved;
  if(body.action==='approve')for(const id of data.aircraftIds){const p:any=aircraft.results.find((r:any)=>r.id===id);requireAircraftReady(p?JSON.parse(p.data):null);}
  if(body.action==='approve'&&(!data.approvalReference||data.effectiveDate>programToday()))throw Error('أدخل مرجع الموافقة، ويجب أن يكون تاريخ السريان قد حلّ قبل الاعتماد');

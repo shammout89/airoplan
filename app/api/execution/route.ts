@@ -8,7 +8,7 @@ import { requireAircraftReady } from '../../../lib/aircraft';
 import { routePolicy, policyWrites } from '../../../lib/approval-policy';
 import { acquireWrite, releaseWrite } from '../../../lib/write-gate';
 import { env } from 'cloudflare:workers';
-import { access, checkOrigin, failure, requirePermission } from '../../../lib/access';
+import { access, checkOrigin, failure, requirePermission, requireAircraftInScope, requireAircraftIdInScope, scopedAircraftSet } from '../../../lib/access';
 import { AccessError, workflowTransition } from '../../../lib/permissions';
 import { calculateLimits, serviceBaseline, normalizeAccomplishment } from '../../../lib/recurrence';
 import { applies, programToday } from '../../../lib/program';
@@ -21,12 +21,21 @@ export async function GET(req?: Request) {
             const selected: any = await db.prepare("SELECT * FROM records WHERE id=? AND owner=? AND kind='task'").bind(taskId, a.scope).first();
             if (!selected)
                 throw new AccessError('المهمة غير موجودة', 404);
-            const task = JSON.parse(selected.data), root = task.schedule?.rootTaskId || selected.id, offset = Math.max(0, Math.min(1000000, Math.floor(Number(url.searchParams.get('offset')) || 0))), where = "owner=? AND kind='task' AND (id=? OR json_extract(data,'$.schedule.rootTaskId')=?)", args = [a.scope, root, root], count: any = await db.prepare('SELECT COUNT(*) total FROM records WHERE ' + where).bind(...args).first(), rows = await db.prepare("SELECT * FROM records WHERE " + where + " ORDER BY CAST(json_extract(data,'$.schedule.sequence') AS INTEGER) DESC,id LIMIT 50 OFFSET ?").bind(...args, offset).all();
+            const task = JSON.parse(selected.data);
+            await requireAircraftIdInScope(a, task.aircraftId);
+            const root = task.schedule?.rootTaskId || selected.id, offset = Math.max(0, Math.min(1000000, Math.floor(Number(url.searchParams.get('offset')) || 0))), where = "owner=? AND kind='task' AND (id=? OR json_extract(data,'$.schedule.rootTaskId')=?)", args = [a.scope, root, root], count: any = await db.prepare('SELECT COUNT(*) total FROM records WHERE ' + where).bind(...args).first(), rows = await db.prepare("SELECT * FROM records WHERE " + where + " ORDER BY CAST(json_extract(data,'$.schedule.sequence') AS INTEGER) DESC,id LIMIT 50 OFFSET ?").bind(...args, offset).all();
             chain = { records: rows.results.map((r: any) => ({ ...r, data: JSON.parse(r.data) })), total: Number(count.total), limit: 50, offset };
             taskIds = chain.records.map((r: any) => r.id);
         }
+        const allowedPlanes = !taskId ? await scopedAircraftSet(a) : null;
+        let scopedTaskIds: Set<string> | null = null;
+        if (allowedPlanes) {
+            const taskRows = await db.prepare("SELECT id, json_extract(data,'$.aircraftId') aircraftId FROM records WHERE owner=? AND kind='task'").bind(a.scope).all();
+            scopedTaskIds = new Set((taskRows.results || []).filter((t: any) => allowedPlanes.has(t.aircraftId)).map((t: any) => t.id));
+        }
         const filter = taskId ? ' AND task_id IN (' + (taskIds.length ? taskIds.map(() => '?').join(',') : 'NULL') + ')' : '', result = await db.prepare('SELECT * FROM accomplishments WHERE workspace_id=?' + filter + ' ORDER BY updated DESC').bind(a.scope, ...taskIds).all(), overrides = await db.prepare("SELECT * FROM effective_values WHERE workspace_id=? AND kind='completion'").bind(a.scope).all();
-        return Response.json({ chain, accomplishments: result.results.map((r: any) => { const original = JSON.parse(r.data), o: any = overrides.results.find((v: any) => v.target_id === r.id); return { ...r, originalData: original, data: o ? { ...original, ...JSON.parse(o.data) } : original, correctionId: o?.version || null }; }) });
+        const filteredAccomplishments = scopedTaskIds ? result.results.filter((r: any) => scopedTaskIds!.has(r.task_id)) : result.results;
+        return Response.json({ chain, accomplishments: filteredAccomplishments.map((r: any) => { const original = JSON.parse(r.data), o: any = overrides.results.find((v: any) => v.target_id === r.id); return { ...r, originalData: original, data: o ? { ...original, ...JSON.parse(o.data) } : original, correctionId: o?.version || null }; }) });
     }
     catch (e) {
         return failure(e);
@@ -53,6 +62,7 @@ export async function POST(req: Request) {
         if (!plane)
             throw Error('الطائرة غير موجودة');
         const aircraft = JSON.parse(plane.data);
+        requireAircraftInScope(a, { id: plane.id, ...aircraft });
         if (body.action !== 'return')
             requireAircraftReady(aircraft);
         const program: any = t.programRevisionId ? await db.prepare('SELECT * FROM program_revisions WHERE id=? AND workspace_id=?').bind(t.programRevisionId, a.scope).first() : null;

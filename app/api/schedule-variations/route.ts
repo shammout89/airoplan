@@ -1,5 +1,5 @@
 import {env} from 'cloudflare:workers';
-import {access,checkOrigin,failure,requirePermission} from '../../../lib/access';
+import {access,checkOrigin,failure,requirePermission,requireAircraftInScope,scopedAircraftSet} from '../../../lib/access';
 import {AccessError,workflowTransition} from '../../../lib/permissions';
 import {acquireWrite,releaseWrite} from '../../../lib/write-gate';
 import {domainContext,domainLock,newDependencies,publishedEvidence,commitDomain,sameContext} from '../../../lib/domain';
@@ -9,13 +9,13 @@ import {normalizeVariationGrant,nominalLimits,variationLimits} from '../../../li
 import {programToday} from '../../../lib/program';
 export const dynamic='force-dynamic';
 const text=(v:any,label:string,max=500)=>{if(typeof v!=='string'||!v.trim()||v.trim().length>max)throw Error('أدخل '+label);return v.trim()};
-export async function GET(req:Request){try{const a=await access(),taskId=new URL(req.url).searchParams.get('taskId'),db=env.DB!;const rows=await db.prepare("SELECT * FROM extension_items WHERE workspace_id=? AND kind='schedule_variation' ORDER BY created DESC,id").bind(a.scope).all();const evidence=await db.prepare('SELECT id,document_id,revision,file_name,digest FROM document_versions WHERE workspace_id=? AND published IS NOT NULL ORDER BY created DESC').bind(a.scope).all();return Response.json({items:rows.results.map((r:any)=>({...r,data:JSON.parse(r.data)})).filter((r:any)=>!taskId||r.data.taskId===taskId),evidence:evidence.results})}catch(e){return failure(e)}}
+export async function GET(req:Request){try{const a=await access(),taskId=new URL(req.url).searchParams.get('taskId'),db=env.DB!,allowedPlanes=await scopedAircraftSet(a);const rows=await db.prepare("SELECT * FROM extension_items WHERE workspace_id=? AND kind='schedule_variation' ORDER BY created DESC,id").bind(a.scope).all();const evidence=await db.prepare('SELECT id,document_id,revision,file_name,digest FROM document_versions WHERE workspace_id=? AND published IS NOT NULL ORDER BY created DESC').bind(a.scope).all();return Response.json({items:rows.results.map((r:any)=>({...r,data:JSON.parse(r.data)})).filter((r:any)=>(!taskId||r.data.taskId===taskId)&&(!allowedPlanes||allowedPlanes.has(r.data.aircraftId))),evidence:evidence.results})}catch(e){return failure(e)}}
 export async function POST(req:Request){let lease:string|null=null;try{
  checkOrigin(req);const a=await access(),db=env.DB!;lease=await acquireWrite(a,req);const b:any=await req.json();if(JSON.stringify(b).length>24000)throw Error('حجم طلب التسامح كبير');
  const lock=await domainLock(db,a.scope),c=await domainContext(db,a.scope),old=b.id?c.items.find((r:any)=>r.id===b.id&&r.kind==='schedule_variation'):null;
  if(b.id&&!old)throw new AccessError('طلب التسامح غير موجود',404);if(old&&b.etag!==old.etag)throw new AccessError('تغير الطلب؛ حدّث الصفحة',409);
  const raw=b.action==='save'?b.data:old?.data;if(!raw)throw Error('طلب غير صالح');
- const task=c.records.find((r:any)=>r.id===raw.taskId&&r.kind==='task'),plane=c.records.find((r:any)=>r.id===task?.data.aircraftId&&r.kind==='aircraft');if(!task||!plane)throw Error('المهمة أو الطائرة غير موجودة');requireAircraftReady(plane.data);
+ const task=c.records.find((r:any)=>r.id===raw.taskId&&r.kind==='task'),plane=c.records.find((r:any)=>r.id===task?.data.aircraftId&&r.kind==='aircraft');if(!task||!plane)throw Error('المهمة أو الطائرة غير موجودة');requireAircraftInScope(a,{id:plane.id,...plane.data});requireAircraftReady(plane.data);
  if(['closed','withdrawn'].includes(task.data.status))throw new AccessError('المرة مغلقة؛ لا يمكن تغيير تصريحها',409);
  const dep=newDependencies();dep.add('records',task,'data');dep.add('records',plane,'data');let state=old?.state||'draft',data:any,actors:any={modified:old?.modified_by||a.userId},pending:any;
  if(b.action==='cancel'){

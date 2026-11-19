@@ -102,3 +102,90 @@ aside nav{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column
 .task-approval-body textarea,.task-policy-settings textarea{width:100%;min-height:90px}
 @media(max-width:600px){.task-approval-body{padding:16px}.task-approval-dialog>.sectionhead,.task-approval-footer{padding:14px 16px}.task-approval-footer button{flex:1}.task-approval-facts{grid-template-columns:1fr}.task-approval-facts dt{font-weight:600}}
 .company-setup{display:grid;gap:24px}.company-setup .panel{padding:24px}.company-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.company-step-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}.company-step h3{margin:12px 0}.company-step-number{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#e8f3ee;color:#12584b;font-weight:700}.company-step p,.company-start-banner p{overflow-wrap:anywhere}.company-start-banner{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px;border:1px solid #c5dcd2;border-radius:14px;background:#f0f8f4;margin-bottom:24px}.company-start-banner p{margin:6px 0 0}.workspace{overflow-wrap:anywhere}.data-export{position:relative}.data-export-options{position:absolute;z-index:15;inset-inline-end:0;top:calc(100% + 8px);width:370px;max-width:calc(100vw - 40px);padding:20px;background:#fff;border:1px solid #dce5eb;border-radius:12px;box-shadow:0 12px 30px #15253d20}.data-export-options{max-height:70dvh;overflow-y:auto}.data-export-options h2{font-size:18px;margin:0 0 12px}.data-export-options p{white-space:normal;line-height:1.8;overflow-wrap:anywhere}.data-export-options .full{margin-top:10px}@media(max-width:760px){.company-step-grid{grid-template-columns:1fr}.company-start-banner{align-items:stretch;flex-direction:column}.company-setup .panel{padding:18px}.company-actions>*{max-width:100%;white-space:normal}.data-export-options{inset-inline-end:auto;inset-inline-start:0}}
+
+/* Collapsible Grouped Sidebar Navigation */
+.nav-group{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.nav-group-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:8px 10px;border:0;border-radius:6px;background:transparent;color:#7a8a99;font-size:11px;font-weight:700;letter-spacing:.2px}
+.nav-group-toggle:hover{background:#f3f7f8;color:#1d4b45}
+.nav-group-items{display:flex;flex-direction:column;gap:4px}
+@media(max-width:760px){
+  aside nav{flex-direction:row;align-items:center;gap:6px;overflow-x:auto;overflow-y:hidden}
+  .nav-group{flex-direction:row;align-items:center;margin-bottom:0;gap:4px}
+  .nav-group-toggle{display:none}
+  .nav-group-items{flex-direction:row;align-items:center;gap:4px}
+}
+
+/* Global Search (Ctrl+K) */
+.global-search-trigger{min-height:34px;padding:6px 12px;font-size:11px;gap:8px;color:#355264}
+.global-search-trigger kbd,.kbd-hint{font:10px monospace;background:#f0f4f7;border:1px solid #d5e0e7;border-radius:4px;padding:2px 6px;color:#556f80}
+.global-search-modal{width:min(680px,calc(100vw - 24px));max-height:80dvh;display:flex;flex-direction:column;overflow:hidden}
+.global-search-bar{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid #e6edf2;color:#5e7585}
+.global-search-bar input{flex:1;min-width:0;border:0;outline:none;padding:6px 0;font-size:14px;background:transparent}
+.global-search-results{overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:4px;max-height:56dvh}
+.global-search-item{width:100%;display:flex;align-items:center;gap:12px;text-align:right;border:1px solid transparent;border-radius:8px;background:#fff;padding:10px 14px;color:#172a3c}
+.global-search-item.active,.global-search-item:hover{background:#eff7f5;border-color:#cfe6df}
+.global-search-icon{width:32px;height:32px;border-radius:8px;background:#eaf3f0;color:#0b746b;display:grid;place-items:center;flex-shrink:0}
+.global-search-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.global-search-text strong{font-size:13px;color:#172a3c}
+.global-search-text small{font-size:11px;color:#6c7f8f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.global-search-foot{display:flex;justify-content:space-between;padding:10px 18px;background:#f8fafc;border-top:1px solid #e7edf2;font-size:10px;color:#788a99}
+@media(max-width:760px){.global-search-trigger kbd{display:none}}
+
+/* Action Inbox */
+.action-inbox{margin-bottom:24px}
+.action-inbox-title{display:flex;align-items:center;gap:10px;color:#0d6359}
+.action-inbox-controls{display:flex;gap:8px;flex-wrap:wrap}
+.action-inbox-list{display:flex;flex-direction:column;border-top:1px solid #edf1f5}
+.action-inbox-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 23px;border-bottom:1px solid #f0f4f7}
+.action-inbox-row:last-child{border-bottom:0}
+.action-inbox-meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.action-inbox-meta strong{font-size:13px;color:#183244}
+.action-inbox-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.action-inbox-badges .badge{display:inline-flex;align-items:center;gap:5px}
+.action-inbox-foot{padding:12px 23px;border-top:1px solid #eef2f5;background:#fafcfd}
+@media(max-width:760px){.action-inbox-row{flex-direction:column;align-items:stretch;padding:14px 16px}}
+
+/* Planner Assignments & Shift Handover */
+.assignment-badge{display:inline-block;margin-top:6px;padding:3px 8px;border-radius:5px;background:#edf3f7;color:#39566b;font-size:10px;font-weight:600}
+.assignment-badge.mine{background:#e5f5ee;color:#0b6b59;border:1px solid #bfe2d2}
+.assignment-modal{width:min(640px,calc(100vw - 24px))}
+.assignment-wide-field{grid-column:1/-1}
+.assignment-modal textarea{width:100%;min-height:96px}
+.assignment-summary{margin:0 24px 16px;background:#f2f8f5;border-color:#cae2d7;color:#1b4f45}
+
+/* Bulk Task Selection Bar */
+.bulk-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:12px 18px;background:#edf6f3;border-bottom:1px solid #cde2da;font-size:12px;color:#185247}
+.bulk-bar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* Visual Gantt Timeline */
+.package-gantt{margin-bottom:22px}
+.gantt-title{display:flex;align-items:center;gap:8px;color:#0c685c}
+.gantt-summary{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gantt-tracks{display:flex;flex-direction:column;border-top:1px solid #e9eff4}
+.gantt-track{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;padding:14px 23px;border-bottom:1px solid #f0f4f8}
+.gantt-track:last-child{border-bottom:0}
+.gantt-track-label{display:flex;flex-direction:column;gap:3px}
+.gantt-lane{position:relative;min-height:44px;background:#f6f9fb;border:1px solid #e3ebf1;border-radius:8px;overflow:hidden}
+.gantt-bar{position:absolute;top:5px;bottom:5px;min-width:64px;padding:4px 8px;border-radius:6px;border:1px solid #0b746b;background:#e5f4f0;color:#0c544a;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;overflow:hidden;text-align:left;font-size:10px}
+.gantt-bar.selected{background:#08766b;color:#fff;box-shadow:0 2px 10px #08766b33}
+.gantt-bar.overlap-aircraft{border-color:#c94d42;background:#fff0ee;color:#8e2a22}
+.gantt-bar.overlap-aircraft.selected{background:#b83f35;color:#fff}
+.gantt-bar.overlap-station:not(.overlap-aircraft){border-color:#c58a29;background:#fff8ea;color:#7c5312}
+.gantt-bar-code{font-weight:700;white-space:nowrap}
+.gantt-bar-meta{font-size:9px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+@media(max-width:760px){.gantt-track{grid-template-columns:1fr;gap:8px;padding:12px 16px}}
+
+/* Work Package Print Sheet */
+@media print{
+  aside,header,.titleline .actions,.programhero,.opactions,.package-gantt,.no-print,.overlay,.toast,footer,.sessionline{display:none!important}
+  main{margin:0!important}
+  .content{padding:0!important;max-width:none!important}
+  .panel{border:1px solid #cbd5df!important;box-shadow:none!important}
+  .printable-package{break-inside:avoid}
+}
+
+/* Aircraft Scope Enforcement Notices & Badges */
+.scope-notice{border-color:#d8b36a;background:#fff9eb;color:#6c4b11;font-size:12px;font-weight:600}
+.scope-summary{display:inline-block;margin:6px 0 8px;padding:5px 10px;border-radius:6px;background:#eef6f4;border:1px solid #cde2db;color:#185247;font-size:12px;font-weight:600}
+.operationalmodal .formgrid{align-items:start}
+.operationalmodal .formgrid label:not(.check){align-content:start}

@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "AeroPlan",
   "release": "0.16.0",
-  "updatedAt": "2026-11-18T20:13:24.630748+03:00",
+  "updatedAt": "2026-11-19T06:02:00.000Z",
   "displayTimeZone": "Asia/Amman",
   "runtime": "v24.22.3 / Linux / SQLite",
   "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
   "sourceFiles": 283,
   "upstreamSourceCommit": "969a7b1286764b2650bc3f5faaa4be0df4e49986",
-  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; preserve existing planning, security and operational acceptance requirements.",
+  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements and aircraft-scope permission/authorization enforcement.",
   "completionRule": {
     "softwareVerified": "Implementation plus applicable automated regression checks and production build passed with recorded evidence.",
     "fullyClosed": "All agreed requirements, applicable UI/target-host checks, and required real operational evidence passed; no known unmet requirement remains.",
@@ -16,9 +16,12 @@
     "syntheticEvidenceIsCompanyAcceptance": false,
     "promiseOfNoFutureDefects": false
   },
-  "currentPhase": "customer-setup-target-host-and-product-pilot-acceptance",
+  "currentPhase": "aircraft-scope-enforcement-software-verified",
   "finalClosure": false,
-  "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [],
+  "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [
+    "Pre-existing ESLint @typescript-eslint/no-explicit-any and legacy prefer-const/react-hooks errors in untouched legacy files; new pure modules (lib/aircraft-scope.ts, lib/aircraft-scope.test.ts) pass eslint cleanly.",
+    "Three Cloudflare miniflare integration scripts (tests/advanced.integration.mjs, tests/scheduling.integration.mjs, tests/access.integration.mjs) cannot execute in this runtime because miniflare was removed during AI Studio migration."
+  ],
   "stages": [
     {
       "order": 1,
@@ -397,6 +400,34 @@
         "previousManualDialogChecks": 89
       },
       "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 28,
+      "id": "planning-ux-suite",
+      "title": "تحسينات تجربة التخطيط: القوائم المطوية، البحث الشامل، صندوق الإجراءات، تعيين المسؤول وتسليم المناوبة، الإنشاء المجمع ومخطط Gantt والطباعة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "lib/planning-ux.test.ts (5/5), tests/ux-planning-security.integration.mjs (24/24), eslint on 11 new modules (0 errors/warnings), npm run build:docker, 37 SQLite/Node/DOM/HTTP regression suites including selfhost/http.test.mjs (226 checks), compile_applet, and headless Chromium playwright-cli checks at 1440x900 & 390x844 (0 console errors, 0 overflow).",
+      "testFiles": [
+        "lib/planning-ux.test.ts",
+        "tests/ux-planning-security.integration.mjs",
+        "selfhost/http.test.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 29,
+      "id": "aircraft-scope-enforcement",
+      "title": "تقييد نطاق الطائرات في الصلاحيات والتفويضات (access_grant و authorization)",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "lib/aircraft-scope.test.ts (6/6), tests/aircraft-scope.integration.mjs (32 checks), regression suites (security-policy 30, task-approval-policy 204, users-management 137, quality 73, ux-planning-security 24, planning.test 36, selfhost/http 226), npm run build:docker, compile_applet, and headless Chromium playwright-cli captures (r2-scope-access-grant.png, r2-scope-authorization.png, r1-scope-mobile.png).",
+      "testFiles": [
+        "lib/aircraft-scope.ts",
+        "lib/aircraft-scope.test.ts",
+        "tests/aircraft-scope.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
     }
   ],
   "pending": [
@@ -557,7 +588,7 @@
       ]
     }
   ],
-  "nextAction": "Apply AeroPlan-Update-0.16.0.zip to the existing verified 0.15.0 source, preserving the aeroplan project and runtime files. Verify healthz and the fingerprint, then follow docs/CUSTOMER_SETUP_0_16_0_AR.md on target Windows/Docker and native browser. Real-company acceptance remains pending; next proposed software work is responsibility assignment and aircraft-scope enforcement.",
+  "nextAction": "Deploy updated build to target Windows/Docker environment and execute native browser operational signoff and real-company acceptance per CUSTOMER_SETUP_0_16_0_AR.md.",
   "checkpoints": [
     {
       "id": "recovered-source",
@@ -1026,6 +1057,43 @@
       "extractedUsers": 137,
       "extractedHttp": 226,
       "targetWindowsDockerExecuted": false
+    },
+    {
+      "id": "planning-ux-enhancements-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-19T05:18:00.000Z",
+      "evidence": "Headless Chromium playwright-cli captures + lib/planning-ux.test.ts + tests/ux-planning-security.integration.mjs",
+      "results": {
+        "eslintNewModules": "0 errors, 0 warnings (11 files)",
+        "unitTests": "5/5 passed (lib/planning-ux.test.ts)",
+        "uxSecurityAndBackupIntegration": "24/24 passed (tests/ux-planning-security.integration.mjs)",
+        "dockerProductionBuild": "passed (npm run build:docker)",
+        "sqliteNodeDomHttpRegressionSuites": "37 suites passed including selfhost/http.test.mjs (226 checks)",
+        "miniflareSuitesSkipped": [
+          "tests/advanced.integration.mjs",
+          "tests/scheduling.integration.mjs",
+          "tests/access.integration.mjs"
+        ],
+        "browserVerification": "passed in headless Chromium (1440x900 & 390x844): 0 console errors/warnings, HTTP 200 on workspace APIs, Ctrl+K global search navigation, collapsible sidebar groups, Gantt empty state, zero mobile horizontal overflow"
+      },
+      "targetWindowsDockerExecuted": false,
+      "companyAcceptanceExecuted": false
+    },
+    {
+      "id": "aircraft-scope-enforcement-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-19T06:02:00.000Z",
+      "evidence": "lib/aircraft-scope.test.ts + tests/aircraft-scope.integration.mjs + headless Chromium playwright-cli screenshots",
+      "results": {
+        "unitTests": "11/11 passed (lib/aircraft-scope.test.ts + lib/planning-ux.test.ts)",
+        "aircraftScopeIntegration": "32/32 checks passed (restricted grant persistence, read filtering, 403 out-of-scope write enforcement across data/workflow/planning/assignments/operations, model normalization matching, expired read-only scope retention, authorization.aircraftIds narrowing, and backup snapshot validation)",
+        "regressionSuitesPassed": "security-policy (30), task-approval-policy (204), users-management (137), quality (73), ux-planning-security (24), planning.test (36), selfhost/http (226)",
+        "dockerProductionBuild": "passed (npm run build:docker)",
+        "eslint": "lib/aircraft-scope.ts clean (0 errors, 0 warnings); zero new lint issues introduced in modified routes/components",
+        "browserVerification": "passed in headless Chromium (1440x900 & 390x844): 0 console errors/warnings, HTTP 200 on control/planning/workspace APIs, verified restricted scope fields in access_grant modal (Settings -> Team) and optional aircraftIds field in authorization modal (Maintenance Resources)"
+      },
+      "targetWindowsDockerExecuted": false,
+      "companyAcceptanceExecuted": false
     }
   ],
   "lastRecovery": {
@@ -1043,7 +1111,7 @@
     "status": "operational_acceptance_pending",
     "productScope": "Sellable aircraft-maintenance planning and records product",
     "proposedDeployment": "Independent installation per customer; shared-SaaS isolation not established",
-    "nextSoftwareMilestone": "Planning work ownership, handover and aircraft-scope authorization; not implemented in 0.16.0",
+    "nextSoftwareMilestone": "Target Windows/Docker deployment, operational signoff, and company acceptance",
     "requirementsDocument": "docs/PRODUCT_READINESS_AR.md"
   }
 }
