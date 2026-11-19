@@ -1,0 +1,20 @@
+{"stage":"rejected-year-before-save","displayed":"2024-09-30","valid":false,"message":"السنة يجب أن تتكوّن من أربعة أرقام."}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: A rejected candidate must not leave a valid visible date unsavable
+
+false !== true
+
+    at eq (file:///workspace/scratch/1292ae1b8981/date-work/AeroPlan-Docker/tests/aircraft-form-save.integration.mjs:38:46)
+    at file:///workspace/scratch/1292ae1b8981/date-work/AeroPlan-Docker/tests/aircraft-form-save.integration.mjs:52:30 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

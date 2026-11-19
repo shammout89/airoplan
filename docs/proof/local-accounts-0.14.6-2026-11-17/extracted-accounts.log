@@ -1,0 +1,1 @@
+75 local-account checks passed: immediate reviewer/approver login, hashing, ownership, atomic failures/race, existing passwords/sessions/MFA/keys/aircraft/documents, old links/reset, disabled membership, MFA policy and full backup/restore.

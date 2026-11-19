@@ -1,0 +1,3 @@
+import {env} from 'cloudflare:workers';import {access,checkOrigin,failure,requirePermission} from '../../../lib/access';import {domainContext} from '../../../lib/domain';import {transitionPreview} from '../../../lib/program-transition';
+export const dynamic='force-dynamic';
+export async function POST(req:Request){try{checkOrigin(req);const a=await access();requirePermission(a,'edit_program');const raw:any=await req.json(),c=await domainContext(env.DB!,a.scope),p=await transitionPreview(env.DB!,a.scope,raw,c);return Response.json({comparison:p.comparison,affected:p.affected.map(({current,...v}:any)=>({...v,current:{date:current.date,hours:current.hours,cycles:current.cycles,baseline:current.schedule?.baseline}})),required:p.required})}catch(e){return failure(e)}}

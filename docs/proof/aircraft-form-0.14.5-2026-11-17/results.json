@@ -1,0 +1,84 @@
+{
+  "release": "0.14.5",
+  "verifiedAt": "2026-11-17T08:23:54.077629+00:00",
+  "scope": "Aircraft add/edit modal alignment and save flow; preserve all prior work",
+  "sourceFingerprint": {
+    "algorithm": "SHA-256",
+    "fingerprint": "3c1bfdc7ecdb3851fad9b3c4004a4933e2a7e7eec4148df13af9845cd870a715",
+    "sourceFiles": 271
+  },
+  "implementationBaseline": "b7761220eae2fd266c95b97120e925acdcbdddf0",
+  "cumulativePatchBase": "43e59a17f6c07d72d92cc5cc42fdd417541e61b0",
+  "beforeFix": {
+    "sourceVersion": "0.14.4",
+    "displayedDate": "2024-09-30",
+    "rejectedCandidate": "202600-09-30",
+    "nativeValidity": false,
+    "staleMessage": "السنة يجب أن تتكوّن من أربعة أرقام.",
+    "evidence": "before-fix-full-page.log"
+  },
+  "commands": [
+    {
+      "command": "npx --no-install tsc --noEmit",
+      "exitCode": 0,
+      "evidence": "typescript.log"
+    },
+    {
+      "command": "npm run build:docker",
+      "exitCode": 0,
+      "evidence": "production-build.log"
+    },
+    {
+      "command": "npm run test:docker",
+      "exitCode": 0,
+      "groups": 36,
+      "evidence": "regression.log"
+    }
+  ],
+  "checks": {
+    "mountedActualPageChecks": 43,
+    "actualDataApiWrites": 5,
+    "successfulDraftSaves": 2,
+    "successfulActivatedSave": 1,
+    "expectedRejectedServerWrites": 2,
+    "invalidVisibleDateBlockedBeforeWrite": true,
+    "dateChecks": 86,
+    "dateApiRequests": 16,
+    "popupDomChecks": 47,
+    "catalogueSyncChecks": 103,
+    "catalogueApiChecks": 99,
+    "settingsStaticChecks": 56,
+    "existingInstallUpgradeChecks": 16,
+    "productionHttpChecks": 164,
+    "baseApiChecks": 799,
+    "advancedApiChecks": 358,
+    "mfaChecks": 57
+  },
+  "uiTestDetails": {
+    "actualComponent": "app/page.tsx, including the actual modal and its submit handlers",
+    "database": "independent disposable SQLite; actual GET/POST data, settings and reference read routes",
+    "unrelatedDashboardReads": "unrelated read-only health routes return test 404; no unrelated application workflows claimed",
+    "stylesheet": "production xUKWySop.css",
+    "warnings": "none from the final full-page run",
+    "successfullyVerified": [
+      "valid retained date stays savable without requiring blur",
+      "draft and activation submit actions",
+      "all five linked dropdown choices",
+      "duplicate and incomplete activation errors visible inside modal; values retained",
+      "native invalid date explained and blocked",
+      "both submit buttons disabled during delayed write",
+      "saved rows reloaded and verified",
+      "scoped CSS alignment and label/control heights"
+    ]
+  },
+  "preservation": {
+    "unchangedPriorFiles": 472,
+    "dependencyGraph": "unchanged; previous locked installation reused",
+    "databaseAndAuthChanges": false
+  },
+  "actualBrowserPixelsOrSegmentedKeyboardChecked": false,
+  "targetWindowsDockerExecuted": false,
+  "browserLimitation": "No new browser launch in this run; previous Chromium attempt in the same environment was blocked by socket() Operation not permitted before navigation. DOM/CSS checks are not pixel acceptance.",
+  "freshNpmAudit": "not run; dependency graph unchanged and prior review restriction preserved",
+  "finalClosure": false
+}

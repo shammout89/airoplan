@@ -1,0 +1,13 @@
+{
+  "command": "npm run build:docker",
+  "exitCode": 0,
+  "runtime": "Node v24.22.1 / Linux",
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "4dfca31c9eb3497141eef61b6967a2527fdd6a587548d3fd4f27c9c14a7ce15d",
+    "sourceFiles": 196
+  },
+  "browser": "Chromium exited at startup before page open",
+  "windowsDocker": "not available in this environment",
+  "syntheticDataOnly": true
+}

@@ -1,0 +1,1 @@
+Chromium launch through Playwright was attempted. Observed: FATAL chrome/browser/process_singleton_posix.cc:297, socket() failed: Operation not permitted. Browser launch stopped before any page could be inspected. No visual or interaction pass is recorded. Docker and PowerShell executables are unavailable in this Linux validation environment.

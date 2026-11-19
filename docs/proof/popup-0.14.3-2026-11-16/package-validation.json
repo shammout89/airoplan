@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "release": "0.14.3",
+  "baselineZipSha256": "a066b7c2270f39829a707452cba7b3e6b6550f809244c29cd83f971fdcf7f271",
+  "sourceCommit": "c3f91e63b0cf90b6cee88158bd388ba13af40d9d",
+  "baselineCommit": "243ca5099804d73f62c6467d97f3b8e551a2e8cd",
+  "crcAndSafePaths": "passed for baseline/full/patch",
+  "patchPayloadHashesBytesAndFullComparison": "passed",
+  "patchFiles": 21,
+  "comboboxWrapperIncluded": true,
+  "sentinelFilesPreserved": 5,
+  "criticalAuthReferenceAndMigrationFilesUnchanged": 27,
+  "fullAndPatchedFingerprints": [
+    {
+      "algorithm": "SHA-256",
+      "fingerprint": "88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+      "sourceFiles": 269
+    },
+    {
+      "algorithm": "SHA-256",
+      "fingerprint": "88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+      "sourceFiles": 269
+    }
+  ],
+  "testedProductionBuild": {
+    "algorithm": "SHA-256",
+    "fingerprint": "88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+    "sourceFiles": 269
+  },
+  "windowsPowerShellAndDockerExecuted": false,
+  "actualBrowserPixelsChecked": false
+}

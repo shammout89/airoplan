@@ -1,0 +1,5 @@
+npx --no-install tsc --noEmit [exit 0]
+npm run build:docker [exit 0]
+npm run test:docker [exit 0]
+Existing locked node_modules reused; no dependency change or new audit.
+Native browser / target Windows-Docker not executed in this run.

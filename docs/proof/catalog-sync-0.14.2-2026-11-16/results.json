@@ -1,0 +1,46 @@
+{
+  "release": "0.14.2",
+  "checkedAt": "2026-11-16T20:13:21.585018+00:00",
+  "cumulativeBaseCommit": "5769a698998cb49dcef6179e8be94cb647177384",
+  "previousReleaseCommit": "9e04629e013959dd1947c8e5385c25bef908764b",
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "5a0164834580aa25184aebf21af685777092e40a697ab3b10ff8790a2b8c1f82",
+    "sourceFiles": 207
+  },
+  "checks": {
+    "typescript": "passed",
+    "productionBuild": "passed",
+    "regressionGroups": 33,
+    "clientSynchronizationChecks": 103,
+    "referenceApiChecks": 99,
+    "uiStaticAndStateChecks": 56,
+    "upgradePreservationChecks": 16,
+    "productionHttpChecks": 164,
+    "baseApiChecks": 799,
+    "advancedApiChecks": 358,
+    "mfaChecks": 57
+  },
+  "commands": [
+    "npx tsc --noEmit",
+    "node tests/aircraft-catalog-sync.integration.mjs",
+    "npm run build:docker",
+    "npm run test:docker"
+  ],
+  "clientTestScope": "Actual reference API routes and SQLite plus production client controller/selectors; browser events, visibility and timers simulated in Node. Not browser UI interaction.",
+  "browserUiChecksExecuted": false,
+  "browserLimitation": "Prior cloud browser could not reach this workspace local server; file protocol was disallowed. No renewed file-protocol attempt or workaround in this release.",
+  "unchanged": [
+    "authentication/runtime files",
+    "membership and server permission enforcement",
+    "reference API and database migrations",
+    "locked dependency versions"
+  ],
+  "userReportedHost": {
+    "status": "ok",
+    "version": "0.14.0",
+    "buildFingerprint": "787d193f7e2cfb239071229b03a826349c83ce86d3f39663bcc3b752530cca02",
+    "source": "User supplied /healthz output in this conversation; not a 0.14.2 deployment check."
+  },
+  "finalClosure": false
+}

@@ -1,0 +1,1 @@
+184 production HTTP checks passed (Node process): local authentication, spoof/CSRF denial, SSR/assets, four roles, independent approval, file integrity, backup/drill, disabled membership, session revocation and restart persistence.

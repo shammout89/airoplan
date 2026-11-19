@@ -1,0 +1,68 @@
+import assert from 'node:assert/strict';
+import {mkdir} from 'node:fs/promises';
+import {build} from 'esbuild';
+import React,{act} from 'react';
+import {JSDOM} from 'jsdom';
+import {fixture} from './controlled-fixture.mjs';
+
+const f=await fixture({initialPlane:false,referenceFixtures:false});
+const dom=new JSDOM('<!doctype html><html lang="ar" dir="rtl"><body><div id="root"></div></body></html>',{url:'https://test.local/',pretendToBeVisual:true});
+const win=dom.window;
+for(const name of ['window','document','navigator','HTMLElement','HTMLInputElement','HTMLButtonElement','Element','Node','NodeFilter','Text','Document','ShadowRoot','SVGElement','Event','EventTarget','MouseEvent','KeyboardEvent','FocusEvent','InputEvent','MutationObserver','AbortController','AbortSignal'])Object.defineProperty(globalThis,name,{value:name==='window'?win:name==='document'?win.document:win[name],configurable:true,writable:true});
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+win.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){},addListener(){},removeListener(){}});
+globalThis.getComputedStyle=win.getComputedStyle.bind(win);
+globalThis.fetch=async()=>Response.json({items:[]});
+globalThis.__initialDateData={name:'SYN-DATE-PLANE',manufactureDate:'2024-09-30',deliveryDate:'2024-10-01',operatorEntryDate:'2024-10-02',serviceDate:'2024-10-03',serviceHours:0,serviceCycles:0,hours:200,cycles:100,counterAsOf:'2026-01-01T10:30:00.000Z',counterSource:'SYN DATE SOURCE',counterConfirmed:true,notes:'SYN NOTES PRESERVED',fleetStatus:'in_service'};
+let submissions=0;
+globalThis.__saveDatePlane=async data=>{submissions++;await f.call('planner','data',{kind:'aircraft',data});};
+await mkdir('.sites-runtime',{recursive:true});
+await build({stdin:{contents:`import React,{useState} from 'react';import {AircraftCatalogProvider} from './app/components/AircraftCatalogProvider';import AircraftFields from './app/components/AircraftFields';export {aircraftDateInputError} from './lib/aircraft-date-input';export function Probe({locked=false}){const [data,setData]=useState(globalThis.__initialDateData);globalThis.__dateData=data;return <AircraftCatalogProvider identity="date-probe" epoch="initial"><form onSubmit={e=>{e.preventDefault();void globalThis.__saveDatePlane(data)}}><AircraftFields data={data} onChange={setData} previous={locked?{...data,counterSnapshot:{}}:undefined} baselineLocked={locked} readOnlyCounters={locked}/><button type="submit">حفظ اختبار التواريخ</button></form></AircraftCatalogProvider>}`,loader:'tsx',resolveDir:process.cwd()},outfile:'.sites-runtime/aircraft-date-dom-probe.mjs',bundle:true,platform:'node',format:'esm',external:['react','react-dom'],jsx:'automatic',banner:{js:"import {createRequire} from 'node:module';const require=createRequire(import.meta.url);"}});
+const {Probe,aircraftDateInputError}=await import('../.sites-runtime/aircraft-date-dom-probe.mjs');
+const {createRoot}=await import('react-dom/client');
+const {getByLabelText,getByRole,fireEvent}=await import('@testing-library/dom');
+const {default:userEvent}=await import('@testing-library/user-event');
+const user=userEvent.setup({document:win.document,delay:null}),root=createRoot(win.document.getElementById('root'));
+let checks=0;const eq=(actual,expected,message)=>{assert.deepEqual(actual,expected,message);checks++};
+const input=label=>getByLabelText(win.document.body,label,{exact:true});
+const change=async(element,value)=>{await act(async()=>{fireEvent.change(element,{target:{value}})})};
+const paste=async(element,text)=>{await act(async()=>{fireEvent.paste(element,{clipboardData:{getData:()=>text}})})};
+try{
+ for(const value of ['', '1900-01-01','2000-02-29','2024-02-29','2026-09-30'])eq(aircraftDateInputError(value),'');
+ for(const value of ['202600-09-31','2026-09-31','2026-04-31','2025-02-29','1900-02-29','1899-12-31','0000-01-01','2026-9-3','2999-01-01'])eq(!!aircraftDateInputError(value),true);
+ for(const value of ['2026-01-01T24:00','2026-01-01T23:60','2026-09-31T10:30','202600-09-30T10:30'])eq(!!aircraftDateInputError(value,true),true);
+ eq(aircraftDateInputError('2024-02-29T23:59',true),'');
+ await act(async()=>{root.render(React.createElement(Probe))});
+ const labels=[['manufactureDate','تاريخ التصنيع'],['deliveryDate','تاريخ التسليم الأول'],['operatorEntryDate','تاريخ الانضمام للمشغّل'],['serviceDate','تاريخ بدء الخدمة — مرجع الفحص الأول']];
+ const manufacture=input(labels[0][1]);
+ await change(manufacture,'202600-09-30');
+ console.log(JSON.stringify({attempt:'202600-09-30',displayed:manufacture.value,parentValue:globalThis.__dateData.manufactureDate}));
+ eq(globalThis.__dateData.manufactureDate,'2024-09-30','An overlong manually entered year must not replace the aircraft date');
+ eq(manufacture.value,'2024-09-30');
+ for(const [key,label] of labels){
+  const field=input(label),before=globalThis.__dateData[key];eq(field.type,'date');eq(field.min,'1900-01-01');
+  await paste(field,'202600-09-31');eq(globalThis.__dateData[key],before);eq(field.value,before);
+  await paste(field,'2026-09-31');eq(globalThis.__dateData[key],before);eq(field.value,before);
+  await paste(field,'2025-02-29');eq(globalThis.__dateData[key],before);
+  await change(field,'2024-02-29');eq(field.value,'2024-02-29');eq(globalThis.__dateData[key],'2024-02-29');eq(field.checkValidity(),true);
+ }
+ const counter=input(/مرجع الرصيد الافتتاحي — التاريخ والوقت UTC/);
+ const timestamp=globalThis.__dateData.counterAsOf;
+ await change(counter,'202600-09-30T10:30');eq(globalThis.__dateData.counterAsOf,timestamp);eq(counter.value,'2026-01-01T10:30');
+ await paste(counter,'2026-09-31T10:30');eq(globalThis.__dateData.counterAsOf,timestamp);
+ await change(counter,'2999-01-01T10:30');eq(counter.checkValidity(),false);eq(globalThis.__dateData.counterAsOf,timestamp);
+ await change(counter,'2024-02-29T23:45');eq(globalThis.__dateData.counterAsOf,'2024-02-29T23:45:00.000Z');eq(counter.value,'2024-02-29T23:45');
+ await change(manufacture,'2999-01-01');eq(manufacture.checkValidity(),false);eq(globalThis.__dateData.manufactureDate,'2024-02-29');
+ await act(async()=>{await user.click(getByRole(win.document.body,'button',{name:'حفظ اختبار التواريخ'}))});eq(submissions,0,'An invalid visible date must block form submission');
+ await change(manufacture,'2024-02-29');eq(manufacture.checkValidity(),true);
+ await change(counter,'2026-01-01T10:30');
+ await change(input('تاريخ التسليم الأول'),'');eq(globalThis.__dateData.deliveryDate,'');
+ eq(globalThis.__dateData.hours,200);eq(globalThis.__dateData.cycles,100);eq(globalThis.__dateData.notes,'SYN NOTES PRESERVED');eq(globalThis.__dateData.counterSource,'SYN DATE SOURCE');eq(globalThis.__dateData.counterConfirmed,false);
+ await act(async()=>{await user.click(getByRole(win.document.body,'button',{name:'حفظ اختبار التواريخ'}))});eq(submissions,1);
+ const stored=JSON.parse((await f.db.prepare("SELECT data FROM records WHERE kind='aircraft'").first()).data);eq(stored.manufactureDate,'2024-02-29');eq(stored.counterAsOf,'2026-01-01T10:30:00.000Z');eq(stored.notes,'SYN NOTES PRESERVED');
+ for(const [key] of labels)for(const value of ['202600-09-31','2026-09-31','2025-02-29'])await f.call('planner','data',{kind:'aircraft',data:{name:'SYN-INVALID-DATE',[key]:value}},400);
+ for(const value of ['202600-09-30T10:30:00.000Z','2026-09-31T10:30:00.000Z','+202600-09-30T10:30:00.000Z'])await f.call('planner','data',{kind:'aircraft',data:{name:'SYN-INVALID-UTC',counterAsOf:value}},400);
+ await act(async()=>{root.render(React.createElement(Probe,{locked:true}))});eq(input('تاريخ بدء الخدمة — مرجع الفحص الأول').readOnly,true);eq(input(/مرجع الرصيد الافتتاحي — التاريخ والوقت UTC/).readOnly,true);
+ const lockedService=globalThis.__dateData.serviceDate,lockedCounter=globalThis.__dateData.counterAsOf;await change(input('تاريخ بدء الخدمة — مرجع الفحص الأول'),'2024-03-01');await change(input(/مرجع الرصيد الافتتاحي — التاريخ والوقت UTC/),'2026-01-02T10:30');eq(globalThis.__dateData.serviceDate,lockedService);eq(globalThis.__dateData.counterAsOf,lockedCounter);
+ console.log(`${checks} aircraft date DOM/API checks plus ${f.checks} real API requests passed: overlong years and impossible pasted dates rejected without rollover; native date controls, leap day, UTC, clear, read-only locks, submit blocking and saved aircraft/non-date values preserved. DOM simulation; no browser pixel or segmented-keyboard claim.`);
+}finally{await act(async()=>root.unmount());dom.window.close();await f.cleanup()}

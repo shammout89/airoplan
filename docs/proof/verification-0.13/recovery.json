@@ -1,0 +1,31 @@
+{
+  "release": "0.13.0",
+  "generatedAt": "2026-11-16T08:43:00.699Z",
+  "runtime": "v24.22.1",
+  "platform": "linux",
+  "fixtures": {
+    "aircraft": 120,
+    "tasks": 10000,
+    "flights": 5000,
+    "signedAuditEvents": 15004,
+    "objects": 200,
+    "objectBytes": 65536,
+    "totalObjectBytes": 13107200
+  },
+  "archiveBytes": 16375150,
+  "backupAndVerificationMs": 7887,
+  "restoreAndValidationMs": 3793,
+  "restoreThroughMaintenanceGatewayMs": 14802,
+  "observedSnapshotLagMs": 7889,
+  "verification": {
+    "recordCounts": true,
+    "privateObjectBytes": true,
+    "signatureChain": true,
+    "mfaKeyContinuity": true,
+    "oldSessionsRevoked": true,
+    "recoveryCodesRevoked": true,
+    "postSnapshotEventExcluded": true,
+    "maintenanceGatePreserved": true
+  },
+  "limits": "Isolated local filesystem drill on Linux; encrypted archive and validated restore plus maintenance-mode startup. Same host temporary destination; not off-host availability, an agreed RPO/RTO, Windows/Docker validation or company operational release."
+}

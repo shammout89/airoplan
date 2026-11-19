@@ -1,0 +1,29 @@
+import {normalizeSchedulePolicy} from './scheduling';
+import type {SchedulePolicy} from './scheduling';
+export type Limit={hours:number|null,cycles:number|null,calendar:number|null,unit:'days'|'months'};
+export type Definition={code:string,title:string,ata:string,reference:string,aircraftIds:string[],allAircraft:boolean,first:Limit,repeat:Limit,notes:string,targetType?:'component'|'engine'|'apu',partNumbers?:string[],requiredWorkCard?:boolean,schedulePolicy?:SchedulePolicy,scheduleEvidence?:any[]};
+export type Program={code:string,name:string,revision:string,sourceReference:string,sourceRevision:string,effectiveDate:string,approvalReference:string,aircraftIds:string[],tasks:Definition[],notes:string};
+function text(v:unknown,label:string,max:number,required=false){if(typeof v!=='string'||v.trim().length>max||(required&&!v.trim()))throw Error('تحقق من '+label);return v.trim()}
+export function validDate(v:string){try{return /^\d{4}-\d{2}-\d{2}$/.test(v)&&Number(v.slice(0,4))>=1900&&new Date(v+'T00:00:00Z').toISOString().slice(0,10)===v}catch{return false}}
+function limits(raw:any,label:string):Limit{if(!raw||!['days','months'].includes(raw.unit))throw Error('حدد وحدة التقويم: '+label);const result:any={unit:raw.unit};for(const key of ['hours','cycles','calendar']){const v=raw[key];if(v===''||v===null||v===undefined){result[key]=null;continue}if((typeof v!=='number'&&typeof v!=='string')||String(v).trim()===''||!Number.isFinite(Number(v))||Number(v)<0||(key!=='hours'&&!Number.isInteger(Number(v))))throw Error('قيمة غير صحيحة: '+label);result[key]=Number(v)}return result}
+function ids(raw:any,allowed:Set<string>,label:string,required=false):string[]{if(!Array.isArray(raw)||raw.length>500||raw.some(x=>typeof x!=='string'||!allowed.has(x))||(required&&!raw.length))throw Error('حدد طائرات صالحة: '+label);return [...new Set(raw)].sort()}
+export function normalizeProgram(raw:any,aircraftIds:string[]):Program{
+ if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('بيانات البرنامج غير صالحة');
+ const code=text(raw.code,'رمز البرنامج',40,true).toUpperCase(),revision=text(raw.revision,'الإصدار',40,true).toUpperCase();
+ const applicable=ids(raw.aircraftIds,new Set(aircraftIds),'البرنامج',true);
+ if(!Array.isArray(raw.tasks)||!raw.tasks.length||raw.tasks.length>10000)throw Error('أضف من مهمة واحدة إلى 10000 مهمة لكل إصدار');
+ const seen=new Set<string>();const tasks=raw.tasks.map((t:any)=>{const taskCode=text(t.code,'رمز المهمة',50,true).toUpperCase();if(seen.has(taskCode))throw Error('رمز المهمة مكرر: '+taskCode);seen.add(taskCode);const first=limits(t.first,'الفحص الأول'),repeat=limits(t.repeat,'التكرار');
+ if(first.hours===null&&first.cycles===null&&first.calendar===null)throw Error('حدد حدًا أوليًا واحدًا على الأقل للمهمة '+taskCode);
+ for(const k of ['hours','cycles','calendar'] as const){if(repeat[k]!==null&&(repeat[k]!<=0||first[k]===null))throw Error('التكرار يجب أن يكون موجبًا وله حد أولي من النوع نفسه: '+taskCode)}
+ const targetType=t.targetType||'aircraft';if(!['aircraft','component','engine','apu'].includes(targetType))throw Error('نوع أصل المهمة غير صحيح');const partNumbers=t.partNumbers||[];if(!Array.isArray(partNumbers)||partNumbers.length>100||new Set(partNumbers).size!==partNumbers.length||partNumbers.some((n:any)=>typeof n!=='string'||!n.trim()||n.length>100))throw Error('قائمة أرقام القطع غير صالحة');
+ const allAircraft=typeof t.allAircraft==='boolean'?t.allAircraft:!t.aircraftIds?.length;const taskIds=ids(t.aircraftIds,new Set(applicable),'انطباق المهمة',!allAircraft);
+ const schedulePolicy=normalizeSchedulePolicy(t.schedulePolicy);if(schedulePolicy)for(const rule of [first,repeat])if(rule.hours!==null&&rule.hours!==Math.round(rule.hours*1e6)/1e6)throw Error('دقة فواصل الساعات المدعومة ست منازل عشرية');if(schedulePolicy?.variation.enabled){for(const [key,cap] of [['hours','hours'],['cycles','cycles'],['calendar','days']] as const)if(schedulePolicy.variation[cap]>0&&first[key]===null)throw Error('تسامح لمحور بلا استحقاق: '+taskCode)}
+ return {...(t.requiredWorkCard===true?{requiredWorkCard:true}:{}),...(targetType!=='aircraft'?{targetType,partNumbers:partNumbers.map((n:string)=>n.trim().toUpperCase()).sort()}:{}),...(schedulePolicy?{schedulePolicy}:{}),code:taskCode,title:text(t.title,'اسم المهمة',300,true),ata:text(t.ata||'','ATA',30),reference:text(t.reference,'مرجع المهمة',200,true),aircraftIds:allAircraft?[]:taskIds,allAircraft,first,repeat,notes:text(t.notes||'','ملاحظات المهمة',2000)};});
+ const effectiveDate=text(raw.effectiveDate,'تاريخ السريان',10,true);if(!validDate(effectiveDate))throw Error('تاريخ السريان غير صحيح');
+ return {code,name:text(raw.name,'اسم البرنامج',200,true),revision,sourceReference:text(raw.sourceReference,'المستند المصدر',200,true),sourceRevision:text(raw.sourceRevision,'إصدار المصدر',80,true),effectiveDate,approvalReference:text(raw.approvalReference||'','مرجع الموافقة',200),aircraftIds:applicable,tasks,notes:text(raw.notes||'','ملاحظات البرنامج',4000)};
+}
+export function applies(program:Program,task:Definition,aircraftId:string){return (!task.targetType)&&program.aircraftIds.includes(aircraftId)&&(task.allAircraft||task.aircraftIds.includes(aircraftId))}
+const departmentDateFormatter=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Amman',year:'numeric',month:'2-digit',day:'2-digit'});
+export function programToday(){return departmentDateFormatter.format(new Date())}
+export const programStateLabels:Record<string,string>={draft:'مسودة',submitted:'بانتظار المراجعة',reviewed:'بانتظار الاعتماد',approved:'معتمد داخليًا',superseded:'إصدار سابق'};
+export function describeLimit(l:Limit){const values=[];if(l.hours!==null)values.push(`${l.hours} FH`);if(l.cycles!==null)values.push(`${l.cycles} FC`);if(l.calendar!==null)values.push(`${l.calendar} ${l.unit==='months'?'شهر':'يوم'}`);return values.join(' / ')||'مرة واحدة — دون تكرار'}

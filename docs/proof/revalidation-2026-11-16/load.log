@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> site-creator-vinext-starter@0.13.0 benchmark:docker
+> node tests/load.mjs outputs/current-verification/load.json
+
+{"release":"0.13.0","generatedAt":"2026-11-16T10:43:14.468Z","runtime":"v24.22.1","platform":"linux","fixtures":{"aircraft":120,"tasks":10000,"flights":5000},"concurrency":5,"requests":40,"errors":0,"elapsedMs":1264,"requestsPerSecond":31.64,"p50Ms":126,"p95Ms":275,"maxResponseBytes":159976,"rssBytes":241639424,"verification":{"completeGlobalCounts":true,"taskPageLimit":50,"distinctPages":true,"referenceSearch":true,"flightPageLimit":100},"limits":"Synthetic local Node/SQLite measurements; rerun on the company Windows/Docker host with representative data. Not a certificate of production capacity."}

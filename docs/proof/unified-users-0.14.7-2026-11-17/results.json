@@ -1,0 +1,72 @@
+{
+  "release": "0.14.7",
+  "verifiedAt": "2026-11-17T19:07:04.159955+03:00",
+  "runtime": "Node v24.22.1 / Linux / SQLite",
+  "importedBaseline": {
+    "release": "0.14.6",
+    "archiveSha256": "2bd030180335095956e73eec773041a921a9f824b9c411e38fa8a8ffaf24b07d",
+    "localImportCommit": "63a9a350420fda180e886209c30b5d56fa115af1"
+  },
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "fbdaf02c20067aaf0fcb4bd4bf0f8b4be678e88db3b982e66294ee20189fc533",
+    "sourceFiles": 273
+  },
+  "commands": [
+    {
+      "command": "npm ci --no-audit --no-fund --prefer-offline --fetch-retries=0 --fetch-timeout=20000",
+      "exitCode": 0,
+      "lockedPackagesInstalled": 739
+    },
+    {
+      "command": "node node_modules/typescript/bin/tsc --noEmit",
+      "exitCode": 0,
+      "log": "typescript.log"
+    },
+    {
+      "command": "npm run build:docker",
+      "exitCode": 0,
+      "log": "build.log"
+    },
+    {
+      "command": "node selfhost/test.mjs",
+      "exitCode": 0,
+      "groups": 38,
+      "log": "regression.log"
+    }
+  ],
+  "checks": {
+    "unifiedUsers": 137,
+    "priorAccounts": 75,
+    "productionHTTP": 184,
+    "mfa": 57,
+    "signedAudit": 21,
+    "fullEncryptedBackup": 35
+  },
+  "actualUpgrade": "Original 0.14.6 LocalAuth source initializes the test database, identities, passwords, sessions, MFA and pending links. Current code then operates on the same schema and data. Only the test fixture MFA import path is relocated.",
+  "browser": {
+    "attempted": true,
+    "pagesOpened": 0,
+    "status": "launch_failed",
+    "observed": "Chromium closed during Playwright launch before the first page could open. Mounted React DOM/native form constraints and production CSS were tested; these are not browser pixels."
+  },
+  "windowsDocker": {
+    "executed": false,
+    "dockerAvailable": false,
+    "powershellAvailable": false
+  },
+  "companyAcceptance": false,
+  "newAuditPerformed": false,
+  "notes": [
+    "Counts overlap and must not be summed as unique tests.",
+    "The signed-audit suite intentionally injects a checkpoint failure; its expected warning is followed by 21 passed checks.",
+    "No schema migrations or dependency-version changes; package and root lock version only."
+  ],
+  "packageRehearsal": {
+    "status": "passed",
+    "sequenceExitCode": 0,
+    "protectedSamples": 12,
+    "sourceFingerprint": "fbdaf02c20067aaf0fcb4bd4bf0f8b4be678e88db3b982e66294ee20189fc533",
+    "proof": "package-rehearsal.json"
+  }
+}

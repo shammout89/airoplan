@@ -1,0 +1,6 @@
+const logFactorials=[0];
+function logFactorial(n:number){for(let i=logFactorials.length;i<=n;i++)logFactorials.push(logFactorials[i-1]+Math.log(i));return logFactorials[n]}
+// Integer Poisson CDF, summed from its mode to avoid underflow in the tails.
+export function poissonCDF(k:number,lambda:number){if(lambda===0)return 1;const mode=Math.min(k,Math.floor(lambda)),initial=Math.exp(-lambda+mode*Math.log(lambda)-logFactorial(mode));let total=initial,term=initial;for(let j=mode;j>0;j--){term*=j/lambda;total+=term;if(term<total*1e-15)break}term=initial;for(let j=mode+1;j<=k;j++){term*=lambda/j;total+=term;if(j>lambda&&term<total*1e-15)break}return Math.max(0,Math.min(1,total))}
+function invert(k:number,target:number){let low=0,high=Math.max(1,k+10*Math.sqrt(k+1)+100);while(poissonCDF(k,high)>target)high*=2;for(let i=0;i<64;i++){const mid=(low+high)/2;if(poissonCDF(k,mid)>target)low=mid;else high=mid}return (low+high)/2}
+export function poissonInterval(count:number,exposure:number){if(!Number.isInteger(count)||count<0||count>1e6||!Number.isFinite(exposure)||exposure<0)throw Error('عدد أحداث أو تعرض غير صالح');if(exposure===0)return {rate:null,lower:null,upper:null,confidence:0.95};return {rate:count/exposure*1000,lower:count?invert(count-1,0.975)/exposure*1000:0,upper:invert(count,0.025)/exposure*1000,confidence:0.95}}

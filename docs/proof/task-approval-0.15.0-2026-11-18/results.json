@@ -1,0 +1,89 @@
+{
+  "release": "0.15.0",
+  "verifiedAt": "2026-11-18T07:44:54.223011+00:00",
+  "displayTimeZone": "Asia/Amman",
+  "runtime": "v24.22.3 / Linux / SQLite",
+  "sourceFingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+  "sourceFiles": 278,
+  "typescript": {
+    "command": "./node_modules/.bin/tsc --noEmit",
+    "exitCode": 0
+  },
+  "productionBuild": {
+    "command": "npm run build:docker",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "npm run test:docker",
+    "exitCode": 0,
+    "groups": 41,
+    "taskPolicyAssertions": 204,
+    "taskPolicyUiAssertions": 70,
+    "taskPolicyUiPosts": 6,
+    "productionHttpChecks": 219,
+    "manualDialogAssertions": 89,
+    "unifiedUserChecks": 137,
+    "accountsChecks": 75,
+    "mfaChecks": 57
+  },
+  "scenarios": [
+    "owner-only policy changes and optimistic concurrency",
+    "frozen policy for drafts, submitted, reviewed and historical requests",
+    "two-person combined review and independent approval",
+    "three-person independent review and approval",
+    "technical classification and sticky escalation; only dedicated administrative note is routine",
+    "all editors and submitters excluded even after role promotion",
+    "reviewer promotion cannot permit signing their own review",
+    "missing/false review confirmations and short notes rejected",
+    "stale task and displayed aircraft versions rejected",
+    "membership/delegation revoked between authorization and commit",
+    "concurrent approvals produce one decision and one event",
+    "new/changed evidence between validation and commit rejected",
+    "required and optional published evidence frozen",
+    "append-only event sequence survives semantic restore",
+    "old v11 backup validates and stages",
+    "v12 semantic restore and resumption with frozen policy and protected current settings",
+    "encrypted full backup/restore preserves settings, history, accounts and successful login",
+    "imports freeze trusted policy at commit and discard forged metadata",
+    "automatic initialization/recurrence/opening preserve independent provenance",
+    "accomplishment review/approval/closure remains independent",
+    "UI owner/read-only forms, CAS errors, confirmation controls, keyboard/scroll and fixed footer",
+    "existing aircraft dates/catalogues/forms/users/auth/recovery regressions"
+  ],
+  "databaseMigrationsAdded": 0,
+  "dependencyVersionsChanged": false,
+  "nativeBrowser": {
+    "status": "blocked_before_page_open",
+    "browser": "Chromium 156.0.8078.79",
+    "reason": "process_singleton_posix.cc: socket() failed: Operation not permitted",
+    "pixelVerificationPassed": false
+  },
+  "dockerContainerBuiltOrRunHere": false,
+  "targetWindowsDockerUpdated": false,
+  "realCompanyAcceptancePassed": false,
+  "packageRehearsal": {
+    "status": "passed",
+    "compatibleSourceVersions": [
+      "0.14.6",
+      "0.14.7",
+      "0.14.8"
+    ],
+    "protectedSentinelsPerSource": 12,
+    "safePathsAndNoSymlinksAndCrcAndPerFileHashes": "passed",
+    "allNonRuntimeFilesMatchFullSource": true,
+    "sameTestedRuntimeFingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+    "extractedChecks": {
+      "sourceBaseline": "0.14.6",
+      "typescriptExitCode": 0,
+      "productionBuildExitCode": 0,
+      "taskPolicyAssertions": 204,
+      "taskUiAssertions": 70,
+      "taskUiPosts": 6,
+      "unifiedUserAssertions": 137,
+      "manualDialogAssertions": 89,
+      "productionHttpAssertions": 219,
+      "productionSourceFingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff"
+    },
+    "evidence": "package-rehearsal.json"
+  }
+}

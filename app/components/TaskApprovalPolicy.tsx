@@ -1,0 +1,26 @@
+'use client';
+import {useEffect,useState} from 'react';
+import {apiFetch} from '../client-fetch';
+import {approvalModes} from '../../lib/task-approval';
+import {roleLabels} from '../../lib/permissions';
+
+export default function TaskApprovalPolicy(){
+ const [view,setView]=useState<any>(null),[form,setForm]=useState<any>(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[message,setMessage]=useState('');
+ async function load(){setError('');try{const r=await apiFetch('/api/task-approval-policy'),j:any=await r.json();if(!r.ok)throw Error(j.error);setView(j);setForm({...j.current.data,changeReason:j.canEdit?'':j.current.data.changeReason,combinedAcknowledged:j.canEdit?false:j.current.data.combinedAcknowledged});}catch(e:any){setError(e.message)}}
+ useEffect(()=>{load()},[]);
+ const change=(key:string,value:any)=>{setForm((old:any)=>({...old,[key]:value}));setMessage('')};
+ async function save(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');setMessage('');try{const r=await apiFetch('/api/task-approval-policy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({previousId:view.current.id,data:form})}),j:any=await r.json();if(!r.ok)throw Error(j.error);await load();setMessage('حُفظ إصدار جديد. الطلبات المحفوظة والجارية تحتفظ بسياستها السابقة.');}catch(e:any){setError(e.message)}finally{setBusy(false)}}
+ const roles=(key:string,choices:string[])=><div className="checksrow">{choices.map(role=><label className="check" key={role}><input type="checkbox" checked={form[key].includes(role)} onChange={e=>change(key,e.target.checked?[...form[key],role]:form[key].filter((r:string)=>r!==role))}/>{roleLabels[role]}</label>)}</div>;
+ return <div className="modulegrid task-policy-settings"><section className="panel modulepanel"><h2>سياسة اعتماد خطة الصيانة</h2><p>المالك يحدد المسار، والخادم يطبّقه على كل طلب. تغيير السياسة لا يعيد كتابة الطلبات الجارية أو الموافقات السابقة.</p>
+ {error&&<p className="error" role="alert">{error} <button className="secondary" disabled={busy} onClick={load}>إعادة تحميل السياسة</button></p>}{message&&<p className="notice" role="status">{message}</p>}
+ {!form?<p role="status">جارٍ تحميل السياسة…</p>:<><p>الإصدار الحالي: <code>{view.current.id}</code>{view.current.created&&<> · {new Date(view.current.created).toLocaleString('ar-JO',{timeZone:'Asia/Amman'})}</>}</p>{!view.canEdit&&<p className="notice">عرض فقط. تعديل السياسة متاح لمالك النظام.</p>}
+ <form onSubmit={save}><fieldset disabled={!view.canEdit||busy}><div className="formgrid">{[['routineMode','التعديلات الإدارية'],['technicalMode','الإنشاء والتعديلات الفنية']].map(([key,label])=><label key={key}>{label}<select value={form[key]} onChange={e=>change(key,e.target.value)}>{Object.entries(approvalModes).map(([value,title])=><option value={value} key={value}>{title}</option>)}</select></label>)}</div>
+ <p className="hint">الإداري: الملاحظة الإدارية فقط بعد اعتماد سابق. الفني: إنشاء مهمة، أو تغيير اسم المهمة أو الطائرة أو المرجع أو الحدود أو البرنامج أو الحقول المخصصة. التغيير الفني يبقى فنيًا خلال دورة الطلب.</p>
+ <h3>أدوار المراجعة الفنية في مسار الثلاثة أشخاص</h3>{roles('reviewerRoles',['admin','reviewer'])}<h3>أدوار الاعتماد في كلا المسارين</h3>{roles('approverRoles',['admin','approver'])}
+ <label className="check"><input type="checkbox" checked={form.requireDocument} onChange={e=>change('requireDocument',e.target.checked)}/>إلزام مستند منشور مرتبط بالمهمة، مع تثبيت إصداره عند الإرسال</label>
+ <div className="formgrid"><label>مرجع إجراء الشركة<input required minLength={3} maxLength={200} value={form.procedureReference} onChange={e=>change('procedureReference',e.target.value)}/></label><label>سبب تغيير السياسة<textarea required minLength={10} maxLength={1000} value={form.changeReason} onChange={e=>change('changeReason',e.target.value)}/></label></div>
+ {[form.routineMode,form.technicalMode].includes('two_person')&&<label className="check notice"><input type="checkbox" required checked={form.combinedAcknowledged} onChange={e=>change('combinedAcknowledged',e.target.checked)}/>أؤكد أن إجراء الشركة يسمح بمسار الشخصين، وأن المعتمد المستقل مسؤول عن المراجعة الفنية والاعتماد مع تسجيل نتيجة المراجعة.</label>}
+ {view.canEdit&&<button className="primary" disabled={busy}>{busy?'جارٍ الحفظ…':'حفظ إصدار السياسة'}</button>}</fieldset></form>
+ <p className="hint">الأدوار وحالة الحساب تُدار من «المستخدمون والصلاحيات». تغيير الدور أو تعطيل الحساب يطبق على الإجراءات التالية فورًا. هذه السياسة تخص اعتماد التخطيط؛ اعتماد الإنجاز والإغلاق يحتفظ بمساره المستقل.</p></>}
+ </section>{view&&<section className="panel modulepanel"><h3>سجل إصدارات السياسة</h3>{!view.history.length&&<p>السياسة الافتراضية: ثلاثة أشخاص مستقلين.</p>}{view.history.map((h:any)=><details key={h.id}><summary>{new Date(h.created).toLocaleString('ar-JO',{timeZone:'Asia/Amman'})} · {h.created_by} · <code>{h.id}</code></summary><p>إداري: {approvalModes[(h.data.routineMode||'three_person') as keyof typeof approvalModes]}<br/>فني: {approvalModes[(h.data.technicalMode||'three_person') as keyof typeof approvalModes]}</p><p>{h.data.procedureReference} · {h.data.changeReason||'سياسة سابقة محفوظة'}</p><p>الإصدار السابق: <code>{h.previous_id||'الافتراضي'}</code></p></details>)}</section>}</div>;
+}

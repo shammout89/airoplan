@@ -1,0 +1,24 @@
+{
+  "baseRelease": "0.14.0",
+  "patchRelease": "0.14.2",
+  "baseZipSha256": "7ea911e8f1d15e5d29caca71f379623f9dda1d103df97040beb23662bc27f48d",
+  "sourceCommit": "b94686ae4eacc0a51960f6eb9c5f556777a14fe2",
+  "patchFiles": 34,
+  "crc": "passed",
+  "pathsAndFileHashes": "passed",
+  "fullAndPatchPayloads": "matched",
+  "protectedSentinelsPreserved": [
+    "compose.yaml",
+    ".env",
+    "data/keep.txt",
+    "secrets/keep.txt",
+    "compose.services.yaml"
+  ],
+  "authenticationAndServerPermissions": "unchanged from original 0.14.0",
+  "browserUiChecksExecuted": false,
+  "sourceFingerprintMatchesTestedBuild": "5a0164834580aa25184aebf21af685777092e40a697ab3b10ff8790a2b8c1f82",
+  "sourceParts": [
+    "full",
+    "patched"
+  ]
+}

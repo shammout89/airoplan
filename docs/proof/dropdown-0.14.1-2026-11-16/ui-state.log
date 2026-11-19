@@ -1,0 +1,1 @@
+56 settings UI/state checks passed: one administrative entry, permission-scoped hub/cards, five accessible searchable fields and red required markers, parent-child clearing, retained selections and unchanged counters. Static SSR/state tests; no browser-interaction claim.

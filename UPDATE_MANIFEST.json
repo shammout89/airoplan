@@ -1,0 +1,469 @@
+{
+  "release": "0.15.0",
+  "sourceCommit": "7aaa74448f033ace90efce50a79440532b9d0713",
+  "compatibleSourceVersions": [
+    "0.14.6",
+    "0.14.7",
+    "0.14.8"
+  ],
+  "baseArchives": [
+    {
+      "release": "0.14.6",
+      "sha256": "2bd030180335095956e73eec773041a921a9f824b9c411e38fa8a8ffaf24b07d"
+    },
+    {
+      "release": "0.14.7",
+      "sha256": "37f7df4a4138bf652dc48cbd8c4678c186a297f4cd5cb7d93199cc26e3c23842"
+    },
+    {
+      "release": "0.14.8",
+      "sha256": "f34373c70e14f2a56cd415d7522082db5301373aca7b6ac5cc7008174e9e6440"
+    }
+  ],
+  "files": [
+    {
+      "path": "DOCKER_AR.md",
+      "sha256": "95f2fa6d2b0e11fd4d02a368409d229ff24aa97bdc6f3b5aaa9d33c0150be35e",
+      "bytes": 11045
+    },
+    {
+      "path": "README.md",
+      "sha256": "38b9bd707f9d1884cbc2a8fd1ae178d9c43584e6eb0c13221b0eb986e4363204",
+      "bytes": 1947
+    },
+    {
+      "path": "app/api/data/route.ts",
+      "sha256": "d73766b52a79f1a8213b43d4f83d9b9df4b5c2b0052fbc2f108c94f486d8d13a",
+      "bytes": 14543
+    },
+    {
+      "path": "app/api/execution/route.ts",
+      "sha256": "986a033013d4fb6a30550504778e1c043633670920cff6d6af04257426ec8a0e",
+      "bytes": 16758
+    },
+    {
+      "path": "app/api/imports/route.ts",
+      "sha256": "18aa202b25cdf29360b7615362f271b74ad4d8ed2c910b8b8e7cf0498ff52811",
+      "bytes": 6305
+    },
+    {
+      "path": "app/api/opening-status/route.ts",
+      "sha256": "91f11d93d4c99e69442f290c656e493f34c3bf9219240f44ad3f9124cf5744ac",
+      "bytes": 5097
+    },
+    {
+      "path": "app/api/settings/route.ts",
+      "sha256": "64857c88643ec7778bb01d58b1a7f02dda8772b351526e5ccc0533c54d465529",
+      "bytes": 2165
+    },
+    {
+      "path": "app/api/task-approval-policy/route.ts",
+      "sha256": "6dee29afe1efa7bcceba4eb7722454b8c048d406b909984e9afd659efbaf0bda",
+      "bytes": 4089
+    },
+    {
+      "path": "app/api/team/route.ts",
+      "sha256": "86b85407f8c18164f24b700af4a78adf5b25413b0f281e2fa7e2276f055faa45",
+      "bytes": 4993
+    },
+    {
+      "path": "app/api/workflow/route.ts",
+      "sha256": "fc9fbbe41ed796231016ab4c2abf5f0dc5bbde577d2ec77e2f6061a7dca8af10",
+      "bytes": 4478
+    },
+    {
+      "path": "app/components/Configuration.tsx",
+      "sha256": "49b414d3f27192b2c1150a6e201490736005d47ecc9016dd1c6e2bafcd812e99",
+      "bytes": 19140
+    },
+    {
+      "path": "app/components/LocalUsers.tsx",
+      "sha256": "71ccfbe577defb2de17d8b6a19b64baeb18688fc007587761c9b39de4d729a02",
+      "bytes": 10226
+    },
+    {
+      "path": "app/components/ManualExecution.tsx",
+      "sha256": "3a3ee6f9d885e2cc9989d9cd98f21baf12b1bf91d63312ff3e14f5563ae20262",
+      "bytes": 7223
+    },
+    {
+      "path": "app/components/RoleMatrix.tsx",
+      "sha256": "d5bbc351639731e6e4f5675f7eec632af4aaa0368ef6ac3fdca205ba0cf71311",
+      "bytes": 1087
+    },
+    {
+      "path": "app/components/SettingsHub.tsx",
+      "sha256": "416e46eeecefcad5089eb48231f257170b3abdfff2517b008ef72b8e4aa718f9",
+      "bytes": 2129
+    },
+    {
+      "path": "app/components/TaskApprovalDialog.tsx",
+      "sha256": "c2657c62f1be7ec7923e5cb9282598d3853174f1378c617278c5f1d49ea348df",
+      "bytes": 13169
+    },
+    {
+      "path": "app/components/TaskApprovalPolicy.tsx",
+      "sha256": "733b43acefe42af332cf97402f7ec762e420e906798559e26418d5dd6fd4d8a9",
+      "bytes": 6234
+    },
+    {
+      "path": "app/components/Team.tsx",
+      "sha256": "cdb08e55d616fb06e4f4dd7fa0da5715ea1cdd7c948b4b657df57a0964ff6d09",
+      "bytes": 4756
+    },
+    {
+      "path": "app/globals.css",
+      "sha256": "fd609ce647501cfe67697539e9d2e8c0b5617c8d6927bc21ac25d34f6061a183",
+      "bytes": 36322
+    },
+    {
+      "path": "app/page.tsx",
+      "sha256": "3797f44cc58fb67198c5422e09334a5ad043780caeb49b495f4309ac6c33e808",
+      "bytes": 37058
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PROGRESS_AR.md",
+      "sha256": "69397ba4dca83c1a1df2f7deb8f3800bdfaf14ab14d08b9c9f3a8c0db94a1fcd",
+      "bytes": 52553
+    },
+    {
+      "path": "docs/MANUAL_EXECUTION_DIALOG_0_14_8_AR.md",
+      "sha256": "bb32ba36635431e57a8ce6f08c9e15e04fedb3da186da1121afced9cac125187",
+      "bytes": 6205
+    },
+    {
+      "path": "docs/PROGRESS_STATE.json",
+      "sha256": "31a0397d9e807ed27160265b6691686a16262c0a3f6edcf7b9c34bbed5c1cca1",
+      "bytes": 40409
+    },
+    {
+      "path": "docs/TASK_APPROVAL_POLICY_0_15_0_AR.md",
+      "sha256": "835a266a0da684565ee7a423c0c577bcef27d42480b447c6bc611bba6a54ed63",
+      "bytes": 13743
+    },
+    {
+      "path": "docs/TEST_REPORT_0_14_7.md",
+      "sha256": "6f9516b2fd5ee9369a84968944382e72abd3d3f246cb79cec4fa0fed4e05a21d",
+      "bytes": 7143
+    },
+    {
+      "path": "docs/TEST_REPORT_0_14_8.md",
+      "sha256": "6e318673644db403fa782ad41a85c9e0516c5a14a21d7bcb0f085d577585d9e0",
+      "bytes": 7389
+    },
+    {
+      "path": "docs/TEST_REPORT_0_15_0_AR.md",
+      "sha256": "c321fed77104e105f6fbeb96ffcc3c265a24875b4289d0b73754c2f6f9f0bde8",
+      "bytes": 6622
+    },
+    {
+      "path": "docs/USERS_UNIFIED_0_14_7_AR.md",
+      "sha256": "1498efbe578dc062563718c990c5e4ad65e1e4bed81b0a0484fee5dd3a97d4a3",
+      "bytes": 6371
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/build.log",
+      "sha256": "1bf66e137c0a52bd36082670c6307aeadd795226b374d2168547e667563d050c",
+      "bytes": 19901
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/dialog.log",
+      "sha256": "2b14c7ba8f9cf6848c3249a9d1bbf798264f606214ddfa8a42f3e22dc391c191",
+      "bytes": 434
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/extracted-build.log",
+      "sha256": "7f6e2e9397abfaff525aad6e59118ef47fdd099f910c24e43f0c3ff207b2ab7b",
+      "bytes": 19922
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/extracted-dialog.log",
+      "sha256": "2b14c7ba8f9cf6848c3249a9d1bbf798264f606214ddfa8a42f3e22dc391c191",
+      "bytes": 434
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/extracted-http.log",
+      "sha256": "18be8915ba83bd90edc22d9ee2077947051c7aadb22570ec3a06d15b0b50aff0",
+      "bytes": 232
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/extracted-typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/extracted-users.log",
+      "sha256": "ac1d02aef0c2d4400ef2ec65d9c25e7dd497295fe5035bf491e8a05eb45d1ea7",
+      "bytes": 497
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/layout-comparison.json",
+      "sha256": "45330e5bcabb61ffa5c7cec18039da43f31bf33379dae5eb45531e4e65c10c00",
+      "bytes": 979
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/package-rehearsal.json",
+      "sha256": "7e5e0dba56e0f038985dbee934dbd17a55bfa19df7437afb2d3ef91bb04ecbef",
+      "bytes": 989
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/package-verification.py",
+      "sha256": "32742afb4dae1a395c4e9df3e79220e0ec43b8a9ad04f19b0251c00f7983f871",
+      "bytes": 6595
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/regression.log",
+      "sha256": "2337ec1cf642d6df6ba80e94ae9d69a1b38fa724815b6ca57e0731f5550e8323",
+      "bytes": 9992
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/results.json",
+      "sha256": "b61ddc97cabc325e1aad48c33f360b5de1c874bdc99c9e0cf49cf6473e656c20",
+      "bytes": 2808
+    },
+    {
+      "path": "docs/proof/manual-execution-0.14.8-2026-11-17/typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/extracted-build.log",
+      "sha256": "22f59c9b39649202c243d9af61a846cebf732ef1c2c98bbf1aade8d28484861a",
+      "bytes": 20441
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/extracted-http.log",
+      "sha256": "279840941464713e2e06fb760f62cd161d399746cf738effff861abdbb484877",
+      "bytes": 232
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/extracted-manual-dialog.log",
+      "sha256": "2b14c7ba8f9cf6848c3249a9d1bbf798264f606214ddfa8a42f3e22dc391c191",
+      "bytes": 434
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/extracted-task-policy.log",
+      "sha256": "bbe1c86413520f4ed41cb74a9980088e5238b1faacd3c276b5dc4e1e0d64152f",
+      "bytes": 331
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/extracted-task-ui.log",
+      "sha256": "a489a9f272e0154a24223bec5d7fe3a48cb459600b46c6a8fb581be76d8ea8d9",
+      "bytes": 291
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/extracted-typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/extracted-users.log",
+      "sha256": "ac1d02aef0c2d4400ef2ec65d9c25e7dd497295fe5035bf491e8a05eb45d1ea7",
+      "bytes": 497
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/package-rehearsal.json",
+      "sha256": "764176bba2b1628836ce381f7a0caeac8274f2d38c653d97028ec2ff01cbda04",
+      "bytes": 2793
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/production-build.log",
+      "sha256": "9d6eb34c3c2ab06d2e93714b0baa1ad404beeaebe44c680726ad2f394abe6446",
+      "bytes": 20420
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/regression.log",
+      "sha256": "7b291e4cfa2a2b42eed08499b00b77fd1b958a6f98368dd82a1d6d91ab1f5f98",
+      "bytes": 10789
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/results.json",
+      "sha256": "d5af7fbd4230312f228bca6630dfda565e4629c3beb8677689b01a87c7e245eb",
+      "bytes": 3657
+    },
+    {
+      "path": "docs/proof/task-approval-0.15.0-2026-11-18/typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/build.log",
+      "sha256": "d0b5d3362add5ff9293cd71f99a2c111c12cf2983c502203d44082a3b1bba6e2",
+      "bytes": 21292
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/package-build.log",
+      "sha256": "9965099afdb6d2a5fcc72e15e446f8c8b861597816c9dced08a70b8e4af0f20a",
+      "bytes": 20698
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/package-http.log",
+      "sha256": "18be8915ba83bd90edc22d9ee2077947051c7aadb22570ec3a06d15b0b50aff0",
+      "bytes": 232
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/package-rehearsal.json",
+      "sha256": "7fc6d1b8e88a4c0b50924cea6e6ec4e01c5618731899365ca426f29dcf56e4d4",
+      "bytes": 998
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/package-users.log",
+      "sha256": "ac1d02aef0c2d4400ef2ec65d9c25e7dd497295fe5035bf491e8a05eb45d1ea7",
+      "bytes": 497
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/regression.log",
+      "sha256": "536186598eda5c1b046e02591b0f16d79ab0c55891ee15880fbdfd9f12092a2d",
+      "bytes": 9558
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/results.json",
+      "sha256": "013676870e36e763000dccf6e4a40bccc68c6b8af22dcf61c45274a799d840d0",
+      "bytes": 2466
+    },
+    {
+      "path": "docs/proof/unified-users-0.14.7-2026-11-17/typescript.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "lib/access.ts",
+      "sha256": "edee9993dd396c66f17bd1306a61584bd7a4700a065335d67788957fe721ef7a",
+      "bytes": 3761
+    },
+    {
+      "path": "lib/approval-policy.ts",
+      "sha256": "8485bf4596d3aef236983ce5d3bb3950998ae99bc157a5e10c1eabeb1bfe6c5c",
+      "bytes": 4810
+    },
+    {
+      "path": "lib/backup-engine.ts",
+      "sha256": "029af9a170a58e5010939bd3f51a977b03cc836325480aed9bdcf220a9dfd9f4",
+      "bytes": 10839
+    },
+    {
+      "path": "lib/backup-format.ts",
+      "sha256": "96b4d49357cd0f94fde632622cbc7a44d08d34e2eacee11aa009121b18b222f6",
+      "bytes": 28314
+    },
+    {
+      "path": "lib/settings-navigation.ts",
+      "sha256": "001f38806a1442c7460f79049ee864c9ed165e0b3a0c18b1e7b34926922f57af",
+      "bytes": 2188
+    },
+    {
+      "path": "lib/task-approval-store.ts",
+      "sha256": "5587b52db5975370051f07082af9f46f5fd4885dea0b218ca37f89e0423f795b",
+      "bytes": 8641
+    },
+    {
+      "path": "lib/task-approval.ts",
+      "sha256": "47b54c3f2f09dfd5fc1bafbfaf91e9328416f354315736fe7d7b0fc54443b9f1",
+      "bytes": 10189
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "f8dd0f3cc8f69099e123800b2fdfa9286ab0d675d0b46e40e411e722d30d51b3",
+      "bytes": 488346
+    },
+    {
+      "path": "package.json",
+      "sha256": "3c5b75f6b99b9488baa0008403e5207dbdc060f20e739c4aca6f2198fb99df81",
+      "bytes": 2922
+    },
+    {
+      "path": "release.json",
+      "sha256": "867616dab3fc9d7a8fc9476bbf43e5a67da50c9c7a2cece6fd3de0bc58adf291",
+      "bytes": 67
+    },
+    {
+      "path": "scripts/package-source-update.mjs",
+      "sha256": "b1d287eb587cf6c1db765e95103194176f16b34a43b4ec91cec702159de392f9",
+      "bytes": 4126
+    },
+    {
+      "path": "scripts/verify-source-update.py",
+      "sha256": "1dc323ff9a5e312393bb5eb6ea39a14b10688a3cf11e5a7b891e3b5c34458c62",
+      "bytes": 6116
+    },
+    {
+      "path": "selfhost/auth.mjs",
+      "sha256": "8e14e6caf63ab0102b4807571f1459f3841de76b74e1730aa9d1fb2f0367a00e",
+      "bytes": 20258
+    },
+    {
+      "path": "selfhost/http.test.mjs",
+      "sha256": "578171f2bbe60fd04e6cc2e3540aef57cbf43b25704e224e51baf6c12299a0de",
+      "bytes": 33073
+    },
+    {
+      "path": "selfhost/runtime.mjs",
+      "sha256": "74627db4e498ad889a633a5f45a48248b56faf6bbad2c34431a52a1c9f21ef0c",
+      "bytes": 1403
+    },
+    {
+      "path": "selfhost/server.mjs",
+      "sha256": "e1ed9d65700d71d977f96f800f3b4c8798eb4461d65b77b7517f3cffdf41e995",
+      "bytes": 31217
+    },
+    {
+      "path": "selfhost/test.mjs",
+      "sha256": "b617fc94b7b0286166987a79af95dbfd79ddaf8acbfce4ad4d59a0c4f066a048",
+      "bytes": 1693
+    },
+    {
+      "path": "tests/aircraft.test.mjs",
+      "sha256": "92dd8d164a90d9acb5345ca7563f0b8882034af5ff037663006932c077617bf0",
+      "bytes": 4182
+    },
+    {
+      "path": "tests/controlled-fixture.mjs",
+      "sha256": "dff50cae145f25e572e09a16ec59dd7066e70e7242bb6ef8700b42cbb5ab4200",
+      "bytes": 6971
+    },
+    {
+      "path": "tests/fixtures/auth-0.14.6.mjs",
+      "sha256": "b19d708bde17200ba5a23853d49bfc393b35180e46e98b48b10392f9fbdebd04",
+      "bytes": 17263
+    },
+    {
+      "path": "tests/manual-execution-dialog.integration.mjs",
+      "sha256": "6ce0b6ec55a11fa137113946cf1c4bd704020fb2e8423fc9a5e7d52b8ad0d40d",
+      "bytes": 13749
+    },
+    {
+      "path": "tests/reference-fixture.mjs",
+      "sha256": "34711fb676bbf3407f980197ec9852b1eb99dc2939989e67ade777a4831a349f",
+      "bytes": 3455
+    },
+    {
+      "path": "tests/settings-ui.test.mjs",
+      "sha256": "d76ea62355bd7f75ac4bedcaabe493fd87e9512778668dd0e4db51ea77ae3427",
+      "bytes": 5323
+    },
+    {
+      "path": "tests/task-approval-policy.integration.mjs",
+      "sha256": "adf5d28e7310bd8ba349f97e2891075647089df2c75f7743600b2967a972e473",
+      "bytes": 24509
+    },
+    {
+      "path": "tests/task-approval-ui.integration.mjs",
+      "sha256": "0f8a14c57486eb1b94c8086c184ab379c1b906179fa57c9df8858e506f71e94a",
+      "bytes": 14805
+    },
+    {
+      "path": "tests/users-management.integration.mjs",
+      "sha256": "236614a25e266b76f5a90a90eb3467849c9073aa9743eae58560e1328e5bfae6",
+      "bytes": 23812
+    }
+  ],
+  "protected": [
+    "compose.yaml",
+    ".env* except .env.example",
+    "data/",
+    "secrets/",
+    "generated Compose overlays",
+    "backup policies",
+    "Start-AeroPlan-Restored.ps1"
+  ]
+}

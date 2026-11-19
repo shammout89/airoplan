@@ -1,0 +1,34 @@
+{
+  "baseline": "0.14.7",
+  "target": "0.14.8",
+  "before": {
+    "dialogDisplay": "block",
+    "dialogFlexDirection": "row",
+    "dialogOverflow": "auto",
+    "dialogMaxHeight": "691.2px",
+    "bodyPadding": "0px",
+    "bodyOverflowY": "visible",
+    "footerSeparatedFromScrollBody": false,
+    "saveInScrollBody": true,
+    "saveAssociatedWithForm": true,
+    "translatedPlanning": false,
+    "rawApprovedVisible": true
+  },
+  "after": {
+    "dialogDisplay": "flex",
+    "dialogFlexDirection": "column",
+    "dialogOverflow": "hidden",
+    "dialogMaxHeight": "736px",
+    "bodyPadding": "20px 24px",
+    "bodyOverflowY": "auto",
+    "footerSeparatedFromScrollBody": true,
+    "saveInScrollBody": false,
+    "saveAssociatedWithForm": true,
+    "translatedPlanning": true,
+    "rawApprovedVisible": false
+  },
+  "method": "Actual component SSR and production CSS in JSDOM",
+  "screenshotReportedByUser": true,
+  "browserPixelsExecuted": false,
+  "windowsDockerExecuted": false
+}

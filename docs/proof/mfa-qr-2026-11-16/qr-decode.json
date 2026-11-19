@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-11-16T13:54:57.117Z",
+  "scope": "Synthetic test fixtures only; no live user keys or codes",
+  "decoder": "jsQR 1.4.0",
+  "rasterizer": "sharp 0.35.5",
+  "checks": 60,
+  "decodedImages": 9,
+  "widths": [
+    240,
+    320,
+    640
+  ],
+  "fixtures": [
+    "ASCII email",
+    "Unicode email",
+    "Long email"
+  ],
+  "result": "passed",
+  "phoneCameraScan": "not performed",
+  "browserLayout": "Chromium exited during startup before page open"
+}

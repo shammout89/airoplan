@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "release": "0.14.4",
+  "baselineVersion": "0.14.3",
+  "baselineArchiveCommit": "9d279c9732136066ff4fee5188502992e397362e",
+  "baselineArchiveSha256": "ffeb25b3d4ff3f348db0e8ccfb910015429f808a077a9da8bc82b4b68c269abf",
+  "recoveredBaselineCommit": "43e59a17f6c07d72d92cc5cc42fdd417541e61b0",
+  "rehearsalSourceCommit": "2a5b2dd86552032f7e270691269c9c6e13bc1f5c",
+  "crcAndSafePaths": "passed",
+  "patchBytesHashesAndFullMatch": "passed",
+  "patchFiles": 22,
+  "protectedSentinelsPreserved": 5,
+  "unchangedPriorFilesCompared": 224,
+  "baselineFullAndPatchedFingerprints": [
+    {
+      "algorithm": "SHA-256",
+      "fingerprint": "88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+      "sourceFiles": 269
+    },
+    {
+      "algorithm": "SHA-256",
+      "fingerprint": "90e4b12c7eef4351131b91cef3f019e3ae3dc2cfd77265cf613ffe925b232818",
+      "sourceFiles": 271
+    },
+    {
+      "algorithm": "SHA-256",
+      "fingerprint": "90e4b12c7eef4351131b91cef3f019e3ae3dc2cfd77265cf613ffe925b232818",
+      "sourceFiles": 271
+    }
+  ],
+  "testedBuildFingerprint": {
+    "algorithm": "SHA-256",
+    "fingerprint": "90e4b12c7eef4351131b91cef3f019e3ae3dc2cfd77265cf613ffe925b232818",
+    "sourceFiles": 271
+  },
+  "targetWindowsDockerExecuted": false,
+  "actualBrowserChecked": false
+}

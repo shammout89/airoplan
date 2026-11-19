@@ -1,0 +1,18 @@
+import {verifiedFile} from '../../../lib/backup-files';
+import {env} from 'cloudflare:workers';
+import {access,checkOrigin,failure} from '../../../lib/access';
+import {AccessError} from '../../../lib/permissions';
+import {recoveryState} from '../../../lib/write-gate';
+import {captureBackup,loadBackup,stageRestore,previewRestore,applyLiveRestore} from '../../../lib/backup-engine';
+export const dynamic='force-dynamic';
+async function owner(){const a=await access();if(!a.isOwner)throw new AccessError('النسخ والاستعادة متاحان لمالك مساحة العمل فقط');return a}
+export async function GET(req:Request){try{const a=await owner(),db=env.DB!;const url=new URL(req.url),id=url.searchParams.get('backupId');if(id){const {snapshot}=await loadBackup(db,env.BUCKET,a.scope,id);const fileId=url.searchParams.get('fileId');if(fileId){const f=snapshot.files?.find((f:any)=>f.versionId===fileId);if(!f)throw Error('ملف النسخة غير موجود');return new Response(await verifiedFile(env.BUCKET,f.backupKey,f.digest,f.size),{headers:{'Content-Type':'application/octet-stream','Content-Disposition':`attachment; filename="${fileId}.bin"`,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}})}return new Response(JSON.stringify(snapshot),{headers:{'Content-Type':'application/json','Content-Disposition':`attachment; filename="AeroPlan-backup-${id}.json"`,'Cache-Control':'no-store'}})}const state=await recoveryState(a.scope),leases=await db.prepare('SELECT id,actor,created FROM write_leases WHERE workspace_id=? ORDER BY created').bind(a.scope).all(),backups=await db.prepare('SELECT id,digest,manifest,created_by,created FROM backup_catalog WHERE workspace_id=? ORDER BY created DESC').bind(a.scope).all(),runs=await db.prepare('SELECT * FROM restore_runs WHERE workspace_id=? ORDER BY created DESC').bind(a.scope).all();return Response.json({state,leases:leases.results,storageAvailable:!!env.BUCKET,backups:backups.results.map((r:any)=>({...r,manifest:JSON.parse(r.manifest)})),runs:runs.results.map((r:any)=>({...r,report:JSON.parse(r.report)})),schedule:'on-demand and mandatory pre-restore; no periodic schedule configured'})}catch(e){return failure(e)}}
+export async function POST(req:Request){try{checkOrigin(req);const a=await owner(),db=env.DB!,body:any=await req.json();if(JSON.stringify(body).length>4000)throw Error('طلب كبير');
+ if(body.action==='create')return Response.json(await captureBackup(db,env.BUCKET,a.scope,a.email));
+ if(body.action==='drill')return Response.json(await stageRestore(db,env.BUCKET,a.scope,body.backupId,a.email));
+ if(body.action==='preview')return Response.json(await previewRestore(db,env.BUCKET,a.scope,body.backupId));
+ if(body.action==='maintenance'||body.action==='resume'){
+ const state=await recoveryState(a.scope);if(state.mode==='restoring')throw new AccessError('الاستعادة قيد التنفيذ؛ انتظر النتيجة',409);if(body.action==='resume'&&body.confirmation!=='RESUME WRITES')throw Error('أكد إعادة فتح الكتابة');const now=new Date().toISOString(),mode=body.action==='maintenance'?'maintenance':'open';await db.batch([db.prepare("UPDATE recovery_control SET mode=?,updated=? WHERE workspace_id=? AND epoch=? AND mode!='restoring'").bind(mode,now,a.scope,state.epoch),db.prepare('INSERT INTO audit(id,owner,action,created) VALUES(?,?,?,?)').bind(crypto.randomUUID(),a.scope,`${a.email} — وضع الصيانة: ${mode}`,now)]);return Response.json({ok:true,state:await recoveryState(a.scope)});
+ }
+ if(body.action==='restore'){const result=await applyLiveRestore(db,env.BUCKET,a.scope,body.runId,a.email,body.confirmation);return Response.json({ok:true,result,note:'بقيت الكتابة متوقفة؛ راجع النتائج ثم افتحها صراحة'});}
+ throw Error('إجراء استعادة غير معروف');}catch(e){return failure(e)}}

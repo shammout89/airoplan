@@ -1,0 +1,17 @@
+{"renderedOption":"SYN UI MAKER","positionerZ":0,"overlayZ":20}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Popup must be above the aircraft dialog; values arrived but were behind it
+    at choose (file:///workspace/scratch/1292ae1b8981/catalog-work/AeroPlan-Docker/tests/aircraft-dropdown-dom.integration.mjs:25:792)
+    at async file:///workspace/scratch/1292ae1b8981/catalog-work/AeroPlan-Docker/tests/aircraft-dropdown-dom.integration.mjs:36:2 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

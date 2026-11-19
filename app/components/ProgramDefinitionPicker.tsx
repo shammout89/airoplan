@@ -1,0 +1,9 @@
+'use client';
+import {useEffect,useState} from 'react';
+import {apiFetch} from '../client-fetch';
+export default function ProgramDefinitionPicker({programId,aircraftId,value,onChange,targetType='aircraft'}:any){
+ const [q,setQ]=useState(''),[offset,setOffset]=useState(0),[page,setPage]=useState<any>({tasks:[],total:0}),[error,setError]=useState('');
+ useEffect(()=>{setQ('');setOffset(0)},[programId]);
+ useEffect(()=>{let live=true;const t=setTimeout(()=>{apiFetch('/api/program-tasks?programId='+encodeURIComponent(programId)+'&targetType='+encodeURIComponent(targetType)+'&q='+encodeURIComponent(q)+'&offset='+offset).then(async r=>{const j:any=await r.json();if(!r.ok)throw Error(j.error);if(live){setPage(j);setError('')}}).catch(e=>{if(live)setError(e.message)})},150);return()=>{live=false;clearTimeout(t)}},[programId,q,offset,targetType]);
+ return <div><label>بحث تعريف المهمة<input value={q} onChange={e=>{setQ(e.target.value);setOffset(0)}} placeholder="رمز أو وصف أو مرجع"/></label>{error&&<p className="error">{error}</p>}<label>تعريف المهمة<select required value={value||''} onChange={e=>onChange(page.tasks.find((t:any)=>t.code===e.target.value))}><option value="">اختر تعريفًا من النتائج…</option>{value&&!page.tasks.some((t:any)=>t.code===value)&&<option value={value}>{value} — الاختيار الحالي</option>}{page.tasks.filter((t:any)=>targetType!=='aircraft'||t.allAircraft||t.aircraftIds.includes(aircraftId)).map((t:any)=><option key={t.code} value={t.code}>{t.code} — {t.title}</option>)}</select></label><div className="actions"><button type="button" className="secondary" disabled={!offset} onClick={()=>setOffset(Math.max(0,offset-50))}>السابق</button><small>{Math.min(offset+1,page.total)}–{Math.min(offset+50,page.total)} / {page.total}</small><button type="button" className="secondary" disabled={offset+50>=page.total} onClick={()=>setOffset(offset+50)}>التالي</button></div></div>;
+}

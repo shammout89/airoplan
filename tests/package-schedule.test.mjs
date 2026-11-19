@@ -1,0 +1,15 @@
+import {build} from 'esbuild';import assert from 'node:assert/strict';
+await build({entryPoints:['lib/package-schedule.ts'],outfile:'.sites-runtime/package-schedule-test.mjs',bundle:true,platform:'node',format:'esm'});
+const {packageSchedule,packageDueWarnings}=await import('../.sites-runtime/package-schedule-test.mjs');let checks=0;
+const eq=(a,b)=>{assert.deepEqual(a,b);checks++},bad=f=>{assert.throws(f);checks++};
+const start='2026-12-01T08:00:00.000Z',end='2026-12-03T16:00:00.000Z',tasks=[{id:'a',data:{date:'2026-12-02'}},{id:'b',data:{date:''}}],resources=[{id:'people',data:{type:'manpower'}},{id:'tool',data:{type:'tool'}}],allocations=[{resourceId:'people',quantity:2},{resourceId:'tool',quantity:1}];
+const a={taskId:'a',start,end:'2026-12-01T10:00:00.000Z',manHours:2,dependencies:[],resourceIds:['tool']},b={taskId:'b',start:'2026-12-01T10:00:00.000Z',end:'2026-12-01T12:00:00.000Z',manHours:2,dependencies:['a'],resourceIds:['tool']};
+const raw={start,end,plannedManHours:4,taskPlan:[a,b]};const run=x=>packageSchedule({...raw,...x},tasks,allocations,resources);
+let s=run({});eq(s.totalManHours,4);eq(s.criticalPathHours,4);eq(packageDueWarnings(tasks,s,[]).length,0);
+s=run({taskPlan:undefined});eq(s.rows.length,2);eq(packageDueWarnings(tasks,s,[]).length,1);
+for(const taskPlan of [[a],[a,a],[{...a,taskId:'foreign'},b],[{...a,start:'bad'},b],[{...a,start:'2026-11-01T00:00:00.000Z'},b],[{...a,end:'2027-01-01T00:00:00.000Z'},b],[{...a,dependencies:['a']},b],[{...a,dependencies:['b']},b],[a,{...b,start}],[{...a,resourceIds:['foreign']},b],[a,{...b,manHours:-1}]])bad(()=>run({taskPlan}));
+bad(()=>run({plannedManHours:5}));
+bad(()=>run({taskPlan:[a,{...b,start,dependencies:[]}]}));
+bad(()=>run({plannedManHours:10,taskPlan:[{...a,manHours:8},{...b,manHours:2}]}));
+eq(packageDueWarnings(tasks,run({}),[{taskId:'b',date:'2026-11-01',overdue:false}]).length,1);
+console.log(`${checks} package schedule checks passed: task windows, dependencies, critical path, manpower/tool capacity and within-package due risks.`);

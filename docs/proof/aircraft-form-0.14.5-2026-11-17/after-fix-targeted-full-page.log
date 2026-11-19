@@ -1,0 +1,3 @@
+{"stage":"rejected-year-before-save","displayed":"2024-09-30","valid":true,"message":""}
+{"stage":"duplicate-save","result":{"status":400,"body":{"error":"تسجيل الطائرة أو هوية المصنع والطراز وMSN موجودة"}},"visible":"تعذّر حفظ الطائرةتسجيل الطائرة أو هوية المصنع والطراز وMSN موجودة"}
+43 mounted full-page aircraft form checks passed with actual read/write API and SQLite: valid draft and fully activated aircraft saves through the real modal, all five dropdown selections, rejected-date recovery without blur, visible duplicate/activation/native validation errors, preserved form values, pending-write buttons and saved records, plus scoped layout CSS. DOM simulation; no pixel or target-Windows claim.

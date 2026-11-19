@@ -1,0 +1,2 @@
+import {readFile,stat} from 'node:fs/promises';import {verifyAuditExport} from './audit-integrity.mjs';
+try{const [file,keyId]=process.argv.slice(2);if(!file||!/^[a-f0-9]{64}$/.test(keyId||''))throw Error('Usage: node selfhost/verify-audit.mjs audit.json TRUSTED_KEY_ID');if((await stat(file)).size>100*1024*1024)throw Error('ملف أكبر من سعة التحقق المباشر');const result=verifyAuditExport(JSON.parse(await readFile(file,'utf8')),keyId);console.log(JSON.stringify(result))}catch(e){console.error(e.message);process.exitCode=1}

@@ -1,0 +1,1 @@
+PASS: local SQL atomicity, migration guards, private object integrity, independent backup files, owner bootstrap, enrollment, sessions, revocation, rate limits and restart persistence.

@@ -1,0 +1,1 @@
+70 task approval UI/CSS checks passed with 6 real UI POSTs: owner/read-only settings, conflict retention, combined confirmations, stale aircraft, independent decisions, fixed footer/scroll, keyboard dismissal and previous screen links. DOM/CSS only; no browser pixels or Windows acceptance.

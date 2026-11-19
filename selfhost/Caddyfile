@@ -1,0 +1,12 @@
+{$AEROPLAN_DOMAIN} {
+ encode zstd gzip
+ header Strict-Transport-Security "max-age=31536000"
+ reverse_proxy app:3000 {
+  header_up Host {$AEROPLAN_DOMAIN}
+  header_up -X-Forwarded-User
+  transport http {
+   keepalive 4s
+   response_header_timeout 120s
+  }
+ }
+}

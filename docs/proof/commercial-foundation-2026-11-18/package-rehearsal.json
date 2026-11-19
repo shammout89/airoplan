@@ -1,0 +1,29 @@
+{
+  "release": "0.16.0",
+  "sourceCommit": "7984edc64d54c4f81312b72885ff31bd6ff9a3f0",
+  "archiveChecks": "safe paths, no symlinks/duplicates, CRC, per-file hash/size, full/patch byte equality",
+  "fullSha256": "1916911605a7f592d75cd254a59dec5c923ddf931bad79e6e8a20e893633a6c0",
+  "patchSha256": "a60776f0dff54051c9dadfc8745208d55d63f252689fc3e6298eb5ffc7d518ba",
+  "patchFiles": 40,
+  "fullFingerprint": {
+    "algorithm": "SHA-256",
+    "fingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
+    "sourceFiles": 283
+  },
+  "baselines": [
+    {
+      "sourceRelease": "0.15.0",
+      "baselineSha256": "f4adcb176eabb09c7586b0b35b6f5bc52b5b676637b2e2e08a8161ffd99333e2",
+      "protectedSentinels": 12,
+      "allUnprotectedFilesMatchFullSource": true,
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "fingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
+        "sourceFiles": 283
+      },
+      "directory": "/workspace/scratch/9a5bc666bbb4/aeroplan_product_work/package-rehearsal/patched-0.15.0/AeroPlan-Docker"
+    }
+  ],
+  "dockerExecuted": false,
+  "targetWindowsBrowserExecuted": false
+}

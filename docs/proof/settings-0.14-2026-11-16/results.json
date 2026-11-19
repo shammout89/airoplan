@@ -1,0 +1,42 @@
+{
+  "release": "0.14.0",
+  "checkedAt": "2026-11-16T16:29:27.476961+00:00",
+  "baselineCommit": "0ae7c1ec400eba31b0a7a6616965b210cbf67bf4",
+  "baselineZipSha256": "d680900324856705cdf70f9cf9be0836e054bd7db7b951a92f5e785c55efde92",
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "787d193f7e2cfb239071229b03a826349c83ce86d3f39663bcc3b752530cca02",
+    "sourceFiles": 204
+  },
+  "checks": {
+    "typescript": "passed",
+    "productionBuild": "passed",
+    "regressionGroups": 32,
+    "catalogueChecks": 99,
+    "settingsUiStateChecks": 56,
+    "existingInstallationUpgradeChecks": 16,
+    "productionHttpChecks": 164,
+    "baseApiChecks": 799,
+    "advancedApiChecks": 358,
+    "mfaChecks": 57
+  },
+  "unchangedRuntimeFiles": [
+    "selfhost/auth.mjs",
+    "selfhost/mfa.mjs",
+    "selfhost/runtime.mjs",
+    "selfhost/server.mjs"
+  ],
+  "commands": [
+    "npm ci --ignore-scripts --no-audit --no-fund --prefer-offline",
+    "npx tsc --noEmit",
+    "npm run build:docker",
+    "npm run test:docker"
+  ],
+  "browser": {
+    "status": "environment_blocked",
+    "pageOpened": false,
+    "reason": "Chromium socket() failed: Operation not permitted (1)"
+  },
+  "targetHost": "0.14 Windows/Docker not executed here",
+  "finalClosure": false
+}

@@ -1,0 +1,28 @@
+{
+  "release": "0.13.0",
+  "generatedAt": "2026-11-16T08:41:29.336Z",
+  "runtime": "v24.22.1",
+  "platform": "linux",
+  "fixtures": {
+    "aircraft": 120,
+    "tasks": 10000,
+    "flights": 5000
+  },
+  "concurrency": 5,
+  "requests": 40,
+  "errors": 0,
+  "elapsedMs": 2770,
+  "requestsPerSecond": 14.44,
+  "p50Ms": 250,
+  "p95Ms": 680,
+  "maxResponseBytes": 159976,
+  "rssBytes": 242024448,
+  "verification": {
+    "completeGlobalCounts": true,
+    "taskPageLimit": 50,
+    "distinctPages": true,
+    "referenceSearch": true,
+    "flightPageLimit": 100
+  },
+  "limits": "Synthetic local Node/SQLite measurements; rerun on the company Windows/Docker host with representative data. Not a certificate of production capacity."
+}

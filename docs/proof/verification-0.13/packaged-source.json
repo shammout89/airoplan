@@ -1,0 +1,11 @@
+{
+  "archiveIntegrity": "passed",
+  "cleanExtraction": true,
+  "typescript": "passed",
+  "nativeProductionBuild": "passed",
+  "productionHTTPChecks": 157,
+  "sourceFingerprintMatches": true,
+  "fingerprint": "23fc357d4d3865237f4c981aef87f64330ed36795cc23718b78be8d8907689d9",
+  "dependencies": "Reused the same locked installation through a node_modules symlink; no new dependency-resolution claim.",
+  "platform": "Linux Node/SQLite; Docker Desktop, PowerShell and browser UI were not validated."
+}

@@ -1,0 +1,7 @@
+npm ci --ignore-scripts --no-audit --no-fund --prefer-offline  [exit 0]
+npx --no-install tsc --noEmit  [exit 0]
+npm run build:docker  [exit 0]
+npm run test:docker  [exit 0]
+node tests/aircraft-dropdown-dom.integration.mjs  [exit 0]
+node scripts/package-docker-release.mjs <rehearsal-output> 243ca5099804d73f62c6467d97f3b8e551a2e8cd  [exit 0]
+CRC, path safety, per-file bytes/SHA-256/full comparison, protected sentinels and extracted sourceFingerprint verification  [passed; package-validation.json]

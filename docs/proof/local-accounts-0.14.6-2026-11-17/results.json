@@ -1,0 +1,102 @@
+{
+  "at": "2026-11-17T12:12:44.248988+00:00",
+  "baselineCommit": "5d78fdaf6f7e4b349575538d67578d237569cf0f",
+  "release": "0.14.6",
+  "runtime": "Node v24.22.1 / Linux / SQLite",
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "d18fb89c9427191ceac8cd5a107649a28f921faebdb3c437a1f2423874840557",
+    "sourceFiles": 271
+  },
+  "typescript": {
+    "command": "./node_modules/.bin/tsc --noEmit",
+    "exitCode": 0
+  },
+  "productionBuild": {
+    "command": "npm run build:docker",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "node selfhost/test.mjs",
+    "exitCode": 0,
+    "groups": 37,
+    "localAccountChecks": 75,
+    "productionHttpRequests": 179,
+    "mfaChecks": 57,
+    "fullPageAircraftFormChecks": 43,
+    "aircraftDateChecks": 86,
+    "catalogueChecks": 99,
+    "catalogueSynchronizationChecks": 103,
+    "popupDomChecks": 47,
+    "existingInstallationMigrationChecks": 16,
+    "baseApiChecks": 799,
+    "advancedApiChecks": 358,
+    "notUniqueTotals": true
+  },
+  "previousInstallation": {
+    "checks": 44,
+    "baseline": "0.14.5",
+    "target": "0.14.6",
+    "actualPreviousAuthUsed": true,
+    "newProductionHttp": true,
+    "oldOwnerPasswordsSessionsMembershipMFAKeysAndPendingLink": "preserved",
+    "aircraftTaskAndDocument": "exact original bytes",
+    "newReviewerApproverLogin": "passed",
+    "newMigrations": 0,
+    "syntheticFixture": true,
+    "windowsDockerExecuted": false
+  },
+  "dependencyVersions": "unchanged; root project version only",
+  "newMigrations": 0,
+  "preservedExistingFilesBeforeDocumentation": 487,
+  "changedExistingFilesBeforeDocumentation": [
+    "compose.yaml",
+    "package-lock.json",
+    "package.json",
+    "release.json",
+    "selfhost/auth.mjs",
+    "selfhost/http.test.mjs",
+    "selfhost/server.mjs",
+    "selfhost/test.mjs"
+  ],
+  "preservedSourceTrees": [
+    "app",
+    "components",
+    "lib",
+    "db",
+    "drizzle"
+  ],
+  "browserPixelsExecuted": false,
+  "windowsDockerExecuted": false,
+  "syntheticEvidenceOnly": true,
+  "evidence": [
+    "build.log",
+    "typescript.log",
+    "regression.log",
+    "previous-installation.log",
+    "verify-previous-installation.mjs",
+    "package-rehearsal.json",
+    "extracted-build.log",
+    "extracted-typescript.log",
+    "extracted-accounts.log",
+    "extracted-http.log",
+    "extracted-upgrade.log"
+  ],
+  "packageRehearsal": {
+    "baselineVersions": [
+      "0.14.3",
+      "0.14.4",
+      "0.14.5"
+    ],
+    "protectedSentinelsPerBaseline": 8,
+    "crcHashesSizesAndFullMatch": "passed",
+    "runtimeSourceFingerprintUnchanged": true,
+    "extractedProductionBuild": "passed",
+    "extractedTypeScript": "passed",
+    "extractedAccountChecks": 75,
+    "extractedProductionHttpChecks": 179,
+    "extractedPreviousVersionUpgradeChecks": 44,
+    "dependencies": "same previously locked installation",
+    "windowsDockerExecuted": false
+  }
+}

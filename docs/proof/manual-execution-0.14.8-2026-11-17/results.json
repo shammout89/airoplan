@@ -1,0 +1,88 @@
+{
+  "release": "0.14.8",
+  "at": "2026-11-17T18:49:41.239840+00:00",
+  "baselineRelease": "0.14.7",
+  "baselineArchiveSha256": "37f7df4a4138bf652dc48cbd8c4678c186a297f4cd5cb7d93199cc26e3c23842",
+  "upstreamArchiveCommit": "d83b6d45c6a3e902774435d85d6e5bfa30bf8bc3",
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "bff7cfc0a19525fd92f9ed9e06cfc6bb75c611ab21b80d4d004a249f0cf18515",
+    "sourceFiles": 273
+  },
+  "typescript": {
+    "command": "./node_modules/.bin/tsc --noEmit",
+    "exitCode": 0
+  },
+  "productionBuild": {
+    "command": "npm run build:docker",
+    "exitCode": 0
+  },
+  "regression": {
+    "command": "node selfhost/test.mjs",
+    "exitCode": 0,
+    "groups": 39,
+    "manualDialogChecks": 89,
+    "manualDialogActualUiPosts": 8,
+    "unifiedUserChecks": 137,
+    "previousAccountChecks": 75,
+    "productionHttpChecks": 184,
+    "mfaChecks": 57,
+    "fullPageAircraftFormChecks": 43,
+    "aircraftDateChecks": 86,
+    "catalogueChecks": 99,
+    "catalogueSynchronizationChecks": 103,
+    "popupDomChecks": 47,
+    "baseApiChecks": 799,
+    "advancedApiChecks": 358,
+    "notUniqueTotals": true
+  },
+  "preservedExistingFilesBeforeDocumentation": 517,
+  "changedExistingFilesBeforeDocumentation": [
+    "app/components/ManualExecution.tsx",
+    "app/globals.css",
+    "compose.yaml",
+    "package-lock.json",
+    "package.json",
+    "release.json",
+    "selfhost/test.mjs"
+  ],
+  "backendAndSchemaAndAuthAndPermissions": "byte-identical to 0.14.7",
+  "oldGlobalCss": "unchanged prefix; manual-only selectors appended",
+  "dependencyVersions": "unchanged; project version metadata only",
+  "newMigrations": 0,
+  "bodyScrollLock": "original html/body overflow and priority restored on close",
+  "existingPlaneRevisionSemantics": "execution API already advances concurrency token; counters and other card values preserved",
+  "browserPixelsExecuted": false,
+  "windowsDockerExecuted": false,
+  "syntheticEvidenceOnly": true,
+  "evidence": [
+    "build.log",
+    "typescript.log",
+    "regression.log",
+    "dialog.log",
+    "layout-comparison.json",
+    "package-rehearsal.json",
+    "package-verification.py",
+    "extracted-build.log",
+    "extracted-typescript.log",
+    "extracted-dialog.log",
+    "extracted-users.log",
+    "extracted-http.log"
+  ],
+  "packageVerification": {
+    "compatibleSources": [
+      "0.14.6",
+      "0.14.7"
+    ],
+    "protectedSentinelsPerSource": 12,
+    "crcPathsHashesSizesFullByteMatchAndNoSymlinks": "passed",
+    "fullAndPatchedFingerprints": "match production",
+    "extractedProductionBuild": "passed",
+    "extractedTypeScript": "passed",
+    "extractedManualDialogChecks": 89,
+    "extractedUnifiedUserChecks": 137,
+    "extractedProductionHttpChecks": 184,
+    "windowsDockerExecuted": false,
+    "browserPixelsExecuted": false
+  }
+}

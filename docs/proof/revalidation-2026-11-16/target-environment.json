@@ -1,0 +1,11 @@
+{
+  "status": "blocked_before_page_open",
+  "executable": "/usr/bin/chromium",
+  "attemptedWith": "Playwright 1.62.1",
+  "error": "Chromium process_singleton_posix.cc: socket() failed: Operation not permitted (1)",
+  "visualChecksExecuted": false,
+  "browserChecksPassed": false,
+  "dockerAvailable": false,
+  "powershellAvailable": false,
+  "meaning": "Host restriction; no application-page result was obtained."
+}

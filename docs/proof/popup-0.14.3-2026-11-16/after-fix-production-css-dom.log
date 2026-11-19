@@ -1,0 +1,9 @@
+Mounted production CSS: BWcuyB8K.css
+{"renderedOption":"SYN UI MAKER","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI FAMILY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI VARIANT","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI COUNTRY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI AUTHORITY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI COUNTRY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI AUTHORITY","positionerZ":50,"overlayZ":20}
+47 actual-component DOM/API checks passed: settings create linked values and an inactive value, aircraft options render above the modal, search/keyboard selection and mouse selection work, clearing a parent clears its child, selected IDs are preserved and the server accepts the activated aircraft. DOM simulation; no browser pixel-rendering claim.

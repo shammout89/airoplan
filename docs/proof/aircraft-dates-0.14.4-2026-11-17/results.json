@@ -1,0 +1,74 @@
+{
+  "release": "0.14.4",
+  "verifiedAt": "2026-11-17T07:47:30.064056+00:00",
+  "sourceFingerprint": {
+    "algorithm": "SHA-256",
+    "fingerprint": "90e4b12c7eef4351131b91cef3f019e3ae3dc2cfd77265cf613ffe925b232818",
+    "sourceFiles": 271
+  },
+  "scope": "Aircraft registration built-in dates and opening-counter UTC input only",
+  "baseline": {
+    "version": "0.14.3",
+    "archiveCommit": "9d279c9732136066ff4fee5188502992e397362e",
+    "archiveSha256": "ffeb25b3d4ff3f348db0e8ccfb910015429f808a077a9da8bc82b4b68c269abf",
+    "recoveredCommit": "43e59a17f6c07d72d92cc5cc42fdd417541e61b0"
+  },
+  "beforeFix": {
+    "status": "failure reproduced",
+    "attempt": "202600-09-30",
+    "parentValue": "202600-09-30",
+    "expected": "2024-09-30"
+  },
+  "commands": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --prefer-offline",
+      "exitCode": 0,
+      "evidence": "install-ci.log"
+    },
+    {
+      "command": "npx --no-install tsc --noEmit",
+      "exitCode": 0,
+      "evidence": "typescript.log"
+    },
+    {
+      "command": "npm run build:docker",
+      "exitCode": 0,
+      "evidence": "production-build.log"
+    },
+    {
+      "command": "npm run test:docker",
+      "exitCode": 0,
+      "groups": 35,
+      "evidence": "regression.log"
+    },
+    {
+      "command": "node tests/aircraft-dates-dom.integration.mjs",
+      "exitCode": 0,
+      "checks": 86,
+      "realApiRequests": 16,
+      "evidence": "after-fix-dom-api.log",
+      "note": "Retested after adding read-only mutation checks and three malformed timestamp API cases; application source unchanged after the full suite."
+    }
+  ],
+  "regression": {
+    "catalogueSyncChecks": 103,
+    "catalogueApiChecks": 99,
+    "popupDomChecks": 47,
+    "uiStaticChecks": 56,
+    "upgradePreservationChecks": 16,
+    "productionHttpChecks": 164,
+    "baseApiChecks": 799,
+    "advancedApiChecks": 358,
+    "mfaChecks": 57
+  },
+  "nativeChromium": {
+    "status": "blocked before page navigation",
+    "reason": "socket() failed: Operation not permitted (1)",
+    "evidence": "browser-launch-blocked.log",
+    "browserPixelsChecked": false,
+    "segmentedKeyboardInteractionChecked": false
+  },
+  "targetWindowsDocker": "not executed here",
+  "freshDependencyAudit": "not run; dependency graph unchanged and earlier automatic-review restriction respected",
+  "finalClosure": false
+}

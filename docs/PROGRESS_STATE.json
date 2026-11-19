@@ -1,0 +1,1049 @@
+{
+  "schemaVersion": 1,
+  "project": "AeroPlan",
+  "release": "0.16.0",
+  "updatedAt": "2026-11-18T20:13:24.630748+03:00",
+  "displayTimeZone": "Asia/Amman",
+  "runtime": "v24.22.3 / Linux / SQLite",
+  "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
+  "sourceFiles": 283,
+  "upstreamSourceCommit": "969a7b1286764b2650bc3f5faaa4be0df4e49986",
+  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; preserve existing planning, security and operational acceptance requirements.",
+  "completionRule": {
+    "softwareVerified": "Implementation plus applicable automated regression checks and production build passed with recorded evidence.",
+    "fullyClosed": "All agreed requirements, applicable UI/target-host checks, and required real operational evidence passed; no known unmet requirement remains.",
+    "unexecutedCheckIsPass": false,
+    "syntheticEvidenceIsCompanyAcceptance": false,
+    "promiseOfNoFutureDefects": false
+  },
+  "currentPhase": "customer-setup-target-host-and-product-pilot-acceptance",
+  "finalClosure": false,
+  "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [],
+  "stages": [
+    {
+      "order": 1,
+      "id": "task-data",
+      "title": "صحة التواريخ وحدود الساعات والدورات",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "80 فحص معالجة؛ رفض البيانات الفاسدة في الإدخال والاعتماد والاستعادة",
+      "testFiles": [
+        "tests/remediation.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 2,
+      "id": "accomplishments",
+      "title": "إغلاق المهام بإنجاز موثق وتصحيح يحفظ الأصل",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "80 فحص معالجة و77 فحص تصحيح إنجازات الوحدات",
+      "testFiles": [
+        "tests/remediation.integration.mjs",
+        "tests/unit-amendments.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 3,
+      "id": "overhaul-forecast",
+      "title": "توقع العمر والعمرة والعدادات المستقلة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "34 فحص مجال متقدم ومجموعة المعالجة والتكامل المتقدم",
+      "testFiles": [
+        "tests/advanced-domain.test.mjs",
+        "tests/remediation.integration.mjs",
+        "tests/advanced.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 4,
+      "id": "package-schedule",
+      "title": "جدولة كل مهمة والتبعيات وسعة الموارد",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "20 فحص جدول الحزمة مع اختبارات التخطيط والتكامل",
+      "testFiles": [
+        "tests/package-schedule.test.mjs",
+        "tests/planning.test.mjs",
+        "tests/access.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 5,
+      "id": "dependency-security",
+      "title": "تحديث الحزم وفحص اعتماديات الإنتاج والبناء",
+      "status": "software_verified",
+      "currentRunVerified": false,
+      "evidence": "Locked npm ci passed. Three pinned dev-only DOM test tools added (38 lock entries); previous production dependency entries unchanged. No new audit; earlier automatic-review restriction preserved.",
+      "testFiles": [
+        "package-lock.json",
+        "docs/proof/revalidation-2026-11-16/audit.json"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 6,
+      "id": "amp-library",
+      "title": "مكتبة برنامج صيانة كبيرة واستيراد بمعاينة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "اختبار برنامج اصطناعي من 10000 تعريف ضمن 80 فحص معالجة",
+      "testFiles": [
+        "tests/remediation.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 7,
+      "id": "opening-status",
+      "title": "ترحيل Last Done وNext Due بمصدر واعتماد",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "16 فحص حساب افتتاحي مع فحوص الاستيراد والمراجعة",
+      "testFiles": [
+        "tests/opening.test.mjs",
+        "tests/remediation.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 8,
+      "id": "unit-hierarchy",
+      "title": "شجرة المكونات ومهام المحرك وAPU وانتقال العمر",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "108 فحوص تجميعات مع حفظ العمر ورفض الدورة والموضع المشغول",
+      "testFiles": [
+        "tests/assemblies.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 9,
+      "id": "amp-transition",
+      "title": "مقارنة إصدارات البرنامج وخطة الانتقال",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "اختبارات تغيير الفاصل والإضافة والسحب مع حفظ التاريخ ضمن 108 فحوص",
+      "testFiles": [
+        "tests/assemblies.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 10,
+      "id": "future-sectors",
+      "title": "التوقع من قطاعات الرحلات المستقبلية",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "14 فحص قطاع مع اختبارات السيناريوهات والاعتماد",
+      "testFiles": [
+        "tests/future.test.mjs",
+        "tests/assemblies.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 11,
+      "id": "engineering",
+      "title": "الانطباق والتعديلات والإصلاحات والتخزين والعودة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "67 فحصًا هندسيًا؛ حفظ الحالة المجهولة ومنع العودة دون أدلة",
+      "testFiles": [
+        "tests/engineering.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 12,
+      "id": "workcard-quality",
+      "title": "مؤهلات العاملين والمعايرة والدفعات وبطاقات العمل",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "73 فحص جودة؛ صلاحية النطاق والمعايرة والمواد والفحص المستقل",
+      "testFiles": [
+        "tests/quality.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 13,
+      "id": "reliability-reports",
+      "title": "الاعتمادية والإجراءات التصحيحية والتقارير المجمدة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "27 فحصًا إحصائيًا و17 فحص تعرض وتصنيف و56 فحص تقرير",
+      "testFiles": [
+        "tests/statistics.test.mjs",
+        "tests/reliability-statistics.test.mjs",
+        "tests/reporting.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 14,
+      "id": "access-security",
+      "title": "الصلاحيات والمصادقة الثانية والتدقيق الموقع",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "57 MFA checks, independent QR decoding of 9 images (60 assertions), 30 access-policy checks and 21 audit checks passed.",
+      "testFiles": [
+        "tests/security-policy.integration.mjs",
+        "selfhost/mfa.test.mjs",
+        "selfhost/audit-integrity.test.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 15,
+      "id": "integration-recovery",
+      "title": "عقود الربط والنسخ المشفر والاستعادة والحمل",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "50 فحص عقد و34 فحص خدمات و35 فحص نسخ؛ نجح قياس الحمل والاستعادة",
+      "testFiles": [
+        "tests/integration-contracts.integration.mjs",
+        "selfhost/services.test.mjs",
+        "selfhost/full-backup.test.mjs",
+        "tests/load.mjs",
+        "tests/recovery-load.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 16,
+      "id": "regression-build",
+      "title": "البناء والمجموعة الشاملة وهوية المصدر المسترجع",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "0.16.0: TypeScript, production build and all 43 groups passed; 72 customer API, 54 mounted UI and 226 production HTTP checks; source fingerprint matches build. Native browser/Windows acceptance pending.",
+      "testFiles": [
+        "selfhost/test.mjs",
+        "selfhost/build.mjs",
+        "selfhost/build-fingerprint.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 17,
+      "id": "settings-catalogues",
+      "title": "الإعدادات الموحدة وقوائم الطائرات المترابطة والتفويض",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "99 catalogue + 56 static UI/state + 16 existing-installation upgrade checks; full 32 groups, production build and 164 HTTP passed",
+      "testFiles": [
+        "tests/aircraft-references.integration.mjs",
+        "tests/settings-ui.test.mjs",
+        "tests/settings-upgrade.test.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 18,
+      "id": "dropdown-arrow-layout",
+      "title": "إطار واحد لقوائم البحث وسهم داخل الصندوق",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "Scoped explicit CSS plus native disabled propagation; TypeScript, production build and 32 regression groups passed. Browser visual/interaction checks blocked and unexecuted.",
+      "testFiles": [
+        "tests/settings-ui.test.mjs",
+        "selfhost/http.test.mjs"
+      ],
+      "browserValidation": "blocked",
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 19,
+      "id": "catalog-client-synchronization",
+      "title": "مزامنة قوائم الإعدادات ونموذج الطائرة والتبويبات",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "103 actual API/client-controller synchronization checks with simulated browser events; production build and all 33 groups passed. Actual browser/target-host checks unexecuted.",
+      "testFiles": [
+        "tests/aircraft-catalog-sync.integration.mjs",
+        "tests/settings-ui.test.mjs",
+        "tests/aircraft-references.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 20,
+      "id": "dropdown-popup-layer",
+      "title": "إظهار قوائم الطائرة فوق النافذة واختبار المكونات مع API",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "Before-fix DOM probe reproduced a rendered option at z-index 0 behind modal 20. Fixed positioner z-index 50; 47 mounted React/API checks passed with production CSS, plus build/types and 34 regression groups. Actual browser and target-host update pending.",
+      "testFiles": [
+        "tests/aircraft-dropdown-dom.integration.mjs",
+        "selfhost/test.mjs",
+        "selfhost/http.test.mjs"
+      ],
+      "browserPixelsChecked": false,
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 21,
+      "id": "aircraft-manual-date-input",
+      "title": "تصحيح الإدخال اليدوي لتواريخ الطائرة فقط",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "Baseline reproduced extended year entering aircraft data. Scoped native date inputs reject overlong years, impossible calendar dates and unsafe UTC conversion. 86 DOM/domain checks + 16 API requests, types/build and all 35 groups passed. Existing API/migrations/auth/catalogue logic unchanged.",
+      "testFiles": [
+        "tests/aircraft-dates-dom.integration.mjs"
+      ],
+      "browserPixelsChecked": false,
+      "finalOperationalAcceptance": "pending",
+      "followUp": "0.14.4 field tests missed stale custom validity after a rejected candidate. Actual Page reproduction and fix added in 0.14.5; original 86 date checks still pass."
+    },
+    {
+      "order": 22,
+      "id": "aircraft-form-layout-save",
+      "title": "محاذاة نموذج الطائرة وإصلاح الحفظ ورسائل الرفض",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "Baseline actual Page probe found displayed valid date with stale customValidity. Scoped fix plus alignment and inline validation; 43 full-Page actual read/write API checks, all 36 groups, types and production build passed. No server rules weakened.",
+      "testFiles": [
+        "tests/aircraft-form-save.integration.mjs",
+        "tests/aircraft-dates-dom.integration.mjs",
+        "tests/aircraft-dropdown-dom.integration.mjs"
+      ],
+      "actualBrowserPixelsChecked": false,
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 23,
+      "id": "local-account-password-creation",
+      "title": "تعيين كلمة المرور وتأكيدها عند إنشاء الحساب المحلي",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "75 local-account + 179 production HTTP + 44 actual previous-version upgrade checks; all 37 groups, TypeScript and production build passed. Old accounts/data preserved. Target Windows/browser pending.",
+      "testFiles": [
+        "selfhost/accounts.test.mjs",
+        "selfhost/http.test.mjs",
+        "docs/proof/local-accounts-0.14.6-2026-11-17/verify-previous-installation.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 24,
+      "id": "unified-local-users",
+      "title": "إدارة المستخدمين وكلمات المرور والأدوار من شاشة واحدة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "137 actual prior-version upgrade / API / SQLite / mounted React checks; 184 production HTTP; types/build and all 38 regression groups passed. Browser native/Windows acceptance pending.",
+      "testFiles": [
+        "tests/users-management.integration.mjs",
+        "selfhost/accounts.test.mjs",
+        "selfhost/http.test.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 25,
+      "id": "manual-execution-dialog-layout",
+      "title": "هوامش نافذة الإنجاز اليدوي وثبات العنوان والأزرار والتمرير وتعريب الحالة",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "39 groups + TypeScript/build passed; 89 actual-component production CSS/API/SQLite checks and 8 UI POSTs; prior user/account/aircraft regressions retained. Browser pixels/Windows pending.",
+      "testFiles": [
+        "tests/manual-execution-dialog.integration.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 26,
+      "id": "task-approval-policy",
+      "title": "سياسة اعتماد التخطيط ومسارا المراجعة والاعتماد",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "docs/proof/task-approval-0.15.0-2026-11-18/results.json",
+      "testFiles": [
+        "tests/task-approval-policy.integration.mjs",
+        "tests/task-approval-ui.integration.mjs",
+        "selfhost/http.test.mjs"
+      ],
+      "finalOperationalAcceptance": "pending"
+    },
+    {
+      "order": 27,
+      "id": "customer-setup-view-export",
+      "title": "تهيئة الشركة وخطوات البدء وتحديد نطاق التصدير",
+      "status": "software_verified",
+      "currentRunVerified": true,
+      "evidence": "docs/proof/commercial-foundation-2026-11-18/results.json",
+      "testFiles": [
+        "tests/customer-setup.integration.mjs",
+        "tests/customer-setup-ui.integration.mjs",
+        "selfhost/http.test.mjs"
+      ],
+      "results": {
+        "lockedInstall": "passed",
+        "dependencyVersions": "unchanged",
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 43,
+        "customerApiChecks": 72,
+        "customerUiChecks": 54,
+        "productionHttpChecks": 226,
+        "previousApprovalPolicyChecks": 204,
+        "previousApprovalUiChecks": 70,
+        "previousUserChecks": 137,
+        "previousManualDialogChecks": 89
+      },
+      "finalOperationalAcceptance": "pending"
+    }
+  ],
+  "pending": [
+    {
+      "id": "browser",
+      "status": "environment_blocked",
+      "reason": "Chromium socket() failed: Operation not permitted (1)",
+      "checksExecuted": false,
+      "lastAttemptAt": "2026-11-16T16:26:00.331358+00:00"
+    },
+    {
+      "id": "windows-docker",
+      "status": "target_host_not_available",
+      "checksExecuted": false
+    },
+    {
+      "id": "real-company-inputs",
+      "status": "not_supplied",
+      "details": "Approved programmes, fleet/component histories, authorisations and certificates."
+    },
+    {
+      "id": "real-external-connections",
+      "status": "not_configured",
+      "details": "Company endpoints, SMTP and independent backup destination/key custody."
+    },
+    {
+      "id": "independent-company-signoff",
+      "status": "pending"
+    },
+    {
+      "id": "qr-phone-enrollment",
+      "status": "awaiting-target-host-update",
+      "checksExecuted": false,
+      "details": "Install the QR update in the existing aeroplan Compose project; scan with the user phone, confirm enrollment, preserve recovery codes and verify a new login."
+    },
+    {
+      "id": "settings-catalogues-browser-acceptance",
+      "status": "user_reported_defect_under_0.14.2",
+      "checksExecuted": false,
+      "details": "User confirmed healthz ok/version 0.14.2 and continued dropdown problem. Popup layer issue reproduced and patched in 0.14.3; target validation pending."
+    },
+    {
+      "id": "dropdown-arrow-browser",
+      "status": "environment_blocked",
+      "checksExecuted": false,
+      "reason": "Remote browser ERR_CONNECTION_REFUSED for local server; file protocol disallowed by security policy; stopped.",
+      "requiredChecks": [
+        "arrow inside field at full and narrow width",
+        "long text and clear button spacing",
+        "mouse selection and search",
+        "keyboard selection and focus"
+      ]
+    },
+    {
+      "id": "catalog-sync-browser-and-host",
+      "status": "0.14.2_runtime_confirmed_ui_acceptance_pending",
+      "checksExecuted": false,
+      "requiredChecks": [
+        "healthz version 0.14.2",
+        "same-page and cross-tab list changes",
+        "fresh draft names and preserved historical records",
+        "visible polling from another browser",
+        "network failure and retry",
+        "arrow, mouse/keyboard and narrow-screen placement"
+      ],
+      "details": "User supplied status ok and version 0.14.2, without fingerprint. This confirms runtime only; latest UI report is unresolved on target. Next verify 0.14.3 and actual interaction."
+    },
+    {
+      "id": "popup-0.14.3-browser-target",
+      "status": "awaiting-target-host-update",
+      "checksExecuted": false,
+      "requiredChecks": [
+        "healthz ok/version 0.14.3/fingerprint 88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+        "Ctrl+F5 and all five settings values selectable above modal",
+        "arrow mouse click, keyboard, search, clear and narrow-screen positioning",
+        "settings changes update open form and other tabs; existing records unchanged"
+      ]
+    },
+    {
+      "id": "aircraft-date-browser-target",
+      "status": "awaiting-target-host-update",
+      "checksExecuted": false,
+      "requiredChecks": [
+        "source baseline 0.14.3; apply date-only patch",
+        "healthz ok/version 0.14.4/fingerprint 90e4b12c7eef4351131b91cef3f019e3ae3dc2cfd77265cf613ffe925b232818",
+        "Ctrl+F5; native manual year entry and impossible day in all five aircraft date fields",
+        "native calendar choice, correction, clear, UTC and save/reopen; existing aircraft/non-date values unchanged"
+      ],
+      "reason": "Chromium blocked at startup: socket() failed: Operation not permitted (1); Windows/Docker target unavailable here."
+    },
+    {
+      "id": "aircraft-form-layout-save-browser-target",
+      "status": "awaiting-target-host-update",
+      "checksExecuted": false,
+      "requiredChecks": [
+        "apply cumulative update to source 0.14.3 or 0.14.4, preserving current files and volumes",
+        "healthz ok/version 0.14.5/fingerprint 3c1bfdc7ecdb3851fad9b3c4004a4933e2a7e7eec4148df13af9845cd870a715",
+        "Ctrl+F5; alignment at wide and narrow widths",
+        "save draft after rejected invalid date with retained valid visible value",
+        "visible duplicate/incomplete/native validation feedback, preserved inputs",
+        "all five linked choices and successful activation; existing records unchanged"
+      ],
+      "browserLimitation": "No original browser/Windows-Docker test in this run; previous Chromium socket restriction recorded."
+    },
+    {
+      "id": "local-account-password-browser-target",
+      "status": "awaiting-target-host-update",
+      "checksExecuted": false,
+      "requiredChecks": [
+        "healthz ok/version 0.14.6/fingerprint d18fb89c9427191ceac8cd5a107649a28f921faebdb3c437a1f2423874840557",
+        "existing owner login; Ctrl+F5; password and confirmation on /auth/admin",
+        "create distinct reviewer and approver with 12–128-character matching passwords; log in immediately",
+        "reject mismatched/short passwords; preserve typed identity and do not create partial account",
+        "existing aircraft, task, catalogues, dates, accounts, MFA policy and pending links preserved",
+        "independent review/approval of TEST-MX-001 on target"
+      ],
+      "localEvidence": "Actual HTTP/native DOM/SQLite and prior-version upgrade passed; original browser pixels and Windows/Docker not executed."
+    },
+    {
+      "id": "unified-users-browser-target",
+      "status": "awaiting-target-host-update",
+      "checksExecuted": false,
+      "requiredChecks": [
+        "healthz ok/version 0.14.7/fingerprint fbdaf02c20067aaf0fcb4bd4bf0f8b4be678e88db3b982e66294ee20189fc533",
+        "owner login; Ctrl+F5; settings/users single form with name/email/password/confirm/role/state",
+        "complete existing unlinked membership without duplicate; create reviewer/approver and log in",
+        "edit role/status; disable old session; reenable requires new login; reset confirmation and activation link",
+        "previous fleet/task counters, catalogues/dates/attachments, auth/MFA and independent workflow preserved"
+      ],
+      "browserLimitation": "Chromium closed at launch before page open; no Windows/Docker target available"
+    },
+    {
+      "id": "manual-execution-dialog-browser-target",
+      "status": "awaiting-target-host-update",
+      "checksExecuted": false,
+      "requiredChecks": [
+        "healthz ok/version 0.14.8/fingerprint bff7cfc0a19525fd92f9ed9e06cfc6bb75c611ab21b80d4d004a249f0cf18515",
+        "Ctrl+F5; TEST-MX-001 manual dialog at full/narrow/short viewport",
+        "header and action bar remain visible; only body scrolls; all text has padding and wraps",
+        "background page scroll stops during open and returns on close",
+        "planning state Arabic; native required fields, draft save and footer feedback",
+        "existing records/accounts/counters and independent review/approval preserved"
+      ],
+      "localEvidence": "Actual React and production CSS with real API/SQLite passed; user screenshot confirms pre-fix issue. No original-browser pixels/Windows Docker executed."
+    },
+    {
+      "id": "customer-setup-browser-0.16.0",
+      "status": "target_host_acceptance_pending",
+      "checksExecuted": false,
+      "attemptAt": "2026-11-18T20:13:24.630748+03:00",
+      "reason": "Native Chromium launched through desktop UI; localhost:8187 refused connection from the browser and from a separate command while the originating server session remained active. No visual acceptance recorded.",
+      "requiredChecks": [
+        "healthz 0.16.0 plus fingerprint",
+        "owner-only company setup/history and preserved stale inputs",
+        "guided setup links and wide/narrow/short rendering",
+        "explicit partial view export, pending search metadata and complete-backup handoff",
+        "existing users/MFA/records and company acceptance"
+      ]
+    }
+  ],
+  "nextAction": "Apply AeroPlan-Update-0.16.0.zip to the existing verified 0.15.0 source, preserving the aeroplan project and runtime files. Verify healthz and the fingerprint, then follow docs/CUSTOMER_SETUP_0_16_0_AR.md on target Windows/Docker and native browser. Real-company acceptance remains pending; next proposed software work is responsibility assignment and aircraft-scope enforcement.",
+  "checkpoints": [
+    {
+      "id": "recovered-source",
+      "status": "passed",
+      "evidence": "Imported ZIP SHA-256 d5e0c882ae8e7802117a894ef1f08e3746839490c8e74d488fad41973d6a8d02; CRC, protected-path checks and 192-file source fingerprint matched."
+    },
+    {
+      "id": "install-build-audit",
+      "status": "passed",
+      "evidence": "npm ci installed 701 locked packages; TypeScript, production build and local storage passed; full audit zero."
+    },
+    {
+      "id": "full-regression",
+      "status": "passed",
+      "evidence": "All 29 scripts in selfhost/test.mjs exited successfully, including actual production HTTP."
+    },
+    {
+      "id": "representative-load-recovery",
+      "status": "passed",
+      "evidence": "P95 275 ms, errors 0; restore 1452 ms; maintenance gateway 5741 ms."
+    },
+    {
+      "id": "target-host-operational-acceptance",
+      "status": "pending",
+      "evidence": "Browser prevented before page open; Docker/PowerShell unavailable; real company acceptance not performed."
+    },
+    {
+      "id": "mfa-qr-local-verification",
+      "status": "software_verified",
+      "at": "2026-11-16T13:57:45.375236+00:00",
+      "evidence": "docs/proof/mfa-qr-2026-11-16/",
+      "results": {
+        "mfaChecks": 57,
+        "productionHttpChecks": 159,
+        "regressionGroups": 29,
+        "qrAssertions": 60,
+        "independentlyDecodedQrImages": 9
+      },
+      "targetHostEnrollment": "not yet performed"
+    },
+    {
+      "id": "settings-catalogues-local-verification",
+      "status": "software_verified",
+      "at": "2026-11-16T16:29:27.476961+00:00",
+      "evidence": "docs/proof/settings-0.14-2026-11-16/",
+      "results": {
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 32,
+        "catalogueChecks": 99,
+        "settingsUiStateChecks": 56,
+        "existingInstallationUpgradeChecks": 16,
+        "productionHttpChecks": 164,
+        "baseApiChecks": 799,
+        "advancedApiChecks": 358,
+        "mfaChecks": 57
+      },
+      "targetHost": "0.14 not deployed on the user host here"
+    },
+    {
+      "id": "settings-patch-extraction-rebuild",
+      "status": "passed",
+      "at": "2026-11-16T16:31:11.601086+00:00",
+      "evidence": "docs/proof/settings-0.14-2026-11-16/package-rehearsal.json",
+      "sourceFingerprint": "787d193f7e2cfb239071229b03a826349c83ce86d3f39663bcc3b752530cca02",
+      "results": {
+        "protectedSentinels": 5,
+        "crcAndFileHashes": "passed",
+        "extractedBuild": "passed",
+        "extractedTypeScript": "passed",
+        "extractedUpgradeChecks": 16,
+        "extractedHttpChecks": 164
+      },
+      "targetHost": "native Linux; Windows/Docker remains pending"
+    },
+    {
+      "id": "dropdown-layout-code-and-regression",
+      "status": "software_verified",
+      "at": "2026-11-16T18:44:50.268078+00:00",
+      "evidence": "docs/proof/dropdown-0.14.1-2026-11-16/",
+      "results": {
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 32,
+        "uiStateChecks": 56,
+        "catalogueChecks": 99,
+        "upgradePreservationChecks": 16,
+        "productionHttpChecks": 164,
+        "baseApiChecks": 799,
+        "mfaChecks": 57
+      },
+      "visualAndInteractionPassed": false
+    },
+    {
+      "id": "dropdown-patch-package-validation",
+      "status": "passed",
+      "evidence": "docs/proof/dropdown-0.14.1-2026-11-16/package-validation.json",
+      "sourceFingerprint": "1b3b5e9abda283ec1ba7db68426ae7b759eccfd81489be58c30d4a51d513fe52",
+      "results": {
+        "crcAndHashes": "passed",
+        "fullAndPatchedSources": "matched tested production build",
+        "protectedSentinelsPreserved": 5
+      },
+      "browserChecksExecuted": false
+    },
+    {
+      "id": "user-reported-host-0.14.0",
+      "status": "user_reported",
+      "evidence": {
+        "status": "ok",
+        "version": "0.14.0",
+        "buildFingerprint": "787d193f7e2cfb239071229b03a826349c83ce86d3f39663bcc3b752530cca02",
+        "source": "User supplied /healthz output in this conversation; not a 0.14.2 deployment check."
+      },
+      "currentReleaseDeployment": false
+    },
+    {
+      "id": "catalog-sync-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-16T20:13:21.585018+00:00",
+      "evidence": "docs/proof/catalog-sync-0.14.2-2026-11-16",
+      "results": {
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 33,
+        "clientSynchronizationChecks": 103,
+        "referenceApiChecks": 99,
+        "uiStaticAndStateChecks": 56,
+        "upgradePreservationChecks": 16,
+        "productionHttpChecks": 164,
+        "baseApiChecks": 799,
+        "advancedApiChecks": 358,
+        "mfaChecks": 57
+      },
+      "browserInteractionsExecuted": false
+    },
+    {
+      "id": "catalog-sync-cumulative-package",
+      "status": "passed",
+      "evidence": "docs/proof/catalog-sync-0.14.2-2026-11-16/package-validation.json",
+      "results": {
+        "crcAndFileHashes": "passed",
+        "fullAndPatchedSourceFingerprints": "matched tested production build",
+        "protectedSentinels": 5
+      },
+      "targetHostDeployed": false
+    },
+    {
+      "id": "user-confirmed-host-0.14.2-with-ui-defect",
+      "status": "user_reported",
+      "evidence": {
+        "status": "ok",
+        "version": "0.14.2",
+        "buildFingerprint": "not provided",
+        "continuedIssue": "Aircraft dropdowns still do not show settings values"
+      },
+      "currentReleaseDeployment": false
+    },
+    {
+      "id": "popup-layer-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-16T21:03:41.030197+00:00",
+      "evidence": "docs/proof/popup-0.14.3-2026-11-16/",
+      "sourceFingerprint": "88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+      "results": {
+        "domApiChecks": 47,
+        "productionCssPopupZIndex": 50,
+        "modalZIndex": 20,
+        "catalogSynchronizationChecks": 103,
+        "catalogApiChecks": 99,
+        "staticUiStateChecks": 56,
+        "existingInstallationPreservationChecks": 16,
+        "productionHttpChecks": 164,
+        "baseApiChecks": 799,
+        "advancedApiChecks": 358,
+        "mfaChecks": 57
+      },
+      "regressionGroups": 34,
+      "typescript": "passed",
+      "productionBuild": "passed",
+      "actualBrowserPixelsChecked": false,
+      "targetWindowsDockerUpdated": false
+    },
+    {
+      "id": "popup-0.14.3-package-validation",
+      "status": "passed",
+      "at": "2026-11-16T21:05:16.475524+00:00",
+      "evidence": "docs/proof/popup-0.14.3-2026-11-16/package-validation.json",
+      "results": {
+        "baseline": "Original AeroPlan-Docker-0.14.2.zip SHA-256 verified",
+        "crcAndSafePaths": "passed",
+        "fileBytesHashesAndFullMatch": "passed",
+        "fixedComboboxWrapper": "included",
+        "protectedSentinelFiles": 5,
+        "unchangedCriticalFiles": 27,
+        "fullAndPatchedFingerprint": "matches tested production build"
+      },
+      "sourceFingerprint": "88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+      "windowsDockerAndActualBrowserExecuted": false
+    },
+    {
+      "id": "aircraft-date-input-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-17T07:47:30.064056+00:00",
+      "evidence": "docs/proof/aircraft-dates-0.14.4-2026-11-17/",
+      "sourceFingerprint": "90e4b12c7eef4351131b91cef3f019e3ae3dc2cfd77265cf613ffe925b232818",
+      "results": {
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 35,
+        "dateChecks": 86,
+        "dateApiRequests": 16,
+        "unchangedComparedFiles": 224,
+        "upgradeChecks": 16,
+        "productionHttpChecks": 164
+      },
+      "browserAndTargetWindowsDockerExecuted": false
+    },
+    {
+      "id": "aircraft-date-patch-package-verification",
+      "status": "passed",
+      "at": "2026-11-17T07:49:48.320909+00:00",
+      "evidence": "docs/proof/aircraft-dates-0.14.4-2026-11-17/package-validation.json",
+      "results": {
+        "baselineVersion": "0.14.3",
+        "crcAndFileHashes": "passed",
+        "protectedSentinelsPreserved": 5,
+        "unchangedPriorFilesCompared": 224,
+        "fullAndPatchedSourceFingerprint": "matched tested build"
+      },
+      "targetWindowsDockerAndBrowserExecuted": false
+    },
+    {
+      "id": "aircraft-form-layout-save-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-17T08:23:54.077629+00:00",
+      "evidence": "docs/proof/aircraft-form-0.14.5-2026-11-17/",
+      "sourceFingerprint": "3c1bfdc7ecdb3851fad9b3c4004a4933e2a7e7eec4148df13af9845cd870a715",
+      "results": {
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 36,
+        "fullPageFormChecks": 43,
+        "actualApiWrites": 5,
+        "successfulDrafts": 2,
+        "successfulActivatedAircraft": 1,
+        "dateChecks": 86,
+        "dateApiRequests": 16,
+        "unchangedPriorFilesCompared": 472
+      },
+      "browserPixelsAndTargetWindowsDockerExecuted": false
+    },
+    {
+      "id": "aircraft-form-cumulative-package-verification",
+      "status": "passed",
+      "at": "2026-11-17T08:26:43.247862+00:00",
+      "evidence": "docs/proof/aircraft-form-0.14.5-2026-11-17/package-validation.json",
+      "results": {
+        "baselineVersions": [
+          "0.14.3",
+          "0.14.4"
+        ],
+        "crcSafePathsFileHashesAndFullMatch": "passed",
+        "protectedSentinelsPerBaseline": 5,
+        "unchangedPrior0_14_4Files": 472,
+        "allPatchedAndFullFingerprints": "matched tested production source"
+      },
+      "actualBrowserOrTargetWindowsDockerExecuted": false
+    },
+    {
+      "id": "local-account-password-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-17T12:12:44.248988+00:00",
+      "evidence": "docs/proof/local-accounts-0.14.6-2026-11-17/",
+      "sourceFingerprint": "d18fb89c9427191ceac8cd5a107649a28f921faebdb3c437a1f2423874840557",
+      "results": {
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 37,
+        "accountChecks": 75,
+        "productionHttpChecks": 179,
+        "actualPreviousVersionUpgradeChecks": 44,
+        "mfaChecks": 57,
+        "fullPageAircraftFormChecks": 43,
+        "unchangedDependencyVersions": true,
+        "newMigrations": 0
+      },
+      "actualBrowserPixelsChecked": false,
+      "targetWindowsDockerUpdated": false
+    },
+    {
+      "id": "local-account-cumulative-package-verification",
+      "status": "passed",
+      "at": "2026-11-17T12:16:35.088617+00:00",
+      "evidence": "docs/proof/local-accounts-0.14.6-2026-11-17/package-rehearsal.json and extracted-*.log",
+      "results": {
+        "baselineVersions": [
+          "0.14.3",
+          "0.14.4",
+          "0.14.5"
+        ],
+        "crcAndHashes": "passed",
+        "fullAndPatchedSourceFingerprints": "match tested production build",
+        "protectedSentinelsPerBaseline": 8,
+        "extractedProductionBuild": "passed",
+        "extractedTypeScript": "passed",
+        "extractedLocalAccountChecks": 75,
+        "extractedProductionHttpChecks": 179,
+        "extractedActualPreviousVersionUpgradeChecks": 44
+      },
+      "targetWindowsDockerAndBrowserExecuted": false
+    },
+    {
+      "id": "unified-users-0.14.7",
+      "status": "software_verified",
+      "evidence": "docs/proof/unified-users-0.14.7-2026-11-17/results.json",
+      "sourceFingerprint": "fbdaf02c20067aaf0fcb4bd4bf0f8b4be678e88db3b982e66294ee20189fc533"
+    },
+    {
+      "id": "unified-users-package-rehearsal",
+      "status": "passed",
+      "evidence": "docs/proof/unified-users-0.14.7-2026-11-17/package-rehearsal.json",
+      "protectedSamples": 12,
+      "unifiedUserChecks": 137,
+      "productionHTTPChecks": 184,
+      "sameSourceFingerprint": "fbdaf02c20067aaf0fcb4bd4bf0f8b4be678e88db3b982e66294ee20189fc533",
+      "windowsDocker": false
+    },
+    {
+      "id": "manual-dialog-0.14.8-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-17T18:49:41.239840+00:00",
+      "evidence": "docs/proof/manual-execution-0.14.8-2026-11-17/",
+      "sourceFingerprint": "bff7cfc0a19525fd92f9ed9e06cfc6bb75c611ab21b80d4d004a249f0cf18515",
+      "results": {
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 39,
+        "manualDialogChecks": 89,
+        "manualDialogUiPosts": 8,
+        "unifiedUserChecks": 137,
+        "accountChecks": 75,
+        "productionHttpChecks": 184,
+        "mfaChecks": 57,
+        "newMigrations": 0,
+        "unchangedDependencyVersions": true
+      },
+      "actualBrowserPixelsChecked": false,
+      "targetWindowsDockerUpdated": false
+    },
+    {
+      "id": "manual-dialog-cumulative-package-verification",
+      "status": "passed",
+      "at": "2026-11-17T18:56:51.883674+00:00",
+      "evidence": "docs/proof/manual-execution-0.14.8-2026-11-17/package-rehearsal.json and extracted-*.log",
+      "results": {
+        "compatibleSources": [
+          "0.14.6",
+          "0.14.7"
+        ],
+        "crcHashesSizesSafePathsAndNoSymlinks": "passed",
+        "protectedSentinelsPerSource": 12,
+        "fullAndPatchedFingerprint": "matches tested production",
+        "extractedProductionBuild": "passed",
+        "extractedTypeScript": "passed",
+        "extractedManualDialogChecks": 89,
+        "extractedUnifiedUserChecks": 137,
+        "extractedProductionHttpChecks": 184
+      },
+      "targetWindowsDockerAndBrowserExecuted": false
+    },
+    {
+      "id": "task-policy-implementation-and-targeted-verification",
+      "status": "in_verification",
+      "at": "2026-11-18T07:34:36.890268+00:00",
+      "targetedScenarios": "Task-policy integration and mounted UI scenarios passed; full regression and release packaging in progress.",
+      "targetWindowsDockerAndBrowserExecuted": false
+    },
+    {
+      "id": "task-policy-0.15.0-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-18T07:44:54.223011+00:00",
+      "evidence": "docs/proof/task-approval-0.15.0-2026-11-18",
+      "sourceFingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+      "results": {
+        "command": "npm run test:docker",
+        "exitCode": 0,
+        "groups": 41,
+        "taskPolicyAssertions": 204,
+        "taskPolicyUiAssertions": 70,
+        "taskPolicyUiPosts": 6,
+        "productionHttpChecks": 219,
+        "manualDialogAssertions": 89,
+        "unifiedUserChecks": 137,
+        "accountsChecks": 75,
+        "mfaChecks": 57
+      },
+      "nativeBrowserPixelsChecked": false,
+      "targetWindowsDockerUpdated": false
+    },
+    {
+      "id": "task-policy-cumulative-package-verification",
+      "status": "passed",
+      "at": "2026-11-18T07:50:43.408462+00:00",
+      "evidence": "docs/proof/task-approval-0.15.0-2026-11-18/package-rehearsal.json",
+      "results": {
+        "compatibleSources": [
+          "0.14.6",
+          "0.14.7",
+          "0.14.8"
+        ],
+        "protectedSentinelsPerSource": 12,
+        "crcHashesSizesSafePathsAndNoSymlinks": "passed",
+        "fullAndPatchedRuntimeFingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+        "extractedChecks": {
+          "sourceBaseline": "0.14.6",
+          "typescriptExitCode": 0,
+          "productionBuildExitCode": 0,
+          "taskPolicyAssertions": 204,
+          "taskUiAssertions": 70,
+          "taskUiPosts": 6,
+          "unifiedUserAssertions": 137,
+          "manualDialogAssertions": 89,
+          "productionHttpAssertions": 219,
+          "productionSourceFingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff"
+        }
+      },
+      "targetWindowsDockerAndBrowserExecuted": false
+    },
+    {
+      "id": "customer-setup-0.16.0-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-18T20:13:24.630748+03:00",
+      "evidence": "docs/proof/commercial-foundation-2026-11-18/results.json",
+      "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
+      "results": {
+        "lockedInstall": "passed",
+        "dependencyVersions": "unchanged",
+        "typescript": "passed",
+        "productionBuild": "passed",
+        "regressionGroups": 43,
+        "customerApiChecks": 72,
+        "customerUiChecks": 54,
+        "productionHttpChecks": 226,
+        "previousApprovalPolicyChecks": 204,
+        "previousApprovalUiChecks": 70,
+        "previousUserChecks": 137,
+        "previousManualDialogChecks": 89
+      },
+      "actualBrowserPixelsChecked": false,
+      "targetWindowsDockerUpdated": false,
+      "companyAcceptanceExecuted": false
+    },
+    {
+      "id": "customer-setup-0.16.0-package-rehearsal",
+      "status": "passed",
+      "at": "2026-11-18T20:17:57.082083+03:00",
+      "evidence": "docs/proof/commercial-foundation-2026-11-18/package-rehearsal.json",
+      "sourceRelease": "0.15.0",
+      "protectedSentinels": 12,
+      "unprotectedFilesMatchFull": true,
+      "extractedBuild": "passed",
+      "extractedTypeScript": "passed",
+      "extractedCustomerApi": 72,
+      "extractedCustomerUi": 54,
+      "extractedUsers": 137,
+      "extractedHttp": 226,
+      "targetWindowsDockerExecuted": false
+    }
+  ],
+  "lastRecovery": {
+    "archiveCommit": "9d279c9732136066ff4fee5188502992e397362e",
+    "archiveSha256": "ffeb25b3d4ff3f348db0e8ccfb910015429f808a077a9da8bc82b4b68c269abf",
+    "importedBaselineCommit": "43e59a17f6c07d72d92cc5cc42fdd417541e61b0",
+    "preservedPriorImplementation": true
+  },
+  "providedBaseline": {
+    "release": "0.15.0",
+    "archiveSha256": "f4adcb176eabb09c7586b0b35b6f5bc52b5b676637b2e2e08a8161ffd99333e2",
+    "runtimeFingerprintMatched": true
+  },
+  "commercialReadiness": {
+    "status": "operational_acceptance_pending",
+    "productScope": "Sellable aircraft-maintenance planning and records product",
+    "proposedDeployment": "Independent installation per customer; shared-SaaS isolation not established",
+    "nextSoftwareMilestone": "Planning work ownership, handover and aircraft-scope authorization; not implemented in 0.16.0",
+    "requirementsDocument": "docs/PRODUCT_READINESS_AR.md"
+  }
+}

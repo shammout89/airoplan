@@ -1,0 +1,4 @@
+# Use with compose.yaml to restore into a NEW volume while retaining the original.
+volumes:
+  aeroplan_data:
+    name: ${RESTORE_VOLUME:-aeroplan_restored_data}

@@ -1,0 +1,40 @@
+// All formulas are arithmetic expressions. No eval, functions from strings, or arbitrary property access.
+export const baseFields:Record<string,string[]>={aircraft:['name','manufacturer','family','model','msn','fleetNumber','registrationCountry','authority','manufactureDate','deliveryDate','operatorEntryDate','serviceDate','serviceHours','serviceCycles','hours','cycles','counterAsOf','counterSource','counterEvidenceVersionId','counterConfirmed','fleetStatus','operator','owner','maintenanceBase','notes'],task:['name','aircraftId','reference','date','hours','cycles','status']};
+export const numberFields=['hours','cycles','serviceHours','serviceCycles'];
+export function expression(source:string,values:Record<string,any>){
+ if(typeof source!=='string'||source.length>300)throw Error('صيغة حسابية طويلة أو غير صالحة');
+ const tokens=source.match(/\d+(?:\.\d+)?|[A-Za-z_][A-Za-z_0-9]*|[+*/(),-]/g)||[];if(tokens.join('')!==source.replace(/\s/g,'')||tokens.length>120)throw Error('رموز غير مسموحة في الصيغة');let i=0;const refs=new Set<string>();
+ const read=(evaluate=true):number=>{let t=tokens[i++];if(t==='+'||t==='-'){const v=read(evaluate);return t==='-'?-v:v}if(t==='('){const v=sum(evaluate);if(tokens[i++]!==')')throw Error('أقواس غير متطابقة');return v}if(/^\d/.test(t||''))return Number(t);if(!/^[A-Za-z_]\w*$/.test(t||''))throw Error('تعبير حسابي غير مكتمل');
+ if(tokens[i]==='('){if(!['min','max','round','abs'].includes(t))throw Error('دالة غير مسموحة');i++;const args=[sum(evaluate)];while(tokens[i]===','){i++;args.push(sum(evaluate))}if(tokens[i++]!==')'||args.length>10||(['abs','round'].includes(t)&&args.length!==1))throw Error('معاملات الدالة غير صالحة');return t==='round'?Math.round(args[0]*1e6)/1e6:t==='abs'?Math.abs(args[0]):t==='min'?Math.min(...args):Math.max(...args)}
+ refs.add(t);const value=values[t];if(evaluate&&(value===undefined||value===null||value===''||!Number.isFinite(Number(value))))throw Error('قيمة لازمة للحساب مفقودة: '+t);return evaluate?Number(value):1;};
+ const product=(ev=true)=>{let v=read(ev);while(tokens[i]==='*'||tokens[i]==='/'){const op=tokens[i++],r=read(ev);if(ev&&op==='/'&&r===0)throw Error('قسمة على صفر');v=op==='*'?v*r:v/r}return v};
+ const sum=(ev=true)=>{let v=product(ev);while(tokens[i]==='+'||tokens[i]==='-'){const op=tokens[i++],r=product(ev);v=op==='+'?v+r:v-r}return v};
+ const value=sum(false);if(i!==tokens.length||!tokens.length)throw Error('صيغة غير مكتملة');i=0;const calculate=()=>{const n=sum();if(!Number.isFinite(n)||Math.abs(n)>1e15)throw Error('نتيجة خارج النطاق');return Math.round(n*1e6)/1e6};return {refs:[...refs],calculate};
+}
+export function compare(actual:any,op:string,expected:any){if(op==='notEmpty')return actual!==''&&actual!==null&&actual!==undefined;if(actual===null||actual===undefined||actual==='')return false;if(op==='eq')return String(actual)===String(expected);if(op==='ne')return String(actual)!==String(expected);if(op==='contains')return String(actual).toLowerCase().includes(String(expected).toLowerCase());if(!Number.isFinite(Number(actual))||!Number.isFinite(Number(expected)))return false;return ({gt:Number(actual)>Number(expected),gte:Number(actual)>=Number(expected),lt:Number(actual)<Number(expected),lte:Number(actual)<=Number(expected)} as any)[op]??false}
+export function sortedFields(fields:any[],entity:string){const own=fields.filter(f=>f.entity===entity&&f.active!==false),byKey=new Map(own.map(f=>[f.key,f])),done=new Set<string>(),stack=new Set<string>(),result:any[]=[];
+ const visit=(f:any)=>{if(done.has(f.key))return;if(stack.has(f.key))throw Error('اعتماد دائري بين الحقول');stack.add(f.key);const deps=[...(f.visibleWhen?[f.visibleWhen.field]:[]),...(f.formula?expression(f.formula,{}).refs:[])];for(const key of deps){if(byKey.has(key))visit(byKey.get(key));else if(!baseFields[entity].includes(key))throw Error('حقل مرجعي غير موجود أو مؤرشف: '+key)}stack.delete(f.key);done.add(f.key);result.push(f)};own.sort((a,b)=>(a.order||0)-(b.order||0)).forEach(visit);return result}
+export function visible(f:any,values:any){return !f.visibleWhen||compare(values[f.visibleWhen.field],f.visibleWhen.op,f.visibleWhen.value)}
+export function applyCustom(fields:any[],entity:string,data:any,previous?:any,strict=true,allowIncomplete=false){const custom:any={...(previous?.custom||{}),...(data.custom||{})},values={...data,...custom},errors:Record<string,string>={};const known=new Set(fields.filter(f=>f.entity===entity).map(f=>f.key));for(const key of Object.keys(custom)){if(!known.has(key)){if(strict)throw Error('حقل مخصص غير معرّف: '+key);delete custom[key]}}
+ for(const f of sortedFields(fields,entity)){if(!visible(f,values)){if(previous?.custom&&f.key in previous.custom)custom[f.key]=previous.custom[f.key];else delete custom[f.key];values[f.key]=custom[f.key];continue}
+ let v=custom[f.key];if(typeof v==='string'&&v.trim()==='')v='';if(v!==undefined&&v!==null&&!['string','number'].includes(typeof v))throw Error('قيمة غير صالحة: '+f.label);if(f.formula){try{v=expression(f.formula,values).calculate();custom[f.key]=v}catch(e:any){errors[f.key]=e.message;v=null;custom[f.key]=null;if(strict&&f.required&&!allowIncomplete)throw Error(f.label+': '+e.message)}}
+ if(strict&&f.required&&!allowIncomplete&&(v===undefined||v===null||v===''))throw Error('الحقل مطلوب: '+f.label);
+ if(v!==undefined&&v!==null&&v!==''){
+ if(f.type==='number'&&(!Number.isFinite(Number(v))||Math.abs(Number(v))>1e15))throw Error('رقم غير صالح: '+f.label);
+ if(f.type==='date'&&(!/^\d{4}-\d{2}-\d{2}$/.test(v)||new Date(v+'T00:00:00Z').toISOString().slice(0,10)!==v))throw Error('تاريخ غير صالح: '+f.label);
+ if(f.type==='select'&&!String(f.options).split(',').map(s=>s.trim()).includes(String(v)))throw Error('خيار غير صالح: '+f.label);
+ if(f.type==='boolean'&&!['نعم','لا'].includes(v))throw Error('قيمة غير صالحة: '+f.label);
+ if(String(v).length>2000)throw Error('قيمة طويلة: '+f.label);
+ }values[f.key]=v;
+ }return {data:{...data,custom},values,errors};}
+export function normalizeField(raw:any,prior:any,fields:any[],records:any[]){const f={...raw,key:prior?.key||'custom_'+crypto.randomUUID().replaceAll('-',''),label:String(raw.label||'').trim(),required:raw.required===true,active:raw.active!==false,order:Number(raw.order||0)};
+ if(!f.label||f.label.length>100||!baseFields[f.entity]||!['text','number','date','select','boolean'].includes(f.type)||!Number.isFinite(f.order)||Math.abs(f.order)>10000)throw Error('تعريف الحقل غير صالح');
+ if(prior&&f.entity!==prior.entity)throw Error('لا يمكن نقل حقل إلى نموذج آخر');if(f.type==='select'){f.options=String(f.options||'').split(',').map((s:string)=>s.trim()).filter(Boolean).join(',');if(!f.options||new Set(f.options.split(',')).size!==f.options.split(',').length)throw Error('أدخل خيارات فريدة للقائمة')}
+ const used=records.filter(r=>r.kind===f.entity&&r.data.custom?.[f.key]!==undefined&&r.data.custom[f.key]!==''&&r.data.custom[f.key]!==null);
+ if(prior&&f.type!==prior.type&&used.length)throw Error('نوع الحقل مستخدم في بيانات محفوظة. أنشئ حقلًا جديدًا بدل تغييره');
+ if(f.type==='select'&&used.some(r=>!f.options.split(',').includes(String(r.data.custom[f.key]))))throw Error('لا يمكن حذف خيار مستخدم في بيانات محفوظة');
+ if(f.formula){if(f.type!=='number')throw Error('الحساب متاح للحقول الرقمية');const numeric=[...numberFields,...fields.filter(x=>x.entity===f.entity&&x.type==='number').map(x=>x.key),f.key];if(expression(f.formula,{}).refs.some(k=>!numeric.includes(k)))throw Error('الصيغة تقبل مراجع رقمية معرّفة فقط')}
+ if(f.visibleWhen){if(!['eq','ne','gt','gte','lt','lte','notEmpty'].includes(f.visibleWhen.op)||String(f.visibleWhen.value??'').length>500)throw Error('شرط ظهور غير صالح')}
+ sortedFields([...fields.filter(x=>x.key!==f.key),f],f.entity);return {field:f,impact:{recordsWithValues:used.length,nextSaveRequired:f.required,archivePreservesValues:true}};
+}
+export function csv(rows:any[],columns:string[]){const quote=(v:any)=>{let s=String(v??'');if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};return '\ufeff'+[columns.map(quote).join(','),...rows.map(r=>columns.map(k=>quote(r[k])).join(','))].join('\r\n')}

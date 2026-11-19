@@ -1,0 +1,37 @@
+{
+  "operations": {
+    "baseURL": "https://operations.example.invalid/",
+    "path": "/api/actual-sectors",
+    "token": "REPLACE_WITH_OPERATIONS_READ_TOKEN",
+    "itemsPath": "items",
+    "nextCursorPath": "nextCursor",
+    "cursorParam": "cursor",
+    "sinceParam": "since",
+    "watermarkPath": "watermark",
+    "sourcePrefix": "OPS",
+    "aircraftMap": {"EXTERNAL_AIRCRAFT_1": "REPLACE_WITH_REGISTRATION"},
+    "confirmOpening": false,
+    "openingAsOf": "",
+    "fields": {"externalId":"id","aircraftKey":"aircraft.id","flightNumber":"number","reference":"technicalLogReference","from":"departureAirport","to":"arrivalAirport","departure":"actualDepartureUTC","durationMinutes":"airborneMinutes","cycles":"cycles"}
+  },
+  "inventory": {
+    "baseURL": "https://inventory.example.invalid/",
+    "path": "/api/balances",
+    "token": "REPLACE_WITH_INVENTORY_READ_TOKEN",
+    "itemsPath": "items",
+    "nextCursorPath": "nextCursor",
+    "cursorParam": "cursor",
+    "inventoryMode": "on_hand_authoritative",
+    "stockMap": {"EXTERNAL_STOCK_1": "REPLACE_WITH_LOCAL_STOCK_CODE"},
+    "fields": {"externalId":"snapshotId","stockKey":"item.id","onHand":"onHand","asOf":"asOfUTC"}
+  },
+  "smtp": {
+    "host": "smtp.example.invalid",
+    "port": 587,
+    "secure": false,
+    "requireTLS": true,
+    "user": "REPLACE_WITH_SMTP_USER",
+    "password": "REPLACE_WITH_SMTP_PASSWORD",
+    "from": "planning@example.invalid"
+  }
+}

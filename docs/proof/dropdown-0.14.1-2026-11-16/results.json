@@ -1,0 +1,61 @@
+{
+  "release": "0.14.1",
+  "checkedAt": "2026-11-16T18:44:50.268078+00:00",
+  "baselineCommit": "5769a698998cb49dcef6179e8be94cb647177384",
+  "baselineZipSha256": "7ea911e8f1d15e5d29caca71f379623f9dda1d103df97040beb23662bc27f48d",
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "1b3b5e9abda283ec1ba7db68426ae7b759eccfd81489be58c30d4a51d513fe52",
+    "sourceFiles": 204
+  },
+  "change": "Explicit scoped flex row, a single outer border and non-shrinking icon controls; propagate disabled to the actual combobox input.",
+  "checks": {
+    "typescript": "passed",
+    "productionBuild": "passed",
+    "regressionGroups": 32,
+    "uiStateChecks": 56,
+    "catalogueChecks": 99,
+    "upgradePreservationChecks": 16,
+    "productionHttpChecks": 164,
+    "baseApiChecks": 799,
+    "mfaChecks": 57
+  },
+  "commands": [
+    "npx tsc --noEmit",
+    "node tests/settings-ui.test.mjs",
+    "npm run build:docker",
+    "npm run test:docker"
+  ],
+  "unchanged": [
+    "selfhost/auth.mjs",
+    "selfhost/mfa.mjs",
+    "selfhost/runtime.mjs",
+    "selfhost/server.mjs",
+    "lib/aircraft-references.ts",
+    "lib/permissions.ts"
+  ],
+  "databaseMigrationsChanged": false,
+  "dependencyVersionsChanged": false,
+  "browser": {
+    "status": "blocked",
+    "interactiveChecksExecuted": false,
+    "attempts": [
+      {
+        "url": "http://127.0.0.1:8774/",
+        "result": "Remote browser could not reach local test server: ERR_CONNECTION_REFUSED"
+      },
+      {
+        "url": "file:///workspace/shared/aeroplan-arrow-before.html",
+        "result": "Browser security policy does not allow file protocol; stopped without workaround."
+      }
+    ],
+    "notClaimed": [
+      "visual arrow containment",
+      "narrow-screen placement",
+      "mouse interaction",
+      "keyboard interaction"
+    ]
+  },
+  "targetHost": "Windows/Docker 0.14.1 deployment not performed in this workspace",
+  "finalClosure": false
+}

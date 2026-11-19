@@ -1,0 +1,83 @@
+{
+  "release": "0.14.3",
+  "verifiedAt": "2026-11-16T21:03:41.030197+00:00",
+  "runtime": "v24.22.1 / Linux / SQLite",
+  "baselineCommit": "243ca5099804d73f62c6467d97f3b8e551a2e8cd",
+  "userReportedHost": {
+    "status": "ok",
+    "version": "0.14.2",
+    "fingerprint": "not supplied",
+    "continuedDropdownProblem": true
+  },
+  "baselineReproduction": {
+    "status": "expected failure reproduced",
+    "popupComputedZIndex": 0,
+    "modalComputedZIndex": 20,
+    "renderedOption": "SYN UI MAKER",
+    "evidence": "before-fix-dom.log"
+  },
+  "commands": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --prefer-offline",
+      "exitCode": 0,
+      "evidence": "install-ci.log"
+    },
+    {
+      "command": "npx --no-install tsc --noEmit",
+      "exitCode": 0,
+      "evidence": "typescript.log"
+    },
+    {
+      "command": "npm run build:docker",
+      "exitCode": 0,
+      "evidence": "production-build.log"
+    },
+    {
+      "command": "npm run test:docker",
+      "exitCode": 0,
+      "groups": 34,
+      "evidence": "regression.log"
+    },
+    {
+      "command": "node tests/aircraft-dropdown-dom.integration.mjs",
+      "exitCode": 0,
+      "checks": 47,
+      "productionStylesheet": "BWcuyB8K.css",
+      "evidence": "after-fix-production-css-dom.log",
+      "reason": "Retested the enhanced probe against the built production CSS after all regression groups passed."
+    }
+  ],
+  "results": {
+    "domApiChecks": 47,
+    "productionCssPopupZIndex": 50,
+    "modalZIndex": 20,
+    "catalogSynchronizationChecks": 103,
+    "catalogApiChecks": 99,
+    "staticUiStateChecks": 56,
+    "existingInstallationPreservationChecks": 16,
+    "productionHttpChecks": 164,
+    "baseApiChecks": 799,
+    "advancedApiChecks": 358,
+    "mfaChecks": 57
+  },
+  "dependencyChanges": {
+    "directDevTools": {
+      "jsdom": "31.0.1",
+      "@testing-library/dom": "10.4.2",
+      "@testing-library/user-event": "14.6.12"
+    },
+    "addedLockEntries": 38,
+    "productionDependencyEntriesChanged": [],
+    "freshNpmAudit": "not run; prior automatic-review restriction preserved",
+    "testNodeRequirement": "Node 24.15+ or 22.22.2+; this run used 24.22.1"
+  },
+  "sourceFingerprint": {
+    "algorithm": "SHA-256",
+    "fingerprint": "88f56ca0d59d25e1e1dafa03f62132f66cfc2b862fbeec54afa8f9a04fb45c40",
+    "sourceFiles": 269
+  },
+  "browserPixelsChecked": false,
+  "actualBrowserArrowPointerActivationChecked": false,
+  "targetWindowsDockerUpdateExecuted": false,
+  "finalOperationalAcceptance": "pending"
+}

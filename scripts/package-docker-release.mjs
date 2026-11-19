@@ -1,0 +1,16 @@
+// Only committed source is packaged. A cumulative patch requires an explicit verified base commit.
+import {execFileSync} from 'node:child_process';import {mkdir,writeFile} from 'node:fs/promises';import path from 'node:path';import {createHash} from 'node:crypto';import {zipSync,strToU8} from 'fflate';
+import release from '../release.json' with {type:'json'};
+const out=path.resolve(process.argv[2]||'outputs/release'),base=process.argv[3]||null,commit=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+if(execFileSync('git',['status','--porcelain','--untracked-files=normal'],{encoding:'utf8'}).trim())throw Error('Commit the complete verified source before packaging');
+const protectedPath=f=>f==='compose.yaml'||f==='.env'||f.startsWith('.env.')&&f!=='.env.example'||/^(data|secrets|node_modules|\.sites-runtime|qa-data)\//.test(f)||/^compose\.(backup|services|production|full-restore)\.yaml$/.test(f)||f==='Start-AeroPlan-Restored.ps1';
+const tracked=execFileSync('git',['ls-tree','--name-only','-r',commit],{encoding:'utf8'}).trim().split('\n');if(tracked.some(f=>/^(data|secrets|node_modules|\.sites-runtime)\//.test(f)||/^\.env(?:$|\.)/.test(f)&&f!=='.env.example'||/\.(?:key|pem|sqlite|apbackup)$/.test(f)))throw Error('Protected runtime data or keys must not be tracked in a release');
+const entries={},files=[];if(base){
+ if(!/^[a-f0-9]{40}$/.test(base))throw Error('Use the exact verified base commit hash');execFileSync('git',['merge-base','--is-ancestor',base,commit]);
+ const paths=execFileSync('git',['diff','--name-only','--diff-filter=ACMR',base,commit],{encoding:'utf8'}).trim().split('\n').filter(Boolean),deleted=execFileSync('git',['diff','--name-only','--diff-filter=D',base,commit],{encoding:'utf8'}).trim();if(deleted)throw Error('Deletion-aware upgrade required before packaging a cumulative update');
+ for(const file of paths){if(protectedPath(file))continue;const bytes=execFileSync('git',['show',commit+':'+file],{maxBuffer:32*1024*1024});entries[file]=new Uint8Array(bytes);files.push({path:file,sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length})}
+ entries['UPDATE_MANIFEST.json']=strToU8(JSON.stringify({release:release.version,baseCommit:base,sourceCommit:commit,files,protected:['compose.yaml','.env','data/','secrets/','generated Compose overlays']},null,2)+'\n');
+}
+await mkdir(out,{recursive:true});const full=path.join(out,`AeroPlan-Docker-${release.version}.zip`),fullBytes=execFileSync('git',['archive','--format=zip','--prefix=AeroPlan-Docker/',commit],{maxBuffer:64*1024*1024});await writeFile(full,fullBytes);const result={release:release.version,sourceCommit:commit,baseCommit:base,patchFiles:files.length,full:{path:full,bytes:fullBytes.length,sha256:createHash('sha256').update(fullBytes).digest('hex')},patch:null};
+if(base){const patch=path.join(out,`AeroPlan-Docker-Cumulative-Update-${release.version}.zip`),bytes=zipSync(entries,{level:6});await writeFile(patch,bytes);result.patch={path:patch,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}}
+await writeFile(path.join(out,`AeroPlan-${release.version}-package-manifest.json`),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));

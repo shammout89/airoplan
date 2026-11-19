@@ -1,0 +1,24 @@
+{
+  "baseRelease": "0.14.0",
+  "patchRelease": "0.14.1",
+  "baseZipSha256": "7ea911e8f1d15e5d29caca71f379623f9dda1d103df97040beb23662bc27f48d",
+  "sourceCommit": "643086ff9f7c786f0f5e87ac9313e6af11a7e3b1",
+  "patchFiles": 16,
+  "crc": "passed",
+  "pathsAndFileHashes": "passed",
+  "fullAndPatchBytes": "matched",
+  "protectedSentinelsPreserved": [
+    "compose.yaml",
+    ".env",
+    "data/keep.txt",
+    "secrets/keep.txt",
+    "compose.services.yaml"
+  ],
+  "noDatabaseMigrationChange": true,
+  "rebuiltSourceVerification": "Both extracted sources matched the already-tested build exactly; no duplicate build claimed.",
+  "sourceFingerprintMatchesTestedBuild": "1b3b5e9abda283ec1ba7db68426ae7b759eccfd81489be58c30d4a51d513fe52",
+  "sourceFingerprintParts": [
+    "full",
+    "patched"
+  ]
+}

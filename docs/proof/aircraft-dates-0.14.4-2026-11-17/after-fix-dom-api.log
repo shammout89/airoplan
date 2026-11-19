@@ -1,0 +1,2 @@
+{"attempt":"202600-09-30","displayed":"2024-09-30","parentValue":"2024-09-30"}
+86 aircraft date DOM/API checks plus 16 real API requests passed: overlong years and impossible pasted dates rejected without rollover; native date controls, leap day, UTC, clear, read-only locks, submit blocking and saved aircraft/non-date values preserved. DOM simulation; no browser pixel or segmented-keyboard claim.

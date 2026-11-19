@@ -1,0 +1,67 @@
+{
+  "release": "0.15.0",
+  "sourceCommit": "5b7d1a577c4ae988e9a580e36559f9fb22f0a348",
+  "archiveChecks": "safe paths, no symlinks/duplicates, CRC, per-file hash/size, full/patch byte equality",
+  "fullSha256": "8e6dd77790f93fae24ea981295f5791cbc5c71c882911671bdd749327c31ceb5",
+  "patchSha256": "2295b446fdc83710d2acc7511aa89500e0c740b7531577672ab32161b0d38dcd",
+  "patchFiles": 79,
+  "fullFingerprint": {
+    "algorithm": "SHA-256",
+    "fingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+    "sourceFiles": 278
+  },
+  "baselines": [
+    {
+      "sourceRelease": "0.14.6",
+      "baselineSha256": "2bd030180335095956e73eec773041a921a9f824b9c411e38fa8a8ffaf24b07d",
+      "protectedSentinels": 12,
+      "allUnprotectedFilesMatchFullSource": true,
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "fingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+        "sourceFiles": 278
+      },
+      "directory": "/workspace/scratch/1292ae1b8981/policy-package-rehearsal/patched-0.14.6/AeroPlan-Docker"
+    },
+    {
+      "sourceRelease": "0.14.7",
+      "baselineSha256": "37f7df4a4138bf652dc48cbd8c4678c186a297f4cd5cb7d93199cc26e3c23842",
+      "protectedSentinels": 12,
+      "allUnprotectedFilesMatchFullSource": true,
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "fingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+        "sourceFiles": 278
+      },
+      "directory": "/workspace/scratch/1292ae1b8981/policy-package-rehearsal/patched-0.14.7/AeroPlan-Docker"
+    },
+    {
+      "sourceRelease": "0.14.8",
+      "baselineSha256": "f34373c70e14f2a56cd415d7522082db5301373aca7b6ac5cc7008174e9e6440",
+      "protectedSentinels": 12,
+      "allUnprotectedFilesMatchFullSource": true,
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "fingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff",
+        "sourceFiles": 278
+      },
+      "directory": "/workspace/scratch/1292ae1b8981/policy-package-rehearsal/patched-0.14.8/AeroPlan-Docker"
+    }
+  ],
+  "dockerExecuted": false,
+  "targetWindowsBrowserExecuted": false,
+  "archiveRole": "Verified candidate: final archive regeneration adds this evidence and documentation only; the runtime source fingerprint is unchanged.",
+  "extractedChecks": {
+    "sourceBaseline": "0.14.6",
+    "typescriptExitCode": 0,
+    "productionBuildExitCode": 0,
+    "taskPolicyAssertions": 204,
+    "taskUiAssertions": 70,
+    "taskUiPosts": 6,
+    "unifiedUserAssertions": 137,
+    "manualDialogAssertions": 89,
+    "productionHttpAssertions": 219,
+    "productionSourceFingerprint": "069ccbe05899e5488bfe526deba296c09438cb6df9af46da62ccd00097b25aff"
+  },
+  "verifiedAt": "2026-11-18T07:50:43.408462+00:00"
+}

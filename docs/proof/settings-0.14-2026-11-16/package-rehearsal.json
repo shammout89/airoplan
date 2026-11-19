@@ -1,0 +1,26 @@
+{
+  "baselineZipSha256": "d680900324856705cdf70f9cf9be0836e054bd7db7b951a92f5e785c55efde92",
+  "patchSourceCommit": "64afb178d97225b607bedf4eba5b4d938b0b0fa9",
+  "patchFiles": 52,
+  "protectedSentinelsPreserved": [
+    "compose.yaml",
+    ".env",
+    "data/keep.txt",
+    "secrets/keep.txt",
+    "compose.services.yaml"
+  ],
+  "crc": "passed",
+  "paths": "passed",
+  "fileHashes": "passed",
+  "checkedAt": "2026-11-16T16:31:11.601086+00:00",
+  "extractedProductionBuild": "passed",
+  "extractedTypeScript": "passed",
+  "extractedUpgradeChecks": 16,
+  "extractedProductionHttpChecks": 164,
+  "sourceFingerprint": {
+    "algorithm": "SHA-256",
+    "fingerprint": "787d193f7e2cfb239071229b03a826349c83ce86d3f39663bcc3b752530cca02",
+    "sourceFiles": 204
+  },
+  "dependencyInstall": "reused the same locked installed dependency tree via a local symlink; source extracted from original ZIP plus patch"
+}

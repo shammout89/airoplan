@@ -1,0 +1,5 @@
+{
+  "status": "blocked_by_automatic_approval_review",
+  "reason": "The additional npm audit request sends dependency manifest metadata to the external npm registry. No retry or workaround was used.",
+  "lastKnownAudit": "The earlier verification record is retained as history; no new audit pass is claimed."
+}

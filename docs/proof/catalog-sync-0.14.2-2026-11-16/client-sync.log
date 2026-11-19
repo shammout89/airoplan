@@ -1,0 +1,1 @@
+103 catalogue synchronization checks passed over the actual API and client store: shared readers, all five lists, cross-tab notifications, hidden/visible tabs, visible polling, linked choices, draft refresh, historical retention, disabled ancestry, race protection, failure recovery, authorization and lifecycle cleanup. Browser interactions were not executed.

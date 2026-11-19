@@ -1,0 +1,32 @@
+{
+  "phase": "initial-package-rehearsal",
+  "release": "0.14.7",
+  "archiveCRC": true,
+  "safeFiles": 518,
+  "byteComparisonsPassed": 518,
+  "protectedSentinels": [
+    "compose.yaml",
+    "compose.production.yaml",
+    "compose.backup.yaml",
+    "compose.services.yaml",
+    "compose.full-restore.yaml",
+    "compose.restore.yaml",
+    ".env",
+    ".env.production",
+    "data/preserved.txt",
+    "secrets/preserved.key",
+    "backups/preserved.bin",
+    "Start-AeroPlan-Restored.ps1"
+  ],
+  "allProtectedBytesPreserved": true,
+  "pathTraversalCheck": true,
+  "sourceCommit": "4c127e96a7c4df6823ca19da13eb0d4efc9091bc",
+  "baselineArchiveSha256": "2bd030180335095956e73eec773041a921a9f824b9c411e38fa8a8ffaf24b07d",
+  "sequenceExitCode": 0,
+  "buildSuccessMarker": "✓ built in",
+  "unifiedUserChecks": 137,
+  "productionHTTPChecks": 184,
+  "sourceFingerprint": "fbdaf02c20067aaf0fcb4bd4bf0f8b4be678e88db3b982e66294ee20189fc533",
+  "sameAsVerifiedSource": true,
+  "windowsDockerExecuted": false
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "typescript",
+    "command": "node node_modules/typescript/bin/tsc --noEmit",
+    "exitCode": 0,
+    "durationMs": 8767,
+    "log": "/workspace/scratch/9a5bc666bbb4/aeroplan_product_work/rehearsal-typescript.log"
+  },
+  {
+    "name": "customer-api",
+    "command": "node tests/customer-setup.integration.mjs",
+    "exitCode": 0,
+    "durationMs": 428,
+    "log": "/workspace/scratch/9a5bc666bbb4/aeroplan_product_work/rehearsal-customer-api.log"
+  },
+  {
+    "name": "customer-ui",
+    "command": "node tests/customer-setup-ui.integration.mjs",
+    "exitCode": 0,
+    "durationMs": 4523,
+    "log": "/workspace/scratch/9a5bc666bbb4/aeroplan_product_work/rehearsal-customer-ui.log"
+  },
+  {
+    "name": "users",
+    "command": "node tests/users-management.integration.mjs",
+    "exitCode": 0,
+    "durationMs": 3860,
+    "log": "/workspace/scratch/9a5bc666bbb4/aeroplan_product_work/rehearsal-users.log"
+  },
+  {
+    "name": "http",
+    "command": "node selfhost/http.test.mjs",
+    "exitCode": 0,
+    "durationMs": 4402,
+    "log": "/workspace/scratch/9a5bc666bbb4/aeroplan_product_work/rehearsal-http.log"
+  }
+]

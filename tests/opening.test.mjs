@@ -1,0 +1,15 @@
+import {build} from 'esbuild';import assert from 'node:assert/strict';
+await build({entryPoints:['lib/scheduling.ts'],outfile:'.sites-runtime/opening-engine.mjs',bundle:true,platform:'node',format:'esm'});
+const {initializeOpening,nextOccurrence,scheduledLimits}=await import('../.sites-runtime/opening-engine.mjs');let checks=0;const eq=(a,b)=>{assert.deepEqual(a,b);checks++},bad=f=>{assert.throws(f);checks++};
+const service={date:'2024-01-01',hours:0,cycles:0},current={hours:1000,cycles:100};
+const policy={version:1,classification:'standard',basis:{hours:'accomplishment',cycles:'previous_due',calendar:'fixed_origin'},reference:'SYNTHETIC SOURCE',evidenceVersionIds:['proof'],variation:{enabled:false,hours:0,cycles:0,days:0}};
+const definition={first:{hours:100,cycles:10,calendar:30,unit:'days'},repeat:{hours:100,cycles:10,calendar:1,unit:'months'},schedulePolicy:policy};
+const raw={ordinal:3,reference:'SYNTHETIC OPENING',lastDone:{date:'2024-03-01',hours:190,cycles:19},previousDue:{date:'2024-02-29',hours:200,cycles:20},nextDue:{date:'2024-03-31',hours:290,cycles:30}};
+const initialized=initializeOpening(definition,service,current,raw,'root','source');eq(initialized.limits,{date:'2024-03-31',hours:290,cycles:30});eq(scheduledLimits(initialized.schedule),{hours:290,cycles:30,date:'2024-03-31'});
+let child=nextOccurrence({...initialized.limits,schedule:initialized.schedule},{date:'2024-03-20',hours:280,cycles:28});eq(child.limits,{hours:380,cycles:40,date:'2024-04-30'});
+child=nextOccurrence({...child.limits,schedule:child.schedule},{date:'2024-04-20',hours:370,cycles:38});eq(child.limits,{hours:470,cycles:50,date:'2024-05-31'});
+for(const change of [{ordinal:1},{ordinal:2.5},{ordinal:1000001},{reference:''},{lastDone:{...raw.lastDone,date:'bad'}},{lastDone:{...raw.lastDone,hours:1001}},{lastDone:{...raw.lastDone,cycles:19.5}},{previousDue:{...raw.previousDue,cycles:''}},{nextDue:{...raw.nextDue,date:'2024-03-30'}},{nextDue:{...raw.nextDue,hours:291}}])bad(()=>initializeOpening(definition,service,current,{...raw,...change},'root','source'));
+const fixed={...definition,schedulePolicy:{...policy,basis:{hours:'fixed_origin',cycles:'fixed_origin',calendar:'fixed_origin'}}};
+const f=initializeOpening(fixed,service,current,{...raw,nextDue:{date:'2024-03-31',hours:300,cycles:30}},'root','source');eq(nextOccurrence({...f.limits,schedule:f.schedule},{date:'2024-03-31',hours:300,cycles:30}).limits.hours,400);
+bad(()=>scheduledLimits({...f.schedule,opening:{...f.schedule.opening,originalOrigin:{...f.schedule.opening.originalOrigin,date:'2024-01-30'}}}));
+console.log(`${checks} opening-status checks passed: documented counters, per-axis bases, fixed month-end anchors, ordinal mapping, missing sources and invalid imports.`);

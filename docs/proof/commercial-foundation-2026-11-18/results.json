@@ -1,0 +1,59 @@
+{
+  "release": "0.16.0",
+  "verifiedAt": "2026-11-18T20:11:42.239988+03:00",
+  "source": {
+    "algorithm": "SHA-256",
+    "fingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
+    "sourceFiles": 283
+  },
+  "baseline": {
+    "release": "0.15.0",
+    "types": "passed",
+    "build": "passed",
+    "regressionGroups": 41
+  },
+  "results": {
+    "lockedInstall": "passed",
+    "dependencyVersions": "unchanged",
+    "typescript": "passed",
+    "productionBuild": "passed",
+    "regressionGroups": 43,
+    "customerApiChecks": 72,
+    "customerUiChecks": 54,
+    "productionHttpChecks": 226,
+    "previousApprovalPolicyChecks": 204,
+    "previousApprovalUiChecks": 70,
+    "previousUserChecks": 137,
+    "previousManualDialogChecks": 89
+  },
+  "browser": {
+    "executed": false,
+    "attempt": "Native Chromium launched through desktop UI; localhost:8187 refused connection from the browser and from a separate command while the originating server session remained active. No visual acceptance recorded."
+  },
+  "windowsDocker": {
+    "executed": false,
+    "reason": "Docker executable and Windows target unavailable"
+  },
+  "companyAcceptance": {
+    "executed": false
+  },
+  "evidence": "docs/proof/commercial-foundation-2026-11-18/",
+  "initialRegressionAttempt": "Old source-string expectation for the initial settings list required updating after adding the company section. The actual page/company/export checks and final full suite passed.",
+  "packaging": {
+    "safeArchiveChecks": "passed",
+    "compatibleBaseline": "0.15.0",
+    "protectedSentinels": 12,
+    "unprotectedFilesMatchFull": true,
+    "fingerprintMatches": true,
+    "extractedSource": {
+      "productionBuild": "passed",
+      "typescript": "passed",
+      "customerApiChecks": 72,
+      "customerUiChecks": 54,
+      "usersChecks": 137,
+      "productionHttpChecks": 226
+    },
+    "evidence": "package-rehearsal.json and extracted-*.log",
+    "note": "Recorded archive SHA values identify the rehearsal artifacts; final documentation/proof packaging preserves runtime source fingerprint and is verified separately."
+  }
+}

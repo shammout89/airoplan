@@ -1,0 +1,23 @@
+{"attempt":"202600-09-30","displayed":"202600-09-30","parentValue":"202600-09-30"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: An overlong manually entered year must not replace the aircraft date
++ actual - expected
+
++ '202600-09-30'
+- '2024-09-30'
+      ^
+
+    at eq (file:///workspace/scratch/1292ae1b8981/date-work/AeroPlan-Docker/tests/aircraft-dates-dom.integration.mjs:26:58)
+    at file:///workspace/scratch/1292ae1b8981/date-work/AeroPlan-Docker/tests/aircraft-dates-dom.integration.mjs:36:2 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '202600-09-30',
+  expected: '2024-09-30',
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

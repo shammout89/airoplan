@@ -1,0 +1,1 @@
+16 existing-installation upgrade checks passed: username/owner, password hashes, active membership, sessions, MFA state/keys, signed audit, exact legacy aircraft bytes and private files retained; new indexes applied once and original login remains valid.

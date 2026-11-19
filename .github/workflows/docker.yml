@@ -1,0 +1,24 @@
+name: Docker build and persistence checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: docker compose config --quiet
+      - run: npm run build:docker
+      - run: npm run test:docker
+      - run: docker build --tag aeroplan:test .
+      - run: node selfhost/http.test.mjs
+        env:
+          AEROPLAN_HTTP_DOCKER: "1"
+          AEROPLAN_DOCKER_IMAGE: aeroplan:test

@@ -1,0 +1,1 @@
+72 customer setup/export checks passed: actual routes/SQLite, owner-only access, CSRF, validation, scoped history, atomic conflict/rollback, recovery epoch, protected semantic restore, unchanged aircraft and explicit 50-of-53 view export. No company acceptance claim.

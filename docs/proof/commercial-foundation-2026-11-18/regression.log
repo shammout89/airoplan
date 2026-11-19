@@ -1,0 +1,65 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> site-creator-vinext-starter@0.16.0 test:docker
+> node selfhost/test.mjs
+
+PASS: local SQL atomicity, migration guards, private object integrity, independent backup files, owner bootstrap, enrollment, sessions, revocation, rate limits and restart persistence.
+75 local-account checks passed: immediate reviewer/approver login, hashing, ownership, atomic failures/race, existing passwords/sessions/MFA/keys/aircraft/documents, old links/reset, disabled membership, MFA policy and full backup/restore.
+137 unified-user checks passed: actual 0.14.6 database upgrade, account plus membership creation, direct login, completed old memberships, roles/status, owner and manager restrictions, CSRF/recovery gate, validation, duplicate/race rejection, audit rollback, disabled-session revocation, pending/reset links, MFA, mounted React form/feedback/buttons, retained old identities/sessions/keys/records/attachments, and full backup/restore. Mounted DOM simulation; separate browser acceptance required.
+72 customer setup/export checks passed: actual routes/SQLite, owner-only access, CSRF, validation, scoped history, atomic conflict/rollback, recovery epoch, protected semantic restore, unchanged aircraft and explicit 50-of-53 view export. No company acceptance claim.
+54 mounted customer/export checks passed with actual API/SQLite and production CSS: first-use/retry, owner-only navigation, native validation, busy guard, saved history, retained stale inputs, explicit reload, six setup actions, honest 50-of-53 export, full-backup handoff and role/keyboard boundaries. DOM simulation; no browser pixels or Windows/Docker acceptance.
+57 MFA checks passed: RFC 6238 vectors, encrypted enrollment, password and second factor, persistent replay prevention, one-use recovery, role policy, expiry, session revocation and complete encrypted restore.
+Audit anchor update failed; the signed database commit was retained
+21 signed audit checks passed: Ed25519 chain, independent export verification, source/update/delete guards, transaction rollback, schema tampering, restart, full backup and tail truncation detection.
+35 complete encrypted-backup checks passed: consistent SQLite and objects, accounts, key/tamper rejection, isolated restoration, session revocation, retention, scheduling, retries and external-destination failures.
+34 native services checks passed: real paginated HTTP contract, mappings, source errors, TLS SMTP delivery, Message-ID, schedule/deduplication, secret redaction and post-restore pause.
+34 advanced domain checks passed: DST, missing local dates, inclusive/exclusive deadlines, flight days, numeric boundaries, independent APU/TBO, recurrence and compliance denominators.
+361 advanced API checks passed on SQLite: units/APU, overhaul, stale review, MEL versions/extensions/repair, defect exceptions, live source idempotency, stock reservations, email outbox and release evidence.
+43 aircraft domain, draft flexibility and backup compatibility checks passed
+99 aircraft catalogue checks passed: linked selections, independent permissions/delegation, duplicate/stale writes, required activation fields, retained legacy labels and disabled values, version history, controlled import and isolated backup restore.
+103 catalogue synchronization checks passed over the actual API and client store: shared readers, all five lists, cross-tab notifications, hidden/visible tabs, visible polling, linked choices, draft refresh, historical retention, disabled ancestry, race protection, failure recovery, authorization and lifecycle cleanup. Browser interactions were not executed.
+Mounted production CSS: BTPTEWsZ.css
+{"renderedOption":"SYN UI MAKER","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI FAMILY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI VARIANT","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI COUNTRY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI AUTHORITY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI COUNTRY","positionerZ":50,"overlayZ":20}
+{"renderedOption":"SYN UI AUTHORITY","positionerZ":50,"overlayZ":20}
+47 actual-component DOM/API checks passed: settings create linked values and an inactive value, aircraft options render above the modal, search/keyboard selection and mouse selection work, clearing a parent clears its child, selected IDs are preserved and the server accepts the activated aircraft. DOM simulation; no browser pixel-rendering claim.
+{"attempt":"202600-09-30","displayed":"2024-09-30","parentValue":"2024-09-30"}
+86 aircraft date DOM/API checks plus 16 real API requests passed: overlong years and impossible pasted dates rejected without rollover; native date controls, leap day, UTC, clear, read-only locks, submit blocking and saved aircraft/non-date values preserved. DOM simulation; no browser pixel or segmented-keyboard claim.
+Mounted production CSS: BTPTEWsZ.css
+{"stage":"rejected-year-before-save","displayed":"2024-09-30","valid":true,"message":""}
+{"stage":"duplicate-save","result":{"status":400,"body":{"error":"تسجيل الطائرة أو هوية المصنع والطراز وMSN موجودة"}},"visible":"تعذّر حفظ الطائرةتسجيل الطائرة أو هوية المصنع والطراز وMSN موجودة"}
+43 mounted full-page aircraft form checks passed with actual read/write API and SQLite: valid draft and fully activated aircraft saves through the real modal, all five dropdown selections, rejected-date recovery without blur, visible duplicate/activation/native validation errors, preserved form values, pending-write buttons and saved records, plus scoped layout CSS. DOM simulation; no pixel or target-Windows claim.
+89 manual accomplishment dialog checks passed with actual React, production CSS and execution/document API/SQLite: padded scroll body, fixed header/footer structure, native external-form submission, busy protection, Arabic planning state, error visibility, internal/external evidence save, independent review/approval/closure, view-only roles and restored page scrolling. 8 actual UI POSTs; no browser pixels or Windows/Docker claim.
+56 settings UI/state checks passed: one administrative entry, permission-scoped hub/cards, five accessible searchable fields and red required markers, parent-child clearing, retained selections and unchanged counters. Static SSR/state tests; no browser-interaction claim.
+16 existing-installation upgrade checks passed: username/owner, password hashes, active membership, sessions, MFA state/keys, signed audit, exact legacy aircraft bytes and private files retained; new indexes applied once and original login remains valid.
+35 recurrence and boundary checks passed
+80 remediation checks passed: strict task data, legacy corruption, manual accomplishment, independent approval, close guard, TBO forecast and independent utilisation.
+108 assembly checks passed: nested life, independent parent counters, cycle/position guards, detach history, approval, stale counter guard, semantic backup.
+14 future-sector checks passed: intra-sector crossing, cycle basis, department calendar day, horizon quality, independent counter gap, overlap and station sequence.
+73 quality API checks passed: actual evidence, credential scope/expiry, independent inspections, calibration windows, traced lot consumption, complete measured work cards and source-controlled closure.
+67 engineering checks passed: structured effectivity, known/unknown modification state, independent source review, stale applicability, protected storage and documented reactivation.
+30 access policy checks passed: independent approval, immediate permission narrowing, role ceiling, read access, controlled revision and automatic read-only expiry.
+204 task policy integration checks passed: owner-only versioning, two/three-person flows, frozen requests, classification/escalation, all-contributor independence, rework/history, stale revisions, live roles, evidence changes, imports, legacy records, semantic/live restore, causal event ordering and encrypted full restore/login.
+70 task approval UI/CSS checks passed with 6 real UI POSTs: owner/read-only settings, conflict retention, combined confirmations, stale aircraft, independent decisions, fixed footer/scroll, keyboard dismissal and previous screen links. DOM/CSS only; no browser pixels or Windows acceptance.
+27 statistical checks passed: independent chi-square quantiles from zero to 10000 events, nonzero upper limit after zero events, absent exposure and invalid inputs.
+17 reliability statistics checks passed: model/ATA exposure, confirmed failure classification, independent MTBUR/MTBF, actual removal windows and unknown corrected exposure.
+77 unit amendment checks passed: preserved original, independent correction chain, open recurrence recalculation, historical-limit preservation, variation timing/revocation, effective counter floors and isolated restore.
+56 reporting checks passed: confidence-based effectiveness, source staleness, immutable approved figures, safe printable HTML, traceable snapshots and isolated restoration.
+50 interface contract checks passed: executable mappings, unit conversion, opening identities, invalid inputs, duplicate/conflict coverage, independent acceptance, no posting, no false live-connection status and isolated restore.
+62 scheduling checks passed: per-axis bases, fixed calendar anchors, leap years, mixed intervals, late catch-up, precision, authorized limits and legacy compatibility.
+16 opening-status checks passed: documented counters, per-axis bases, fixed month-end anchors, ordinal mapping, missing sources and invalid imports.
+152 scheduling API checks passed on SQLite: evidence, roles, pinned approvals, pre-due grants, no stacking, actual exceptions, concurrent authorization, recurrence, corrections, reports and backup semantics.
+23 flight normalization and ledger arithmetic checks passed
+36 forecast, lifetime and resource-capacity checks passed
+20 package schedule checks passed: task windows, dependencies, critical path, manpower/tool capacity and within-package due risks.
+20 formula, condition, migration-safety and CSV checks passed
+123 extension scenarios executed: document publication, inventory reservations/issues, pinned approvals, field integrity, atomic Excel imports, alerts and reports.
+106 technical requirement scenarios passed: source versions, independent approvals, aircraft/component scope, applicability, execution evidence, stale corrections, identity changes and revision gaps.
+Aircraft card API scenarios passed, including evidence pinning, blocked forecasts, legacy upgrade and import isolation.
+{"ok":true,"isolation":"independent disposable D1 database","rows":508,"tables":18,"files":3,"digest":"ed337e23c485c70d36e48c38f3e725ebd1e2f78fda929150addf00f8ba31b3f6","durationMs":2948}
+799 API checks passed: prior regressions plus forecast profiles, capacity conflicts, concurrent reservations, package completion, component life, occupied/expired installation rejection, removal/reinstallation without life reset, movement staleness and independent approvals.
+226 production HTTP checks passed (Node process): local authentication, spoof/CSRF denial, SSR/assets, four roles, independent approval, file integrity, backup/drill, disabled membership, session revocation and restart persistence.
