@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "AeroPlan",
   "release": "0.16.0",
-  "updatedAt": "2026-11-20T10:39:00.000Z",
+  "updatedAt": "2026-11-20T11:25:30.000Z",
   "displayTimeZone": "Asia/Amman",
   "runtime": "v24.22.3 / Linux / SQLite",
   "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
   "sourceFiles": 283,
   "upstreamSourceCommit": "969a7b1286764b2650bc3f5faaa4be0df4e49986",
-  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, task creation modal field ordering, 4-digit year date-input hardening, unified 4-stage task lifecycle & role guidance, execution action inbox routing, 3-tab execution modal organization, plan row clarity, and default sidebar grouping.",
+  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, task creation modal field ordering, 4-digit year date-input hardening, unified 4-stage task lifecycle & role guidance, execution action inbox routing, 3-tab execution modal organization, plan row clarity, default sidebar grouping, and program modal save button wording.",
   "completionRule": {
     "softwareVerified": "Implementation plus applicable automated regression checks and production build passed with recorded evidence.",
     "fullyClosed": "All agreed requirements, applicable UI/target-host checks, and required real operational evidence passed; no known unmet requirement remains.",
@@ -16,7 +16,7 @@
     "syntheticEvidenceIsCompanyAcceptance": false,
     "promiseOfNoFutureDefects": false
   },
-  "currentPhase": "ui-ux-clarity-and-lifecycle-guidance-software-verified",
+  "currentPhase": "program-save-button-label-software-verified",
   "finalClosure": false,
   "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [
     "Pre-existing ESLint @typescript-eslint/no-explicit-any and legacy prefer-const/react-hooks errors in untouched legacy files; new and refactored UX modules (lib/task-workflow-guide.ts, lib/task-workflow-guide.test.ts, lib/action-inbox.ts, lib/planning-ux.test.ts, app/components/TaskLifecycleBar.tsx, app/components/ActionInbox.tsx) pass eslint cleanly with 0 errors and 0 warnings.",
@@ -1178,6 +1178,20 @@
         ],
         "dockerProductionBuild": "passed (npm run build:docker) and compile_applet passed",
         "browserVerification": "passed in seeded Headless Chromium (1440x900 & 390x844): 0 console/page errors, 0 HTTP >= 400 responses, verified ActionInbox execution routing, collapsed secondary sidebar groups, clean plan table execution sub-status, 4-stage TaskLifecycleBar with Arabic role-guidance callout, 3 accessible tabs inside Execution modal, AircraftDateInput on execution date, and zero mobile horizontal overflow (scrollW 390 === innerW 390)"
+      },
+      "targetWindowsDockerExecuted": false,
+      "companyAcceptanceExecuted": false
+    },
+    {
+      "id": "program-save-button-label-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-20T11:25:30.000Z",
+      "evidence": "Headless Chromium playwright-cli test (r4-program-save-btn.png) + 20 unit tests + npm run build:docker + targeted API/UI/HTTP integration suites",
+      "results": {
+        "unitTests": "20/20 passed (lib/task-workflow-guide.test.ts, lib/planning-ux.test.ts, lib/aircraft-scope.test.ts, lib/aircraft-date-input.test.ts)",
+        "regressionSuitesPassed": "planning.test (36), remediation (80), engineering (67), aircraft-scope (32), task-approval-policy (204), task-approval-ui (70), manual-execution-dialog (89), customer-setup-ui (54), aircraft-form-save (43), selfhost/http (226)",
+        "dockerProductionBuild": "passed (npm run build:docker)",
+        "browserVerification": "passed in seeded Headless Chromium (1440x900): confirmed 'حفظ المسودة' replaced with 'حفظ' inside Programs modal, verified creating AMP-A320N Rev 01 and editing draft notes cleanly with 0 console/page errors and 0 HTTP >= 400 responses"
       },
       "targetWindowsDockerExecuted": false,
       "companyAcceptanceExecuted": false
