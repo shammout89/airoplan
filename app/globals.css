@@ -195,3 +195,39 @@ aside nav{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column
 .task-picker-full>div{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;align-items:end}
 .task-picker-full .actions{grid-column:1/-1;align-items:center}
 @media(max-width:760px){.task-picker-full>div{grid-template-columns:1fr}}
+
+/* Lifecycle Progress Bar, Role Guidance & Execution Tabs */
+.lifecycle-bar{border:1px solid #d5e5df;background:#f7fbf9;border-radius:10px;padding:16px 18px;margin-bottom:18px;display:grid;gap:14px}
+.lifecycle-bar-compact{padding:12px 14px;margin:12px 0 16px;gap:10px}
+.lifecycle-bar-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.lifecycle-bar-head strong{display:block;font-size:13px;color:#144941}
+.lifecycle-bar-head p{margin:4px 0 0;font-size:12px;color:#47636e;line-height:1.7}
+.lifecycle-waiting{background:#fff;border:1px solid #d9e6e1;border-radius:8px;padding:6px 12px;min-width:165px}
+.lifecycle-waiting small{margin:0;color:#68808b;font-size:10px}
+.lifecycle-waiting strong{font-size:12px;color:#0b6a5f}
+.lifecycle-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.lifecycle-step{display:flex;align-items:flex-start;gap:9px;padding:10px;border-radius:8px;border:1px solid #e1ebe6;background:#fff}
+.lifecycle-step.is-done{border-color:#bfe2d3;background:#eff8f4}
+.lifecycle-step.is-active{border-color:#0b746b;background:#fff;box-shadow:0 0 0 2px #0b746b1a}
+.lifecycle-step.is-blocked{border-color:#e8c7c3;background:#fff6f5}
+.lifecycle-step-index{width:24px;height:24px;border-radius:50%;display:inline-grid;place-items:center;font-size:11px;font-weight:700;flex-shrink:0;background:#eef3f5;color:#5b7180}
+.lifecycle-step.is-done .lifecycle-step-index{background:#0b746b;color:#fff}
+.lifecycle-step.is-active .lifecycle-step-index{background:#e7f4f1;color:#08685d;border:1px solid #0b746b}
+.lifecycle-step.is-blocked .lifecycle-step-index{background:#fbeae8;color:#a8443a}
+.lifecycle-step-text{min-width:0;display:grid;gap:2px}
+.lifecycle-step-text strong{font-size:11px;color:#193545;line-height:1.5}
+.lifecycle-step-text small{font-size:10px;color:#607784;line-height:1.5;overflow-wrap:anywhere}
+.lifecycle-next-line{font-size:12px;color:#274657;line-height:1.7;border-top:1px solid #e1ece7;padding-top:10px}
+.role-guidance{display:flex;align-items:flex-start;gap:10px;border:1px solid #e5cf9b;background:#fffaf0;color:#6b4d12;border-radius:8px;padding:12px 14px}
+.role-guidance svg{flex-shrink:0;margin-top:2px;color:#b57d18}
+.role-guidance strong{display:block;font-size:12px;margin-bottom:4px}
+.role-guidance p{margin:0;color:inherit;font-size:12px;line-height:1.7}
+.execution-tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #e1ebe6;padding-bottom:12px;margin-bottom:4px}
+.execution-tab{border:1px solid #d8e4e8;background:#f8fbfb;color:#3c5868;border-radius:7px;padding:9px 14px;font-size:12px;font-weight:600;min-height:38px}
+.execution-tab.active{background:#08766b;border-color:#08766b;color:#fff}
+.lifecycle-subhint{color:#215b52;font-weight:600;margin-top:4px;white-space:normal;max-width:240px;line-height:1.6}
+.task-actions-cell{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.task-actions-cell .workflowbuttons{margin-top:0;flex-wrap:wrap;align-items:center}
+.task-actions-cell .enginebutton{margin-top:0;min-height:30px;padding:6px 11px;font-size:10px}
+.task-secondary-links{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+@media(max-width:760px){.lifecycle-steps{grid-template-columns:1fr}.lifecycle-waiting{width:100%}}

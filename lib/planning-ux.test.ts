@@ -151,6 +151,62 @@ test('buildActionInbox enforces separation of duties and prioritizes assigned it
   assert.ok(approverInbox.some((i) => i.entityId === 't-overdue' && i.actionKind === 'execute_overdue'));
 });
 
+test('buildActionInbox surfaces execution accomplishments per role while preserving separation of duties', () => {
+  const aircraft = [{ id: 'a1', data: { name: 'JY-AZ1', hours: 5000, cycles: 2000 } }];
+  const tasks = [
+    { id: 't-exec-draft', data: { name: 'فحص مسودة تنفيذ', aircraftId: 'a1', reviewState: 'approved', status: 'open', hours: 4800 } },
+    { id: 't-exec-sub', data: { name: 'فحص مرسل للمراجعة', aircraftId: 'a1', reviewState: 'approved', status: 'open', hours: 4800 } },
+    { id: 't-exec-rev', data: { name: 'فحص جاهز للاعتماد', aircraftId: 'a1', reviewState: 'approved', status: 'open', hours: 4800 } },
+  ];
+  const accomplishments = [
+    { id: 'e1', task_id: 't-exec-draft', state: 'draft', modified_by: 'u-planner' },
+    { id: 'e2', task_id: 't-exec-sub', state: 'submitted', modified_by: 'u-planner', submitted_by: 'u-planner' },
+    { id: 'e3', task_id: 't-exec-rev', state: 'reviewed', modified_by: 'u-planner', submitted_by: 'u-planner', reviewed_by: 'u-reviewer' },
+  ];
+
+  const plannerInbox = buildActionInbox({
+    session: { userId: 'u-planner', role: 'planner', permissions: ['read', 'submit', 'record_execution'] },
+    aircraft,
+    tasks,
+    accomplishments,
+    today: '2026-05-01',
+  });
+  assert.ok(plannerInbox.some((i) => i.entityId === 't-exec-draft' && i.actionKind === 'execute_submit'));
+  // Once submitted or reviewed, do not clutter inbox with execute_overdue
+  assert.equal(plannerInbox.some((i) => i.entityId === 't-exec-sub' && i.actionKind === 'execute_overdue'), false);
+  assert.equal(plannerInbox.some((i) => i.entityId === 't-exec-rev' && i.actionKind === 'execute_overdue'), false);
+
+  const reviewerInbox = buildActionInbox({
+    session: { userId: 'u-reviewer', role: 'reviewer', permissions: ['read', 'review'] },
+    aircraft,
+    tasks,
+    accomplishments,
+    today: '2026-05-01',
+  });
+  assert.equal(reviewerInbox.some((i) => i.entityId === 't-exec-sub' && i.actionKind === 'execute_review'), true);
+  assert.equal(reviewerInbox.some((i) => i.entityId === 't-exec-rev'), false);
+
+  const approverInbox = buildActionInbox({
+    session: { userId: 'u-approver', role: 'approver', permissions: ['read', 'approve'] },
+    aircraft,
+    tasks,
+    accomplishments,
+    today: '2026-05-01',
+  });
+  assert.equal(approverInbox.some((i) => i.entityId === 't-exec-rev' && i.actionKind === 'execute_approve'), true);
+  assert.equal(approverInbox.some((i) => i.entityId === 't-exec-sub'), false);
+
+  // Reviewer who reviewed t-exec-rev cannot also approve it even if granted approve permission
+  const dualReviewerApproverInbox = buildActionInbox({
+    session: { userId: 'u-reviewer', role: 'admin', permissions: ['read', 'review', 'approve'] },
+    aircraft,
+    tasks,
+    accomplishments,
+    today: '2026-05-01',
+  });
+  assert.equal(dualReviewerApproverInbox.some((i) => i.entityId === 't-exec-rev' && i.actionKind === 'execute_approve'), false);
+});
+
 test('normalizeAssignment validates members, prevents duplicate backup, and strips/rejects control chars', () => {
   const members = [
     { id: 'm1', userId: 'u1', email: 'planner@example.test', role: 'planner', state: 'active' },

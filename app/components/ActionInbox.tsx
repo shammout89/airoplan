@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { AlertTriangle, ArrowUpLeft, CheckCircle2, ClipboardCheck, Inbox, Send } from 'lucide-react';
 import {
   ActionInboxItem,
+  InboxAccomplishmentRecord,
   InboxAssignmentRecord,
   InboxPlaneRecord,
   InboxPlanningItem,
@@ -15,6 +16,7 @@ interface ActionInboxProps {
   session: { userId?: string; role?: string; permissions?: string[] } | null;
   aircraft: InboxPlaneRecord[];
   tasks: InboxTaskRecord[];
+  accomplishments?: InboxAccomplishmentRecord[];
   planningItems: InboxPlanningItem[];
   assignments: InboxAssignmentRecord[];
   onAction: (item: ActionInboxItem) => void;
@@ -28,23 +30,23 @@ function ActionBadge({ kind }: { kind: ActionInboxItem['actionKind'] }) {
       </span>
     );
   }
-  if (kind === 'approve') {
+  if (kind === 'approve' || kind === 'execute_approve') {
     return (
       <span className="badge soon">
-        <CheckCircle2 size={12} /> بانتظار الاعتماد
+        <CheckCircle2 size={12} /> {kind === 'execute_approve' ? 'بانتظار اعتماد التنفيذ' : 'بانتظار الاعتماد'}
       </span>
     );
   }
-  if (kind === 'review') {
+  if (kind === 'review' || kind === 'execute_review') {
     return (
       <span className="badge soon">
-        <ClipboardCheck size={12} /> بانتظار المراجعة
+        <ClipboardCheck size={12} /> {kind === 'execute_review' ? 'بانتظار مراجعة التنفيذ' : 'بانتظار المراجعة'}
       </span>
     );
   }
   return (
     <span className="badge">
-      <Send size={12} /> مسودة
+      <Send size={12} /> {kind === 'execute_submit' ? 'مسودة تنفيذ' : 'مسودة'}
     </span>
   );
 }
@@ -53,6 +55,7 @@ export default function ActionInbox({
   session,
   aircraft,
   tasks,
+  accomplishments = [],
   planningItems,
   assignments,
   onAction,
@@ -66,10 +69,11 @@ export default function ActionInbox({
         session,
         aircraft,
         tasks,
+        accomplishments,
         planningItems,
         assignments,
       }),
-    [session, aircraft, tasks, planningItems, assignments]
+    [session, aircraft, tasks, accomplishments, planningItems, assignments]
   );
 
   const mineCount = items.filter((i) => i.assignedToMe).length;

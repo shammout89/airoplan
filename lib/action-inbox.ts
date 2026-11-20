@@ -2,7 +2,24 @@ import { due } from './due';
 import { taskMode } from './task-approval';
 import { programToday } from './program';
 
-export type InboxActionKind = 'submit' | 'review' | 'approve' | 'execute_overdue';
+export type InboxActionKind =
+  | 'submit'
+  | 'review'
+  | 'approve'
+  | 'execute_overdue'
+  | 'execute_submit'
+  | 'execute_review'
+  | 'execute_approve';
+
+export interface InboxAccomplishmentRecord {
+  id: string;
+  task_id: string;
+  state: string;
+  modified_by?: string | null;
+  submitted_by?: string | null;
+  reviewed_by?: string | null;
+  approved_by?: string | null;
+}
 
 export interface ActionInboxItem {
   id: string;
@@ -76,6 +93,7 @@ export interface ActionInboxInput {
   session: { userId?: string; role?: string; permissions?: string[] } | null;
   aircraft?: InboxPlaneRecord[];
   tasks?: InboxTaskRecord[];
+  accomplishments?: InboxAccomplishmentRecord[];
   planningItems?: InboxPlanningItem[];
   assignments?: InboxAssignmentRecord[];
   today?: string;
@@ -99,6 +117,9 @@ export function buildActionInbox(input: ActionInboxInput): ActionInboxItem[] {
   );
   const assignmentMap = new Map<string, InboxAssignmentRecord['data']>(
     (input.assignments || []).map((a) => [`${a.data?.targetType}:${a.data?.targetId}`, a.data])
+  );
+  const accomplishmentMap = new Map<string, InboxAccomplishmentRecord>(
+    (input.accomplishments || []).map((e) => [e.task_id, e])
   );
   const today = input.today || programToday();
   const items: ActionInboxItem[] = [];
@@ -181,20 +202,81 @@ export function buildActionInbox(input: ActionInboxInput): ActionInboxItem[] {
     }
 
     if (state === 'approved') {
-      const dueState = due(d, plane, today);
-      if (dueState.status === 'overdue') {
-        items.push({
-          id: `task-overdue:${t.id}`,
-          entityType: 'task',
-          entityId: t.id,
-          title: d.name || 'مهمة مستحقة',
-          subtitle: `${planeName} · مستحقة / متجاوزة`,
-          actionKind: 'execute_overdue',
-          actionLabel: 'الاستحقاق والتنفيذ',
-          tab: 'task',
-          assignedToMe,
-          priority: assignedToMe ? 1 : 10,
-        });
+      const entry = accomplishmentMap.get(t.id);
+      if (entry) {
+        const execSameAuthor =
+          entry.modified_by === userId || entry.submitted_by === userId;
+
+        if (entry.state === 'draft' && can(permissions, 'submit')) {
+          items.push({
+            id: `exec-submit:${t.id}`,
+            entityType: 'task',
+            entityId: t.id,
+            title: d.name || 'تنفيذ بانتظار الإرسال',
+            subtitle: `${planeName}${d.reference ? ` · ${d.reference}` : ''} · مسودة تنفيذ`,
+            actionKind: 'execute_submit',
+            actionLabel: 'إرسال التنفيذ للمراجعة',
+            tab: 'task',
+            assignedToMe,
+            priority: assignedToMe ? 2 : 12,
+          });
+          continue;
+        }
+
+        if (entry.state === 'submitted' && can(permissions, 'review') && !execSameAuthor) {
+          items.push({
+            id: `exec-review:${t.id}`,
+            entityType: 'task',
+            entityId: t.id,
+            title: d.name || 'تنفيذ بانتظار المراجعة',
+            subtitle: `${planeName}${d.reference ? ` · ${d.reference}` : ''} · سجل تنفيذ مرسل`,
+            actionKind: 'execute_review',
+            actionLabel: 'تأكيد مراجعة التنفيذ',
+            tab: 'task',
+            assignedToMe,
+            priority: assignedToMe ? 2 : 11,
+          });
+          continue;
+        }
+
+        if (
+          entry.state === 'reviewed' &&
+          can(permissions, 'approve') &&
+          !execSameAuthor &&
+          entry.reviewed_by !== userId
+        ) {
+          items.push({
+            id: `exec-approve:${t.id}`,
+            entityType: 'task',
+            entityId: t.id,
+            title: d.name || 'تنفيذ بانتظار الاعتماد',
+            subtitle: `${planeName}${d.reference ? ` · ${d.reference}` : ''} · مراجعة التنفيذ مكتملة`,
+            actionKind: 'execute_approve',
+            actionLabel: 'اعتماد التنفيذ وحساب التالي',
+            tab: 'task',
+            assignedToMe,
+            priority: assignedToMe ? 1 : 9,
+          });
+          continue;
+        }
+      }
+
+      if (!entry || entry.state === 'draft') {
+        const dueState = due(d, plane, today);
+        if (dueState.status === 'overdue') {
+          items.push({
+            id: `task-overdue:${t.id}`,
+            entityType: 'task',
+            entityId: t.id,
+            title: d.name || 'مهمة مستحقة',
+            subtitle: `${planeName} · مستحقة / متجاوزة`,
+            actionKind: 'execute_overdue',
+            actionLabel: 'الاستحقاق والتنفيذ',
+            tab: 'task',
+            assignedToMe,
+            priority: assignedToMe ? 1 : 10,
+          });
+        }
       }
     }
   }

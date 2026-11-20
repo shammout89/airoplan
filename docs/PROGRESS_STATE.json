@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "AeroPlan",
   "release": "0.16.0",
-  "updatedAt": "2026-11-19T12:21:00.000Z",
+  "updatedAt": "2026-11-20T10:39:00.000Z",
   "displayTimeZone": "Asia/Amman",
   "runtime": "v24.22.3 / Linux / SQLite",
   "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
   "sourceFiles": 283,
   "upstreamSourceCommit": "969a7b1286764b2650bc3f5faaa4be0df4e49986",
-  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, task creation modal field ordering, and 4-digit year date-input hardening.",
+  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, task creation modal field ordering, 4-digit year date-input hardening, unified 4-stage task lifecycle & role guidance, execution action inbox routing, 3-tab execution modal organization, plan row clarity, and default sidebar grouping.",
   "completionRule": {
     "softwareVerified": "Implementation plus applicable automated regression checks and production build passed with recorded evidence.",
     "fullyClosed": "All agreed requirements, applicable UI/target-host checks, and required real operational evidence passed; no known unmet requirement remains.",
@@ -16,10 +16,10 @@
     "syntheticEvidenceIsCompanyAcceptance": false,
     "promiseOfNoFutureDefects": false
   },
-  "currentPhase": "task-due-date-validation-fix-software-verified",
+  "currentPhase": "ui-ux-clarity-and-lifecycle-guidance-software-verified",
   "finalClosure": false,
   "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [
-    "Pre-existing ESLint @typescript-eslint/no-explicit-any and legacy prefer-const/react-hooks errors in untouched legacy files; new pure modules (lib/aircraft-scope.ts, lib/aircraft-scope.test.ts) pass eslint cleanly.",
+    "Pre-existing ESLint @typescript-eslint/no-explicit-any and legacy prefer-const/react-hooks errors in untouched legacy files; new and refactored UX modules (lib/task-workflow-guide.ts, lib/task-workflow-guide.test.ts, lib/action-inbox.ts, lib/planning-ux.test.ts, app/components/TaskLifecycleBar.tsx, app/components/ActionInbox.tsx) pass eslint cleanly with 0 errors and 0 warnings.",
     "Three Cloudflare miniflare integration scripts (tests/advanced.integration.mjs, tests/scheduling.integration.mjs, tests/access.integration.mjs) cannot execute in this runtime because miniflare was removed during AI Studio migration."
   ],
   "stages": [
@@ -1158,6 +1158,26 @@
         "regressionSuitesPassed": "aircraft-dates-dom (86+16), aircraft-form-save (43), task-approval-ui (70), flexibility (20), task-approval-policy (204), security-policy (30), aircraft-scope (32), selfhost/http (226)",
         "dockerProductionBuild": "passed (npm run build:docker)",
         "browserVerification": "passed in headless Chromium (1440x900): min=1900-01-01 & max=9999-12-31 enforced natively; typing extra digits after 4-digit year does not produce 6-digit years (202700); valid future date 2027-02-19 accepted with 0 console errors/warnings"
+      },
+      "targetWindowsDockerExecuted": false,
+      "companyAcceptanceExecuted": false
+    },
+    {
+      "id": "ui-ux-clarity-and-lifecycle-guidance-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-20T10:39:00.000Z",
+      "evidence": "lib/task-workflow-guide.test.ts + lib/planning-ux.test.ts (20/20 suite) + 42 SQLite/Node/DOM/HTTP integration suites + seeded Headless Chromium playwright-cli desktop (1440x900) & mobile (390x844) verification",
+      "results": {
+        "eslintNewAndRefactoredUxModules": "0 errors, 0 warnings (lib/task-workflow-guide.ts, lib/task-workflow-guide.test.ts, lib/action-inbox.ts, lib/planning-ux.test.ts, app/components/TaskLifecycleBar.tsx, app/components/ActionInbox.tsx)",
+        "unitTests": "20/20 passed (lib/task-workflow-guide.test.ts, lib/planning-ux.test.ts, lib/aircraft-scope.test.ts, lib/aircraft-date-input.test.ts)",
+        "integrationAndSecuritySuitesPassed": "42 SQLite/Node/DOM/HTTP suites passed including selfhost/http.test.mjs (226 checks), task-approval-policy, task-approval-ui (70 checks), manual-execution-dialog, ux-planning-security, security-policy, aircraft-scope (32 checks), customer-setup (72 checks), customer-setup-ui (54 checks), users-management (137 checks), remediation (80 checks), assemblies (108 checks), quality (73 checks), reporting (56 checks), engineering (67 checks), planning (36 checks), scheduling (62 checks), accounts (75 checks), mfa (57 checks), audit-integrity (21 checks), full-backup (35 checks)",
+        "miniflareSuitesSkipped": [
+          "tests/advanced.integration.mjs",
+          "tests/scheduling.integration.mjs",
+          "tests/access.integration.mjs"
+        ],
+        "dockerProductionBuild": "passed (npm run build:docker) and compile_applet passed",
+        "browserVerification": "passed in seeded Headless Chromium (1440x900 & 390x844): 0 console/page errors, 0 HTTP >= 400 responses, verified ActionInbox execution routing, collapsed secondary sidebar groups, clean plan table execution sub-status, 4-stage TaskLifecycleBar with Arabic role-guidance callout, 3 accessible tabs inside Execution modal, AircraftDateInput on execution date, and zero mobile horizontal overflow (scrollW 390 === innerW 390)"
       },
       "targetWindowsDockerExecuted": false,
       "companyAcceptanceExecuted": false

@@ -3,9 +3,11 @@ import {useEffect,useId,useState} from 'react';
 import {apiFetch} from '../client-fetch';
 import {taskReviewLabel} from '../../lib/task-approval';
 import {programToday} from '../../lib/program';
+import {computeTaskWorkflowGuide} from '../../lib/task-workflow-guide';
+import TaskLifecycleBar from './TaskLifecycleBar';
 
 const labels:Record<string,string>={draft:'مسودة',submitted:'للمراجعة',reviewed:'للاعتماد',approved:'معتمد'};
-export default function ManualExecution({task,aircraft,entries,permissions,onChanged,onClose}:any){
+export default function ManualExecution({task,aircraft,entries,permissions,session,onChanged,onClose}:any){
  const entry=entries.find((e:any)=>e.task_id===task.id),can=(p:string)=>permissions.includes(p);
  const formId=useId(),titleId=useId();
  const [form,setForm]=useState<any>({date:programToday(),hours:aircraft?.data.hours??'',cycles:aircraft?.data.cycles??'',reference:'',performedBy:'',method:'internal',organisation:'',evidenceVersionIds:[],notes:'',exceptionReference:''});
@@ -21,8 +23,10 @@ export default function ManualExecution({task,aircraft,entries,permissions,onCha
  async function act(action:string){setBusy(true);setError('');setMessage('');try{const r=await apiFetch('/api/execution',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,taskId:task.id,etag:entry?.etag,data:form})});const j:any=await r.json();if(!r.ok)throw Error(j.error);await onChanged();setMessage(action==='approve'?'اعتمد الإنجاز وأغلقت المهمة مع حفظ الأدلة.':'حفظ الإجراء')}catch(e:any){setError(e.message)}finally{setBusy(false)}}
  const field=(key:string,label:string,type='text',required=true)=><label>{label}<input type={type} value={form[key]??''} required={required} min={type==='number'?0:undefined} step={key==='cycles'?1:'0.000001'} max={type==='date'?programToday():undefined} maxLength={key==='notes'?4000:500} onChange={e=>setForm({...form,[key]:e.target.value})}/></label>;
  const closed=task.data.status==='closed',canSave=!closed&&can('record_execution')&&(!entry||entry.state==='draft');
+ const guide=computeTaskWorkflowGuide({taskData:task.data,accomplishment:entry,session:session?{...session,permissions}:{permissions}});
  return <div className="overlay manual-execution-overlay"><section className="modal executionmodal manual-execution-dialog" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-label="تنفيذ مهمة يدوية"><div className="sectionhead"><h2 id={titleId}>سجل إنجاز: {task.data.name}</h2><button type="button" className="secondary" disabled={busy} onClick={onClose}>إغلاق النافذة</button></div><div className="manual-execution-body">
  <p>المهمة اليدوية لا تولد تكرارًا تلقائيًا. الإغلاق يتطلب سجل إنجاز ومراجعة واعتمادًا مستقلين. اعتماد البيانات هنا لا يصدر تصريح إفراج للطائرة.</p>
+ <TaskLifecycleBar guide={guide} compact showGuidance/>
  {task.data.status==='closed'?<section><h3>سجل مغلق</h3>{entry?<><p>{entry.data.date} · {entry.data.reference} · {entry.data.performedBy}</p><p>طريقة الإثبات: {entry.data.method==='external'?'شهادة خارجية':'سجل داخلي'}</p><p>{entry.data.evidenceSnapshot?.map((e:any)=>e.fileName+' / '+e.revision).join('، ')}</p></>:<p className="error">سجل تاريخي مغلق بلا إنجاز معتمد؛ يحتاج مطابقة وإجراء تصحيح موثق.</p>}</section>:<>
  <p>حالة الإنجاز: {entry?labels[entry.state]:'لم يسجل'} · حالة التخطيط: {taskReviewLabel(task.data)}</p>
  <form id={formId} onSubmit={e=>{e.preventDefault();act('save')}}><fieldset className="formfieldset" disabled={busy||!can('record_execution')||entry&&entry.state!=='draft'}><div className="formgrid">

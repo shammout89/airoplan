@@ -20,7 +20,7 @@ await mkdir('.sites-runtime',{recursive:true});
 const bindings={name:'bindings',setup(b){b.onResolve({filter:/^(next\/headers|cloudflare:workers)$/},a=>({path:a.path,namespace:'fixture'}));b.onLoad({filter:/.*/,namespace:'fixture'},a=>({contents:a.path==='next/headers'?'export async function headers(){return globalThis.__headers}':'export const env=globalThis.__env',loader:'js'}))}};
 await build({stdin:{contents:"export {GET as executions} from './app/api/execution/route';export {GET as documents} from './app/api/documents/route';export {rolePermissions} from './lib/permissions';",resolveDir:process.cwd(),loader:'ts'},outfile:'.sites-runtime/manual-dialog-reads.mjs',bundle:true,platform:'node',format:'esm',plugins:[bindings]});
 const reads=await import('../.sites-runtime/manual-dialog-reads.mjs');
-await build({entryPoints:['app/components/ManualExecution.tsx'],outfile:'.sites-runtime/manual-dialog.mjs',bundle:true,platform:'node',format:'esm',jsx:'automatic',external:['react','react-dom']});
+await build({entryPoints:['app/components/ManualExecution.tsx'],outfile:'.sites-runtime/manual-dialog.mjs',bundle:true,platform:'node',format:'esm',jsx:'automatic',external:['react','react-dom','lucide-react']});
 const {default:ManualExecution}=await import('../.sites-runtime/manual-dialog.mjs'),{createRoot}=await import('react-dom/client'),{getByRole,getByLabelText,queryByRole,fireEvent,waitFor}=await import('@testing-library/dom'),{default:userEvent}=await import('@testing-library/user-event');
 const root=createRoot(win.document.getElementById('root')),user=userEvent.setup({document:win.document,delay:null});
 let actor='planner',selectedTask,props,checks=0,closed=0,hold=null,releaseHold=null;
