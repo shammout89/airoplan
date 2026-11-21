@@ -30,7 +30,7 @@ const headers=who=>{globalThis.__headers=new Headers({'oai-authenticated-user-id
 async function snapshot(){headers(actor);const response=await reads.executions(new Request('https://test.local/api/execution'));assert.equal(response.status,200);return {task:await f.row(selectedTask,'records'),aircraft:await f.row(f.planeId,'records'),entries:(await response.json()).accomplishments}}
 async function refresh(){props={...props,...await snapshot()};root.render(React.createElement(ManualExecution,props))}
 globalThis.fetch=async(url,init={})=>{
- const who=actor,{signal,...options}=init,request=new Request(new URL(String(url),'https://test.local'),{...options,headers:{origin:'https://test.local',...Object.fromEntries(new Headers(options.headers))}}),pathname=new URL(request.url).pathname;
+ const who=actor,options={...init};delete options.signal;const request=new Request(new URL(String(url),'https://test.local'),{...options,headers:{origin:'https://test.local',...Object.fromEntries(new Headers(options.headers))}}),pathname=new URL(request.url).pathname;
  if(pathname==='/api/documents'){headers(who);return reads.documents(request)}
  if(pathname==='/api/execution'&&init.method==='POST'){
   const body=await request.clone().json();if(hold)await hold;headers(who);const response=await f.api.execute(request);writes.push({who,body,status:response.status,result:await response.clone().json()});return response;

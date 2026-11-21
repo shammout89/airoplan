@@ -5,7 +5,7 @@ import {engineeringKinds,normalizeEngineering,engineeringEffects} from './engine
 import {qualityKinds,normalizeQuality,qualityEffects} from './quality';
 import {normalizeSectorPlan,sectorPlanEffects} from './future';
 import {normalizeTransition,transitionEffects} from './program-transition';
-import {normalizeUnitTask,unitTaskEffects,unitTaskKinds} from './unit-tasks';
+import {normalizeUnitTask,unitTaskEffects} from './unit-tasks';
 import {newDependencies,publishedEvidence,sameContext} from './domain';
 import {controlEntities} from './control-types';
 export const controlledKinds=controlEntities;

@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "project": "AeroPlan",
   "release": "0.16.0",
-  "updatedAt": "2026-11-20T11:25:30.000Z",
+  "updatedAt": "2026-11-21T08:48:00.000Z",
   "displayTimeZone": "Asia/Amman",
   "runtime": "v24.22.3 / Linux / SQLite",
   "sourceFingerprint": "dd333b06a9dcc75abf29a28b278c3c9b6eeae2211cc68a03d3926244b3899385",
   "sourceFiles": 283,
   "upstreamSourceCommit": "969a7b1286764b2650bc3f5faaa4be0df4e49986",
-  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, task creation modal field ordering, 4-digit year date-input hardening, unified 4-stage task lifecycle & role guidance, execution action inbox routing, 3-tab execution modal organization, plan row clarity, default sidebar grouping, and program modal save button wording.",
+  "scope": "Customer company setup, owner-only versioned identity and guided first-use workflow; explicit loaded-view export and complete-backup handoff; planning UX enhancements, aircraft-scope permission/authorization enforcement, task creation modal field ordering, 4-digit year date-input hardening, unified 4-stage task lifecycle & role guidance, execution action inbox routing, 3-tab execution modal organization, plan row clarity, default sidebar grouping, program modal save button wording, and safe non-destructive code hygiene cleanup.",
   "completionRule": {
     "softwareVerified": "Implementation plus applicable automated regression checks and production build passed with recorded evidence.",
     "fullyClosed": "All agreed requirements, applicable UI/target-host checks, and required real operational evidence passed; no known unmet requirement remains.",
@@ -16,10 +16,10 @@
     "syntheticEvidenceIsCompanyAcceptance": false,
     "promiseOfNoFutureDefects": false
   },
-  "currentPhase": "program-save-button-label-software-verified",
+  "currentPhase": "code-cleanup-and-dead-code-removal-software-verified",
   "finalClosure": false,
   "knownUnresolvedSoftwareDefectsObservedInCurrentChecks": [
-    "Pre-existing ESLint @typescript-eslint/no-explicit-any and legacy prefer-const/react-hooks errors in untouched legacy files; new and refactored UX modules (lib/task-workflow-guide.ts, lib/task-workflow-guide.test.ts, lib/action-inbox.ts, lib/planning-ux.test.ts, app/components/TaskLifecycleBar.tsx, app/components/ActionInbox.tsx) pass eslint cleanly with 0 errors and 0 warnings.",
+    "Zero @typescript-eslint/no-unused-vars, no-unused-vars, prefer-const, and react/no-children-prop issues remain across non-vendor workspace directories (app, lib, selfhost, tests, worker, scripts); pre-existing @typescript-eslint/no-explicit-any and legacy react-hooks lint errors remain in legacy files when running global npm run lint.",
     "Three Cloudflare miniflare integration scripts (tests/advanced.integration.mjs, tests/scheduling.integration.mjs, tests/access.integration.mjs) cannot execute in this runtime because miniflare was removed during AI Studio migration."
   ],
   "stages": [
@@ -1192,6 +1192,28 @@
         "regressionSuitesPassed": "planning.test (36), remediation (80), engineering (67), aircraft-scope (32), task-approval-policy (204), task-approval-ui (70), manual-execution-dialog (89), customer-setup-ui (54), aircraft-form-save (43), selfhost/http (226)",
         "dockerProductionBuild": "passed (npm run build:docker)",
         "browserVerification": "passed in seeded Headless Chromium (1440x900): confirmed 'حفظ المسودة' replaced with 'حفظ' inside Programs modal, verified creating AMP-A320N Rev 01 and editing draft notes cleanly with 0 console/page errors and 0 HTTP >= 400 responses"
+      },
+      "targetWindowsDockerExecuted": false,
+      "companyAcceptanceExecuted": false
+    },
+    {
+      "id": "code-cleanup-and-dead-code-removal-software-verification",
+      "status": "software_verified",
+      "at": "2026-11-21T08:48:00.000Z",
+      "evidence": "Filtered ESLint audit (0 target issues across 58 cleaned files) + 20 unit tests + npm run build:docker + 42 SQLite/Node/DOM/HTTP regression suites + Headless Chromium playwright-cli load check",
+      "results": {
+        "cleanedFilesCount": 58,
+        "targetLintRulesRemaining": 0,
+        "deletedTrackedBaseFiles": 0,
+        "unitTests": "20/20 passed (lib/task-workflow-guide.test.ts, lib/planning-ux.test.ts, lib/aircraft-scope.test.ts, lib/aircraft-date-input.test.ts)",
+        "sqliteNodeDomHttpRegressionSuites": "42/42 passed including selfhost/http.test.mjs (226 checks), task-approval-policy (204), task-approval-ui (70), manual-execution-dialog (89), aircraft-form-save (43), aircraft-scope (32), users-management (137), customer-setup (72), customer-setup-ui (54), full-backup (35), audit-integrity (21)",
+        "miniflareSuitesSkipped": [
+          "tests/advanced.integration.mjs",
+          "tests/scheduling.integration.mjs",
+          "tests/access.integration.mjs"
+        ],
+        "dockerProductionBuild": "passed (npm run build:docker)",
+        "browserSmokeVerification": "passed in Headless Chromium (1440x900) on http://localhost:3000: 0 console errors/warnings, HTTP 200 on /api/data and /api/settings"
       },
       "targetWindowsDockerExecuted": false,
       "companyAcceptanceExecuted": false

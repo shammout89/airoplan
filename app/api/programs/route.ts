@@ -8,7 +8,6 @@ import {access,checkOrigin,failure,requirePermission,requireAircraftIdInScope} f
 import {AccessError,workflowTransition} from '../../../lib/permissions';
 import {normalizeProgram,programToday} from '../../../lib/program';
 export const dynamic='force-dynamic';
-function unpack(r:any){return {...r,data:JSON.parse(r.data)}}
 export async function GET(req?:Request){try{const a=await access(),u=new URL(req?.url||'https://local/api/programs'),id=u.searchParams.get('id'),summary=u.searchParams.get('summary')==='1';const result=await env.DB!.prepare('SELECT * FROM program_revisions WHERE workspace_id=?'+(id?' AND id=?':'')+' ORDER BY updated DESC,id').bind(a.scope,...(id?[id]:[])).all();return Response.json({revisions:await Promise.all(result.results.map(async(r:any)=>({...r,data:summary?JSON.parse(r.data):await programData(env.DB!,a.scope,r)})))})}catch(e){return failure(e)}}
 export async function POST(req:Request){let lease:string|null=null;try{checkOrigin(req);const a=await access();lease=await acquireWrite(a,req);const body:any=await req.json();const pendingPolicy=await routePolicy(env.DB!,a,'program',body);if(!body||JSON.stringify(body).length>6*1024*1024)throw Error('حجم بيانات البرنامج أكبر من المسموح');
  const db=env.DB!;const now=new Date().toISOString(),etag=crypto.randomUUID();

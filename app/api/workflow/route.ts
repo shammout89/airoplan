@@ -23,7 +23,7 @@ export async function POST(req:Request){let lease:string|null=null;try{
  if(body.action==='return'&&original.taskApproval){const technicalHash=await taskHash(original,true),w=original.taskApproval,risk=technicalHash!==w.technicalHash?'technical':w.risk;recover={...original,taskApproval:{...w,risk,mode:risk==='technical'?w.policy.technicalMode:w.policy.routineMode,contentHash:await taskHash(original)}};}
  let prepared=await workflowTaskSnapshot(raw,a,row.id,recover);
  prepared=await checkTaskEvidence(raw,a,row.id,prepared,body.action);
- let data=transitionTask(prepared,body,a);if(body.action==='return')data.taskApproval={...data.taskApproval,contentHash:await taskHash(data),technicalHash:await taskHash(data,true)};
+ const data=transitionTask(prepared,body,a);if(body.action==='return')data.taskApproval={...data.taskApproval,contentHash:await taskHash(data),technicalHash:await taskHash(data,true)};
  data._revision=crypto.randomUUID();const now=new Date().toISOString(),encoded=JSON.stringify(data),documents=evidenceGuard(a.scope,row.id,body.action==='return'?{taskApproval:null}:data),actor=taskActorGuard(a);
  const results=await raw.batch([
   raw.prepare('UPDATE records SET data=?,updated=? WHERE id=? AND owner=? AND data=?'+(body.action==='return'?'':' AND EXISTS(SELECT 1 FROM records WHERE id=? AND owner=? AND data=?)')+documents.sql+actor.sql).bind(encoded,now,row.id,a.scope,row.data,...(body.action==='return'?[]:[original.aircraftId,a.scope,plane.data]),...documents.args,...actor.args),

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-export async function runExtensions({api,call,db,mf,owner,planner,reviewer,approver,viewer,plane}){
+export async function runExtensions({api,call,db,owner,reviewer,approver,viewer,plane}){
  let count=0;const test=async(...args)=>{count++;return call(...args)};
  const p={id:'extension-planner',email:'extension-planner@example.test'};await test(owner,'member',{email:p.email,role:'planner'});await test(p,'read');
  const items=async()=> (await test(owner,'inventory')).items;const get=async id=>(await items()).find(x=>x.id===id);

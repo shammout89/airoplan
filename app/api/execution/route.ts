@@ -1,6 +1,6 @@
 import {prepareTaskApproval,taskPolicyHeadGuard,taskEventWrites,taskActorGuard} from '../../../lib/task-approval-store';
 import {programDefinition} from '../../../lib/program-store';
-import { initializeSchedule, nextOccurrence, controlledExecution } from '../../../lib/scheduling';
+import { initializeSchedule, nextOccurrence } from '../../../lib/scheduling';
 import {taskLimits} from '../../../lib/task-validation';
 import {executionRecord} from '../../../lib/execution-record';
 import { pinScheduleEvidence } from '../../../lib/schedule-evidence';
@@ -10,7 +10,7 @@ import { acquireWrite, releaseWrite } from '../../../lib/write-gate';
 import { env } from 'cloudflare:workers';
 import { access, checkOrigin, failure, requirePermission, requireAircraftInScope, requireAircraftIdInScope, scopedAircraftSet } from '../../../lib/access';
 import { AccessError, workflowTransition } from '../../../lib/permissions';
-import { calculateLimits, serviceBaseline, normalizeAccomplishment } from '../../../lib/recurrence';
+import { serviceBaseline } from '../../../lib/recurrence';
 import { applies, programToday } from '../../../lib/program';
 export const dynamic = 'force-dynamic';
 export async function GET(req?: Request) {

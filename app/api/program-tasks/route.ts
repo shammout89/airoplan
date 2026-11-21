@@ -2,7 +2,7 @@ import {env} from 'cloudflare:workers';
 import {access,checkOrigin,failure,requirePermission} from '../../../lib/access';
 import {AccessError} from '../../../lib/permissions';
 import {acquireWrite,releaseWrite} from '../../../lib/write-gate';
-import {programData,previewProgramChange,storedProgram,definitionWrites} from '../../../lib/program-store';
+import {previewProgramChange,storedProgram,definitionWrites} from '../../../lib/program-store';
 import {pinScheduleEvidence} from '../../../lib/schedule-evidence';
 export const dynamic='force-dynamic';
 export async function GET(req:Request){try{

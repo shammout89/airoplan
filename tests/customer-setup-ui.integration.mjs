@@ -51,7 +51,7 @@ try{
  // Follow the new entry point and export through the actual full application page.
  globalThis.fetch=async(url,init={})=>{
   const pathname=new URL(String(url),'https://test.local').pathname;headers();
-  const {signal,...options}=init,request=new Request(new URL(String(url),'https://test.local'),{...options,headers:{origin:'https://test.local',...Object.fromEntries(new Headers(options.headers))}});
+  const options={...init};delete options.signal;const request=new Request(new URL(String(url),'https://test.local'),{...options,headers:{origin:'https://test.local',...Object.fromEntries(new Headers(options.headers))}});
   const handler={'/api/data':api.readData,'/api/settings':api.readSettings,'/api/aircraft-references':api.readReferences,'/api/programs':api.readPrograms,'/api/company':api.readCompany}[pathname];
   if(!handler)throw Error('Unexpected full-page request: '+pathname);if(pathname==='/api/data'&&new URL(request.url).searchParams.get('q')==='SYN UI export 52'&&workspaceHold)await workspaceHold;return handler(request);
  };

@@ -1,4 +1,4 @@
-import assert from 'node:assert/strict';import {fixture} from './controlled-fixture.mjs';const f=await fixture();const {api,db,bucket,scope,planeId,evidence,call,row,approve,eq,newTask}=f;
+import {fixture} from './controlled-fixture.mjs';const f=await fixture();const {api,db,bucket,scope,planeId,evidence,call,row,approve,eq,newTask}=f;
 try{
  const task=await newTask('SYN REPORT TASK',{name:'<script>SYNTHETIC</script>'});
  const post=async(reference,departure,durationMinutes)=>{const plane=await row(planeId,'records');return api.postActualFlight(db,{role:'planner',scope,userId:'planner',email:'planner@example.test'},{aircraftId:planeId,aircraftRevision:plane.data._revision,confirmOpening:true,openingAsOf:'2026-11-01T00:00:00.000Z',data:{reference,flightNumber:reference,from:'AAA',to:'BBB',departure,durationMinutes,cycles:1,notes:''}})};

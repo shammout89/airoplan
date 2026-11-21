@@ -2,7 +2,7 @@ import {unitAmendmentKinds,normalizeUnitAmendment,unitAmendmentEffects,validateU
 import {componentAircraftId,componentDependencies,resolvedComponentLife} from './component-tree';
 import {initializeSchedule,initializeOpening,nextOccurrence,normalizeVariationGrant,variationLimits,nominalLimits,scheduledLimits,calculationTrace} from './scheduling';
 import {newDependencies,publishedEvidence} from './domain';
-import {programDefinition,programData} from './program-store';
+import {programDefinition} from './program-store';
 import {counter} from './recurrence';
 import {validDate,programToday} from './program';
 import {shortText} from './planning';

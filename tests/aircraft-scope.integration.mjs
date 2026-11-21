@@ -4,7 +4,7 @@ import { mkdir } from 'node:fs/promises';
 import { fixture } from './controlled-fixture.mjs';
 
 const f = await fixture();
-const { db, bucket, scope, planeId: planeAId, evidence, api, call, row, approve, eq } = f;
+const { db, bucket, scope, planeId: planeAId, evidence, api, call, approve, eq } = f;
 
 await mkdir('.sites-runtime', { recursive: true });
 await build({

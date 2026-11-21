@@ -61,7 +61,7 @@ export function scheduledLimits(s:any){
  if(!Number.isInteger(s.sequence)||s.sequence<1||s.sequence>1000000)throw Error('تسلسل الاستحقاق غير صالح');
  if(s.sequence===1)return s.opening?openingLimits(s):calculateLimits(s.rules.first,s.baseline);
  const result:any={hours:'',cycles:'',date:''},rules=s.rules.repeat as Limit;
- for(const key of axes){const step=rules[key];if(step==null)continue;if(!(step>0))throw Error('فاصل تكرار غير صالح');const col=key==='calendar'?'date':key;
+ for(const key of axes){const step=rules[key];if(step==null)continue;if(!(step>0))throw Error('فاصل تكرار غير صالح');
  const configured=s.policy?.basis?.[key]||'accomplishment';if(!Object.keys(basisLabels).includes(configured))throw Error('أساس الاستحقاق غير معروف');
  const basis=s.previousVariation?.[key]&&configured==='accomplishment'?'previous_due':configured;
  if(key==='calendar'){

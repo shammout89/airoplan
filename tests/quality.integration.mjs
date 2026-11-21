@@ -1,4 +1,4 @@
-import {fixture} from './controlled-fixture.mjs';const f=await fixture();const {api,db,bucket,scope,planeId,evidence,call,row,approve,eq,reject,newTask,completeTask}=f;
+import {fixture} from './controlled-fixture.mjs';const f=await fixture();const {api,db,bucket,scope,evidence,call,row,approve,eq,reject,newTask,completeTask}=f;
 try{
  const credential={organization:'SYN MRO',licenseNumber:'SYN LICENCE',validFrom:'2026-11-01',validUntil:'2026-12-31',licenseExpires:'2027-01-01',trainingExpires:'2027-01-01',privileges:['maintenance','inspection','release'],allModels:false,models:['SYN'],status:'active',evidenceVersionIds:[evidence],notes:''};
  const performer=await call('admin','control',{action:'save',kind:'authorization',data:{...credential,userId:'planner',reference:'SYN AUTH 1'}});await approve('control',performer.id,{preparer:'admin'});

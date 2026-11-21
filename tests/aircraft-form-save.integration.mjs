@@ -24,7 +24,7 @@ let posts=0,holdWrite=null,releaseWrite=null;
 const requests=[],writeResults=[];
 globalThis.fetch=async(url,init={})=>{
  globalThis.__headers=new Headers({'oai-authenticated-user-id':'admin','oai-authenticated-user-email':'admin@example.test'});
- const {signal,...options}=init,pathname=new URL(String(url),'https://test.local').pathname;
+ const options={...init};delete options.signal;const pathname=new URL(String(url),'https://test.local').pathname;
  requests.push([init.method||'GET',pathname]);
  const request=new Request(new URL(String(url),'https://test.local'),{...options,headers:{origin:'https://test.local',...Object.fromEntries(new Headers(options.headers))}});
  if(pathname==='/api/data'){if(init.method==='POST'){posts++;if(holdWrite)await holdWrite;const response=await f.api.data(request);writeResults.push({status:response.status,body:await response.clone().json()});return response}return readApi.readData(request)}

@@ -1,6 +1,6 @@
 'use client';
 import Registers from './Registers';
-import {apiFetch,setDataEpoch} from '../client-fetch';
+import {apiFetch} from '../client-fetch';
 import {useEffect,useState} from 'react';
 import {roleLabels} from '../../lib/permissions';
 import LocalUsers from './LocalUsers';

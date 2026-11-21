@@ -1,10 +1,9 @@
 import {effectiveUnitExecution} from './unit-execution';
 import {componentAircraftId,resolvedComponentLife} from './component-tree';
 import {executionRecord} from './execution-record';
-import {recalculateOccurrence,controlledExecution,nominalLimits} from './scheduling';
+import {recalculateOccurrence,nominalLimits} from './scheduling';
 import {requireAircraftReady} from './aircraft';
-import {componentLife} from './planning';
-import {counter,normalizeAccomplishment,calculateLimits} from './recurrence';
+import {counter,normalizeAccomplishment} from './recurrence';
 import {normalizedFlight,ledgerTotals,roundHours,effectiveCompletion} from './operations';
 import {AccessError} from './permissions';
 export async function operationContext(db:any,scope:string){const rec=await db.prepare('SELECT * FROM records WHERE owner=?').bind(scope).all();const comp=await db.prepare("SELECT * FROM accomplishments WHERE workspace_id=? AND state='approved'").bind(scope).all();const eff=await db.prepare('SELECT * FROM effective_values WHERE workspace_id=?').bind(scope).all();const flight=await db.prepare('SELECT * FROM flights WHERE workspace_id=?').bind(scope).all();return {records:rec.results.map((r:any)=>({...r,raw:r.data,data:JSON.parse(r.data)})),completions:comp.results.map((r:any)=>({...r,data:JSON.parse(r.data)})),overrides:eff.results.map((r:any)=>({...r,data:JSON.parse(r.data)})),flights:flight.results.map((r:any)=>({...r,data:JSON.parse(r.data)}))}}

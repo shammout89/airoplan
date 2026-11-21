@@ -1,3 +1,21 @@
+# سجل تقدم AeroPlan 0.16.0 — تنظيف الكود وإزالة المخلفات البرمجية دون التأثير على النظام
+
+آخر تحديث: 2026-11-21 11:48 بتوقيت عمّان.
+
+نُفّذ تنظيف شامل للكود عبر **58 ملفًا** (`app/api/*` و`app/components/*` و`app/page.tsx` و`lib/*` و`selfhost/*` و`tests/*`) دون حذف أي ملف متتبع مطلوب لتحديثات Docker التراكمية (`scripts/package-docker-release.mjs`) ودون أي تغيير في سلوك التشغيل أو قواعد الأمان وفصل المهام:
+1. **إزالة الاستيرادات والمتغيرات غير المستخدمة**: تنظيف 18 مسار API و9 مكونات واجهة و15 ملف خادم ومنطق و17 ملف اختبار من الواردات والمتغيرات الميتة، مع الإبقاء على استدعاءات التحقق الجانبية كما هي.
+2. **معالجة قواعد `prefer-const` و`react/no-children-prop` وإزالة الخصائص الآمنة**: تحويل التعريفات الثابتة إلى `const`، وتمرير عنصر الابن مباشرة في `React.createElement` داخل اختبار الإعدادات، واستبدال تفكيك الاستبعاد (`rest-sibling`) بنسخ سطحي مع `delete` للحفاظ على استبعاد حقول `storage_key` و`storageKey` و`context` و`digest` و`signal` دون تحذيرات Lint.
+
+نتائج الفحوصات المنفذة بعد آخر تعديل برمجي:
+- **فحص ESLint للملفات غير المورّدة (`app`, `lib`, `selfhost`, `tests`, `worker`, `scripts`)**: **0** أخطاء أو تحذيرات متبقية لقواعد `no-unused-vars` و`@typescript-eslint/no-unused-vars` و`prefer-const` و`react/no-children-prop`.
+- **اختبارات المنطق المجرد (`npx --yes tsx --test ...`)**: نجاح **20/20** اختبارًا.
+- **بناء الإنتاج ومجموعات الانحدار والأمان (`npm run build:docker` + `42` مجموعة SQLite/Node/DOM/HTTP)**: نجاح بناء الإنتاج بالكامل واجتياز **42/42** مجموعة اختبار بما فيها `selfhost/http.test.mjs` (226) و`task-approval-policy` (204) و`task-approval-ui` (70) و`manual-execution-dialog` (89) و`aircraft-form-save` (43) و`aircraft-scope` (32) و`users-management` (137) و`customer-setup-ui` (54) و`full-backup` (35).
+- **فحص المتصفح الحقيقي (Headless Chromium via `playwright-cli` على دقة `1440×900`)**: تحميل التطبيق النظيف (`http://localhost:3000`) مع **0** أخطاء Console و0 تحذيرات واستجابات HTTP `200` على طلبات مساحة العمل والإعدادات.
+
+القيود الموثقة بوضوح:
+- تم تخطي 3 اختبارات تعتمد على `miniflare` (`tests/advanced.integration.mjs` و`tests/scheduling.integration.mjs` و`tests/access.integration.mjs`) لعدم توفر الحزمة في بيئة المنصة، وتستمر قواعد `no-explicit-any` / `react-hooks` المسبقة في الملفات القديمة عند تشغيل الفحص العام `npm run lint`، كما يظل النشر على بيئة Windows/Docker واعتماد الشركة النهائي معلّقًا (`pending`).
+
+---
 # سجل تقدم AeroPlan 0.16.0 — تعديل زر حفظ برنامج الصيانة إلى «حفظ» والتحقق منه
 
 آخر تحديث: 2026-11-20 13:25 بتوقيت عمّان.

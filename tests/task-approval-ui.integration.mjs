@@ -2,13 +2,13 @@
 import assert from 'node:assert/strict';
 import {build} from 'esbuild';import {mkdir,readdir,readFile} from 'node:fs/promises';
 import React,{act} from 'react';import {JSDOM} from 'jsdom';import {fixture} from './controlled-fixture.mjs';
-const f=await fixture(),{api,db,scope,row,call,planeId}=f;
+const f=await fixture(),{api,db,row,call,planeId}=f;
 const dom=new JSDOM('<!doctype html><html lang="ar" dir="rtl"><head></head><body><button id="outside">Outside</button><div id="root"></div></body></html>',{url:'https://test.local/?settings=policy',pretendToBeVisual:true}),win=dom.window;
 for(const name of ['window','document','navigator','HTMLElement','HTMLInputElement','HTMLButtonElement','HTMLTextAreaElement','Element','Node','Text','Document','Event','EventTarget','MouseEvent','KeyboardEvent','FocusEvent','InputEvent','MutationObserver','AbortController','AbortSignal'])Object.defineProperty(globalThis,name,{value:name==='window'?win:name==='document'?win.document:win[name],configurable:true,writable:true});
 globalThis.IS_REACT_ACT_ENVIRONMENT=true;globalThis.getComputedStyle=win.getComputedStyle.bind(win);win.HTMLElement.prototype.scrollIntoView=function(){};
 const cssDir='dist-node/client/_next/static/css',css=(await Promise.all((await readdir(cssDir)).filter(f=>f.endsWith('.css')).map(f=>readFile(cssDir+'/'+f,'utf8')))).join('\n'),style=win.document.createElement('style');style.textContent=css;win.document.head.append(style);
 await mkdir('.sites-runtime',{recursive:true});await build({stdin:{contents:"export {default as Policy} from './app/components/TaskApprovalPolicy';export {default as Dialog} from './app/components/TaskApprovalDialog';export {default as SettingsHub} from './app/components/SettingsHub';export {default as Configuration} from './app/components/Configuration';export {rolePermissions} from './lib/permissions';",loader:'ts',resolveDir:process.cwd()},outfile:'.sites-runtime/task-approval-ui.mjs',bundle:true,platform:'node',format:'esm',jsx:'automatic',external:['react','react-dom','lucide-react']});
-const {Policy,Dialog,SettingsHub,Configuration,rolePermissions}=await import('../.sites-runtime/task-approval-ui.mjs'),{createRoot}=await import('react-dom/client'),{getByRole,getByLabelText,queryByRole,fireEvent,waitFor}=await import('@testing-library/dom'),{default:userEvent}=await import('@testing-library/user-event');
+const {Policy,Dialog,SettingsHub,rolePermissions}=await import('../.sites-runtime/task-approval-ui.mjs'),{createRoot}=await import('react-dom/client'),{getByRole,getByLabelText,queryByRole,fireEvent,waitFor}=await import('@testing-library/dom'),{default:userEvent}=await import('@testing-library/user-event');
 const root=createRoot(win.document.getElementById('root')),user=userEvent.setup({document:win.document,delay:null});let actor='owner',checks=0,changed=0,closed=0,hold=null,releaseHold,failRead=false;const writes=[];
 const eq=(a,b,message)=>{assert.deepEqual(a,b,message);checks++},ok=(v,message)=>{assert(v,message);checks++};
 const identities={owner:'admin',planner:'planner',reviewer:'reviewer',approver:'approver',viewer:'viewer'};

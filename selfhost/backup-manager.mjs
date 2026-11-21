@@ -1,4 +1,4 @@
-import {readFile,mkdir,open,rm,mkdtemp,stat} from 'node:fs/promises';
+import {readFile,open,rm,mkdtemp} from 'node:fs/promises';
 import path from 'node:path';
 import {captureFullBackup,backupInventory,verifyFullBackup,restoreFullBackup,applyRetention,atomicJSON,backupKey} from './full-backup.mjs';
 export function normalizeBackupPolicy(raw,old={}){const p={enabled:raw.enabled===true,intervalHours:Number(raw.intervalHours??old.intervalHours??24),keepLast:Number(raw.keepLast??old.keepLast??30),destinationClass:raw.destinationClass??old.destinationClass??'unconfirmed',destinationConfirmed:raw.destinationConfirmed===true,label:String(raw.label??old.label??'').trim()};if(!Number.isInteger(p.intervalHours)||p.intervalHours<1||p.intervalHours>168||!Number.isInteger(p.keepLast)||p.keepLast<2||p.keepLast>365||!['off_host','external_disk','local_only','unconfirmed'].includes(p.destinationClass)||p.label.length>150)throw Error('تحقق من سياسة النسخ: 1–168 ساعة و2–365 نسخة');if(p.enabled&&(!p.destinationConfirmed||p.destinationClass==='unconfirmed'||!p.label))throw Error('أكد الوجهة الفعلية ووصفها قبل تفعيل الجدولة');return p}
